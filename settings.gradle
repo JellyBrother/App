@@ -1,2 +1,5 @@
 include ':app', ':baselibrary', ':chatlibrary'
-//rootProject.name='Chat'
+
+
+// 这里是测试各个组件独立运行
+include ':standalone:appmodule'

@@ -1,14 +1,21 @@
 apply plugin: 'com.android.application'
 
+def projectName = getName();
 android {
-    compileSdkVersion Integer.parseInt(project.compileSdkVersion)
-    buildToolsVersion project.buildToolsVersion
+    //设置编译工具版本
+    compileSdkVersion rootProject.ext.common.compileSdkVersion
+    buildToolsVersion rootProject.ext.common.buildToolsVersion
     defaultConfig {
-        applicationId project.applicationId+"app"
-        minSdkVersion Integer.parseInt(project.minSdkVersion)
-        targetSdkVersion Integer.parseInt(project.targetSdkVersion)
-        versionCode Integer.parseInt(project.versionCode)
-        versionName project.versionName
+        //定义包名，将会替换Manifest中的包名
+        applicationId rootProject.ext.common.applicationId + '.' + projectName
+        //支持最低的API版本
+        minSdkVersion rootProject.ext.common.minSdkVersion
+        //当前编译的API版本
+        targetSdkVersion rootProject.ext.common.targetSdkVersion
+        // 版本号
+        versionCode rootProject.ext.common.versionCode
+        // 版本名称
+        versionName rootProject.ext.common.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         ndk {

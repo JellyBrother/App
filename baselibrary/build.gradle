@@ -1,13 +1,18 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion Integer.parseInt(project.compileSdkVersion)
-    buildToolsVersion project.buildToolsVersion
+    //设置编译工具版本
+    compileSdkVersion rootProject.ext.common.compileSdkVersion
+    buildToolsVersion rootProject.ext.common.buildToolsVersion
     defaultConfig {
-        minSdkVersion Integer.parseInt(project.minSdkVersion)
-        targetSdkVersion Integer.parseInt(project.targetSdkVersion)
-        versionCode Integer.parseInt(project.versionCode)
-        versionName project.versionName
+        //支持最低的API版本
+        minSdkVersion rootProject.ext.common.minSdkVersion
+        //当前编译的API版本
+        targetSdkVersion rootProject.ext.common.targetSdkVersion
+        // 版本号
+        versionCode rootProject.ext.common.versionCode
+        // 版本名称
+        versionName rootProject.ext.common.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
@@ -27,6 +32,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     // 兼容库
-    api project.androidSupport
-    api project.androidSupportDesign
+    api rootProject.ext.dependencies.androidSupport
+    api rootProject.ext.dependencies.androidSupportDesign
+    api rootProject.ext.dependencies.easypermissions
 }
