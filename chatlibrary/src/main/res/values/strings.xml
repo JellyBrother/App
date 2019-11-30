@@ -1,0 +1,5 @@
+<resources>
+    <string name="message_name">消息</string>
+    <string name="message_friend">朋友</string>
+    <string name="message_me">我</string>
+</resources>

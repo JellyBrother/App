@@ -1,0 +1,7 @@
+ -keep class com.android.mms.ui.MmsThumbnailPresenter {
+*;
+}
+# LeakCanary
+#-libraryjars libs/leakcanary.jar
+-dontwarn com.squareup.**
+-keep class com.squareup.** { *; }
