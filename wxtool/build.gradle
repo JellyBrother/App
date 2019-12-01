@@ -27,7 +27,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // 兼容库
-    api rootProject.ext.dependencies.androidSupport
-    api rootProject.ext.dependencies.androidSupportDesign
-//    api rootProject.ext.dependencies.easypermissions
+    compileOnly project(':baselibrary')
+    implementation rootProject.ext.dependencies.easypermissions
 }

@@ -1,5 +1,5 @@
-include ':app', ':baselibrary', ':chatlibrary'
+include ':app', ':baselibrary', ':chatlibrary', ':wxtool'
 
 
 // 这里是测试各个组件独立运行
-include ':standalone:appmodule'
+//include ':standalone:appmodule'

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/but_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@*android:drawable/btn_dropdown"
+        android:padding="10dp"
+        android:text="隐藏"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/but_begin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@*android:drawable/btn_dropdown"
+        android:padding="10dp"
+        android:text="开始"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/but_add_start_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@*android:drawable/btn_dropdown"
+        android:padding="10dp"
+        android:text="从搜索人员处开始添加"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+</LinearLayout>

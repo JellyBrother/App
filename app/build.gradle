@@ -16,7 +16,6 @@ android {
         versionCode rootProject.ext.common.versionCode
         // 版本名称
         versionName rootProject.ext.common.versionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         ndk {
             abiFilters('armeabi', 'armeabi-v7a', 'arm64-v8a')
@@ -57,12 +56,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     // 其他依赖
     implementation project(':baselibrary')
     implementation project(':chatlibrary')
+    implementation project(':wxtool')
 //    compileOnly project.androidSupport
 //    compileOnly project.androidSupportDesign
     // 内存监控

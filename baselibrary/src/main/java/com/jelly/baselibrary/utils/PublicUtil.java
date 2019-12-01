@@ -36,6 +36,10 @@ public class PublicUtil {
         return false;
     }
 
+    public static <T> boolean isEmptyArray(T[] list) {
+        return list == null || list.length == 0;
+    }
+
     /**
      * Author：
      * Date：2019.11.21 15:26

@@ -21,7 +21,7 @@ public class App extends Application {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
         //启用矢量图兼容
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
