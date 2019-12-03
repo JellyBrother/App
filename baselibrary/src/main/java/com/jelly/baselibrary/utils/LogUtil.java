@@ -22,31 +22,31 @@ public class LogUtil {
     }
 
     public void v(String tag, String str) {
-        if (BaseCommon.Base.isLogOn) {
+        if (BaseCommon.Base.enableLog) {
             Log.v(tag, str);
         }
     }
 
     public void d(String tag, String str) {
-        if (BaseCommon.Base.isLogOn) {
+        if (BaseCommon.Base.enableLog) {
             Log.d(tag, str);
         }
     }
 
     public void i(String tag, String str) {
-        if (BaseCommon.Base.isLogOn) {
+        if (BaseCommon.Base.enableLog) {
             Log.d(tag, str);
         }
     }
 
     public void w(String tag, String str) {
-        if (BaseCommon.Base.isLogOn) {
+        if (BaseCommon.Base.enableLog) {
             Log.d(tag, str);
         }
     }
 
     public void e(String tag, String str) {
-        if (BaseCommon.Base.isLogOn) {
+        if (BaseCommon.Base.enableLog) {
             Log.d(tag, str);
         }
     }

@@ -1,33 +1,40 @@
-ext {
-    //通用信息
-    common = [
-            compileSdkVersion: 28,
-            buildToolsVersion: '28.0.3',
-            minSdkVersion    : 21,
-            targetSdkVersion : 28,
-            applicationId    : 'com.jelly',
-            versionCode: 1,
-            versionName: '1.0.0'
-    ]
-    //sit
-    sit = [
-            versionCode: 1,
-            versionName: '1.0.0'
-    ]
-    //uat
-    uat = [
-            versionCode: 1,
-            versionName: '1.0.0'
-    ]
-    //production
-    production = [
-            versionCode: 1,
-            versionName: '1.0.0'
-    ]
-    //dependencies
-    dependencies = [
-            androidSupport: 'com.android.support:support-v4:28.0.0',
-            androidSupportDesign: 'com.android.support:design:28.0.0',
-            easypermissions: 'pub.devrel:easypermissions:2.+'
-    ]
-}
+//ext = {
+//    //通用信息
+//    common = [
+//            compileSdkVersion: 28,
+//            buildToolsVersion: '28.0.3',
+//            minSdkVersion    : 21,
+//            targetSdkVersion : 28,
+//            applicationId    : 'com.jelly',
+//            versionCode      : 1,
+//            versionName      : '1.0.0'
+//    ]
+//    //sit
+//    sit = [
+//            versionCode: 1,
+//            versionName: '1.0.0'
+//    ]
+//    //uat
+//    uat = [
+//            versionCode: 1,
+//            versionName: '1.0.0'
+//    ]
+//    //production
+//    production = [
+//            versionCode: 1,
+//            versionName: '1.0.0'
+//    ]
+//    //dependencies
+//    dependencies = [
+//            androidSupport      : 'com.android.support:support-v4:28.0.0',
+//            androidSupportDesign: 'com.android.support:design:28.0.0',
+//            easypermissions     : 'pub.devrel:easypermissions:2.+'
+//    ]
+//    //config
+//    config = [
+//            enableLog      : true,
+//            enableChat     : false,
+//            enableOtherTool: false,
+//            enableWxTool   : false
+//    ]
+//}

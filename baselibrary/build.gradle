@@ -2,17 +2,17 @@ apply plugin: 'com.android.library'
 
 android {
     //设置编译工具版本
-    compileSdkVersion rootProject.ext.common.compileSdkVersion
-    buildToolsVersion rootProject.ext.common.buildToolsVersion
+    compileSdkVersion Integer.parseInt(project.common_compileSdkVersion)
+    buildToolsVersion project.common_buildToolsVersion
     defaultConfig {
         //支持最低的API版本
-        minSdkVersion rootProject.ext.common.minSdkVersion
+        minSdkVersion Integer.parseInt(project.common_minSdkVersion)
         //当前编译的API版本
-        targetSdkVersion rootProject.ext.common.targetSdkVersion
+        targetSdkVersion Integer.parseInt(project.common_targetSdkVersion)
         // 版本号
-        versionCode rootProject.ext.common.versionCode
+        versionCode Integer.parseInt(project.common_versionCode)
         // 版本名称
-        versionName rootProject.ext.common.versionName
+        versionName project.common_versionName
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -27,7 +27,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // 兼容库
-    api rootProject.ext.dependencies.androidSupport
-    api rootProject.ext.dependencies.androidSupportDesign
-//    api rootProject.ext.dependencies.easypermissions
+    api project.dependencies_androidSupport
+    api project.dependencies_androidSupportDesign
+    api project.dependencies_easypermissions
+
+//    api project.dependencies_easypermissions
 }

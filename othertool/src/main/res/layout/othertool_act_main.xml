@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_copy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@*android:color/holo_blue_bright"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="复制文件" />
+
+    <TextView
+        android:id="@+id/tv_add_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@*android:color/holo_blue_bright"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="点击添加朋友"
+        android:visibility="gone" />
+</LinearLayout>

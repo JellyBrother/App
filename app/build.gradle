@@ -3,23 +3,28 @@ apply plugin: 'com.android.application'
 def projectName = getName();
 android {
     //设置编译工具版本
-    compileSdkVersion rootProject.ext.common.compileSdkVersion
-    buildToolsVersion rootProject.ext.common.buildToolsVersion
+    compileSdkVersion Integer.parseInt(project.common_compileSdkVersion)
+    buildToolsVersion project.common_buildToolsVersion
     defaultConfig {
         //定义包名，将会替换Manifest中的包名
-        applicationId rootProject.ext.common.applicationId + '.' + projectName
+        applicationId project.common_applicationId + '.' + projectName
         //支持最低的API版本
-        minSdkVersion rootProject.ext.common.minSdkVersion
+        minSdkVersion Integer.parseInt(project.common_minSdkVersion)
         //当前编译的API版本
-        targetSdkVersion rootProject.ext.common.targetSdkVersion
+        targetSdkVersion Integer.parseInt(project.common_targetSdkVersion)
         // 版本号
-        versionCode rootProject.ext.common.versionCode
+        versionCode Integer.parseInt(project.common_versionCode)
         // 版本名称
-        versionName rootProject.ext.common.versionName
-        vectorDrawables.useSupportLibrary = true
+        versionName project.common_versionName
+        vectorDrawables.useSupportLibrary = project.common_vectorDrawables_useSupportLibrary
         ndk {
             abiFilters('armeabi', 'armeabi-v7a', 'arm64-v8a')
         }
+        // 添加自定义字段
+        buildConfigField "boolean", "enableLog", project.common_enableLog
+        buildConfigField "boolean", "enableChat", project.module_enableChat
+        buildConfigField "boolean", "enableOtherTool", project.module_enableOtherTool
+        buildConfigField "boolean", "enableWxTool", project.module_enableWxTool
     }
     repositories {
         flatDir {
@@ -58,8 +63,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // 其他依赖
     implementation project(':baselibrary')
-    implementation project(':chatlibrary')
-    implementation project(':wxtool')
+    if (project.module_enableChat && project.module_enableChat == "true") {
+        implementation project(':chat')
+    }
+    if (project.module_enableOtherTool && project.module_enableOtherTool == "true") {
+        implementation project(':othertool')
+    }
+    if (project.module_enableWxTool && project.module_enableWxTool == "true") {
+        implementation project(':wxtool')
+    }
 //    compileOnly project.androidSupport
 //    compileOnly project.androidSupportDesign
     // 内存监控

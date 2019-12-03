@@ -32,5 +32,6 @@
         android:padding="10dp"
         android:text="从搜索人员处开始添加"
         android:textColor="#666666"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 </LinearLayout>

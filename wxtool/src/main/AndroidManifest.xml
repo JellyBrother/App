@@ -2,11 +2,18 @@
     package="com.jelly.wxtool">
 
     <application>
-        <activity android:name="com.jelly.wxtool.message.activity.WxToolMainActivity" />
-        <activity android:name="com.jelly.wxtool.message.activity.WxTest7Activity" />
-        <service android:name="com.jelly.wxtool.message.service.FloatingButtonService" />
+<!--        <activity android:name="com.jelly.wxtool.main.activity.WxToolMainActivity" />-->
+        <activity android:name="com.jelly.wxtool.main.activity.WxToolMainActivity">
+            <intent-filter>
+                <action android:name="com.jelly.wxtool.main.activity.WxToolMainActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.jelly.wxtool.main.activity.WxTest7Activity" />
+        <service android:name="com.jelly.wxtool.main.service.FloatingButtonService" />
         <service
-            android:name="com.jelly.wxtool.message.service.AddFriendService"
+            android:name="com.jelly.wxtool.main.service.AddFriendService"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">

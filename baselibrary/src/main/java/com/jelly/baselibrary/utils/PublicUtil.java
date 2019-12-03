@@ -19,7 +19,7 @@ public class PublicUtil {
     private static long mLastClickTime;
 
     /**
-     * Author：liuguodong
+     * Author：
      * Date：2019.11.21 10:49
      * Description：判定集合是否为空
      *

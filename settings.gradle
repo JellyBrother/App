@@ -1,5 +1,24 @@
-include ':app', ':baselibrary', ':chatlibrary', ':wxtool'
+// 这里是必须有的
+include ':app',
+        ':baselibrary'
 
+// 配置各个模块
+Properties properties = new Properties()
+if (new File('gradle.properties').exists()) {
+    properties.load(new FileInputStream('gradle.properties'))
+}
+if (properties['module_enableChat'] && properties['module_enableChat'] == "true") {
+    include ':chat'
+}
+if (properties['module_enableWxTool'] && properties['module_enableWxTool'] == "true") {
+    include ':wxtool'
+}
+if (properties['module_enableOtherTool'] && properties['module_enableOtherTool'] == "true") {
+    include ':othertool'
+}
 
 // 这里是测试各个组件独立运行
 //include ':standalone:appmodule'
+
+
+

@@ -1,9 +1,0 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jelly.chatlibrary">
-
-
-
-    <application>
-        <activity android:name="com.jelly.chatlibrary.message.activity.MessageMainActivity" />
-    </application>
-</manifest>

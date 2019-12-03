@@ -14,11 +14,35 @@
 
             <TextView
                 android:id="@+id/tv_jump_chat"
-                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="跳转MessageMainActivity" />
+                android:background="@*android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="跳转ChatMainActivity聊天页面"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_jump_wx_tool"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@*android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="跳转微信工具类"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_jump_other_tool"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@*android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="跳转其他工具类"
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
