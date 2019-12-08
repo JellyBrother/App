@@ -16,6 +16,9 @@ out/
 # Gradle files
 .gradle/
 build/
+gradle/
+gradlew
+gradlew.bat
 
 # standalone files
 standalone/
