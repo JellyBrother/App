@@ -9,15 +9,15 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.jelly.baselibrary.base.BaseActivity;
+import com.jelly.baselibrary.base.BaseLifecycleActivity;
 import com.jelly.baselibrary.utils.LogUtil;
 import com.jelly.baselibrary.utils.ToastUtil;
 import com.jelly.wxtool.main.utils.WxToolJumpUtil;
 import com.jelly.wxtool.main.service.AddFriendService;
 import com.jelly.wxtool.main.utils.AccessibilityUtil;
-import com.jelly.wxtool.main.WxToolMainViewModel;
+import com.jelly.wxtool.main.WxToolMainActViewModel;
 
-public class WxTest7Activity extends BaseActivity<WxToolMainViewModel> {
+public class WxTest7Activity extends BaseLifecycleActivity<WxToolMainActViewModel> {
     private static final String TAG = "WxToolMainActivity";
     private static final int REQUEST_ALERT_PERMISSIONS = 1;
     private static final int REQUEST_ACCESSIBILITY_PERMISSIONS = 2;
@@ -31,8 +31,8 @@ public class WxTest7Activity extends BaseActivity<WxToolMainViewModel> {
     }
 
     @Override
-    protected WxToolMainViewModel initViewModel() {
-        return new WxToolMainViewModel();
+    protected WxToolMainActViewModel initViewModel() {
+        return new WxToolMainActViewModel();
     }
 
     @Override

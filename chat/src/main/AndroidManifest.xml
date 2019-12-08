@@ -4,7 +4,7 @@
     <application>
         <!--        <activity android:name="com.jelly.chat.main.activity.ChatMainActivity" />-->
 
-        <activity android:name="com.jelly.chat.main.activity.ChatMainActivity">
+        <activity android:name="com.jelly.chat.main.activity.ChatMainAct">
             <intent-filter>
                 <action android:name="com.jelly.chat.main.activity.ChatMainActivity" />
                 <category android:name="android.intent.category.DEFAULT" />

@@ -67,11 +67,16 @@ dependencies {
         implementation project(':chat')
     }
     if (project.module_enableOtherTool && project.module_enableOtherTool == "true") {
-        implementation project(':othertool')
+        implementation project(':otherTool')
     }
     if (project.module_enableWxTool && project.module_enableWxTool == "true") {
-        implementation project(':wxtool')
+        implementation project(':wxTool')
     }
+    if (project.module_enableProvider && project.module_enableProvider == "true") {
+        runtimeOnly project(':provider')
+        implementation project(':baseProviderLibrary')
+    }
+
 //    compileOnly project.androidSupport
 //    compileOnly project.androidSupportDesign
     // 内存监控

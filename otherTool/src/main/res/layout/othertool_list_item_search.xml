@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@*android:drawable/btn_default_small"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <com.jelly.baselibrary.widget.gif.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/ri_pic"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@*android:drawable/perm_group_personal_info"
+        app:riv_oval="true" />
+
+    <ImageView
+        android:id="@+id/iv_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="22dp"
+        android:src="@*android:drawable/btn_check_buttonless_on"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@id/iv_select"
+        android:layout_toRightOf="@+id/ri_pic"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/othertool_color_000000"
+        android:textDirection="anyRtl"
+        android:textSize="@dimen/othertool_dimen_14sp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toRightOf="@+id/ri_pic"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/othertool_color_b2b2b2"
+        android:textDirection="anyRtl"
+        android:textSize="@dimen/othertool_dimen_12sp" />
+</RelativeLayout>

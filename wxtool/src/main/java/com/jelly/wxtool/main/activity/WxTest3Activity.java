@@ -15,15 +15,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jelly.baselibrary.base.BaseActivity;
+import com.jelly.baselibrary.base.BaseLifecycleActivity;
 import com.jelly.baselibrary.utils.LogUtil;
 import com.jelly.baselibrary.utils.ToastUtil;
 import com.jelly.wxtool.R;
 import com.jelly.wxtool.main.service.AddFriendService3;
 import com.jelly.wxtool.main.service.FloatingButtonService;
-import com.jelly.wxtool.main.WxToolMainViewModel;
+import com.jelly.wxtool.main.WxToolMainActViewModel;
 
-public class WxTest3Activity extends BaseActivity<WxToolMainViewModel> {
+public class WxTest3Activity extends BaseLifecycleActivity<WxToolMainActViewModel> {
     private static final String TAG = "WxToolMainActivity";
     private static final int SETTINGS_ACTION_MANAGE_OVERLAY_PERMISSION = 1;
     private static final int REQUEST_PERMISSIONS_MUST = 1;
@@ -38,8 +38,8 @@ public class WxTest3Activity extends BaseActivity<WxToolMainViewModel> {
     }
 
     @Override
-    protected WxToolMainViewModel initViewModel() {
-        return new WxToolMainViewModel();
+    protected WxToolMainActViewModel initViewModel() {
+        return new WxToolMainActViewModel();
     }
 
     @Override

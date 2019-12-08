@@ -11,16 +11,16 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jelly.baselibrary.base.BaseActivity;
+import com.jelly.baselibrary.base.BaseLifecycleActivity;
 import com.jelly.baselibrary.utils.LogUtil;
 import com.jelly.wxtool.R;
-import com.jelly.wxtool.main.WxToolMainViewModel;
+import com.jelly.wxtool.main.WxToolMainActViewModel;
 
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class WxTestActivity extends BaseActivity<WxToolMainViewModel> implements EasyPermissions.PermissionCallbacks {
+public class WxTestActivity extends BaseLifecycleActivity<WxToolMainActViewModel> implements EasyPermissions.PermissionCallbacks {
     private static final String TAG = "WxToolMainActivity";
     private static final int SETTINGS_ACTION_MANAGE_OVERLAY_PERMISSION = 1;
     private static final int REQUEST_PERMISSIONS_MUST = 1;
@@ -35,8 +35,8 @@ public class WxTestActivity extends BaseActivity<WxToolMainViewModel> implements
     }
 
     @Override
-    protected WxToolMainViewModel initViewModel() {
-        return new WxToolMainViewModel();
+    protected WxToolMainActViewModel initViewModel() {
+        return new WxToolMainActViewModel();
     }
 
     @Override

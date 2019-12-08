@@ -3,7 +3,7 @@
 
     <application>
 <!--        <activity android:name="com.jelly.wxtool.main.activity.WxToolMainActivity" />-->
-        <activity android:name="com.jelly.wxtool.main.activity.WxToolMainActivity">
+        <activity android:name="com.jelly.wxtool.main.activity.WxToolMainAct">
             <intent-filter>
                 <action android:name="com.jelly.wxtool.main.activity.WxToolMainActivity" />
                 <category android:name="android.intent.category.DEFAULT" />

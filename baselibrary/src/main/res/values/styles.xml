@@ -2,7 +2,7 @@
     <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/base_color_33aaff</item>
         <item name="colorPrimaryDark">@color/base_color_2299ee</item>
-        <item name="colorAccent">@color/base_color_FF4081</item>
+        <item name="colorAccent">@color/base_color_ff4081</item>
     </style>
     <style name="AppTheme" parent="AppThemeBase">
     </style>

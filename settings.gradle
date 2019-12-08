@@ -1,6 +1,13 @@
-// 这里是必须有的
-include ':app',
-        ':baselibrary'
+// 主工程
+include ':app'
+/**
+ * 1、baseEmptyLibrary里面的类和方法要跟baselibrary实时更新，保持一致。
+ * 2、好处就是避免各个模块引用base资源，导致资源错乱问题。
+ */
+// 真实base库，参与主工程的编译和打包。
+include ':baselibrary'
+// 不含资源文件的假base库，参与编译不参与打包。
+include ':baseEmptyLibrary'
 
 // 配置各个模块
 Properties properties = new Properties()
@@ -11,10 +18,14 @@ if (properties['module_enableChat'] && properties['module_enableChat'] == "true"
     include ':chat'
 }
 if (properties['module_enableWxTool'] && properties['module_enableWxTool'] == "true") {
-    include ':wxtool'
+    include ':wxTool'
 }
 if (properties['module_enableOtherTool'] && properties['module_enableOtherTool'] == "true") {
-    include ':othertool'
+    include ':otherTool'
+}
+if (properties['module_enableProvider'] && properties['module_enableProvider'] == "true") {
+    include ':provider'
+    include ':baseProviderLibrary'
 }
 
 // 这里是测试各个组件独立运行

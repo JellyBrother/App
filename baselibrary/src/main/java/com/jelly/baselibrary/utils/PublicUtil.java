@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.jelly.baselibrary.R;
 import com.jelly.baselibrary.common.BaseCommon;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class PublicUtil {
             return false;
         }
         //没有网络
+        ToastUtil.makeText(R.string.base_no_net);
         return true;
     }
 
@@ -73,5 +75,9 @@ public class PublicUtil {
             return false;
         }
         return true;
+    }
+
+    public static String getString(String text){
+        return (text + "").replace("null", "");
     }
 }

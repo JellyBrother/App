@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/tv_search_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/othertool_search_list_cancel"
+            android:textColor="@color/othertool_color_b2b2b2"
+            android:textSize="@dimen/othertool_dimen_16sp" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/tv_search_cancel"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/othertool_search"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="20dp"
+            android:singleLine="true"
+            android:textColor="@color/othertool_color_000000"
+            android:textColorHint="@color/othertool_color_b2b2b2"
+            android:textSize="@dimen/othertool_dimen_14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/othertool_color_b2b2b2" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_main_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_top" />
+
+    <com.jelly.baselibrary.widget.listview.PullListView
+        android:id="@+id/lv_search_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_top"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/rl_search_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_top"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_search_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:src="@*android:drawable/emo_im_sad" />
+
+        <TextView
+            android:id="@+id/tv_search_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_search_empty"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/othertool_search_empty"
+            android:textColor="#d1d1d1"
+            android:textSize="@dimen/othertool_dimen_14sp" />
+    </LinearLayout>
+</RelativeLayout>
