@@ -1,0 +1,31 @@
+apply plugin: 'com.android.library'
+
+android {
+    //设置编译工具版本
+    compileSdkVersion Integer.parseInt(project.common_compileSdkVersion)
+    buildToolsVersion project.common_buildToolsVersion
+    defaultConfig {
+        //支持最低的API版本
+        minSdkVersion Integer.parseInt(project.common_minSdkVersion)
+        //当前编译的API版本
+        targetSdkVersion Integer.parseInt(project.common_targetSdkVersion)
+        // 版本号
+        versionCode Integer.parseInt(project.common_versionCode)
+        // 版本名称
+        versionName project.common_versionName
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // 兼容库
+    compileOnly project(':baseemptylibrary')
+}

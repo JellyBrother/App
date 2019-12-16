@@ -1,0 +1,40 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jelly.wxtool">
+
+    <application>
+        <activity android:name="com.jelly.wxtool.main.activity.WxToolMainAct">
+            <intent-filter>
+                <action android:name="com.jelly.wxtool.main.activity.WxToolMainAct" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.jelly.wxtool.test.activity.WxToolTestAct" />
+        <activity android:name="com.jelly.wxtool.search.activity.AddBySearchAct" />
+        <activity android:name="com.jelly.wxtool.test.activity.WxTest7Activity" />
+        <service android:name="com.jelly.wxtool.test.service.FloatingButtonService" />
+        <!--        <service-->
+        <!--            android:name="com.jelly.wxtool.test.service.AddFriendService"-->
+        <!--            android:enabled="true"-->
+        <!--            android:exported="true"-->
+        <!--            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.accessibilityservice.AccessibilityService" />-->
+        <!--            </intent-filter>-->
+        <!--            <meta-data-->
+        <!--                android:name="android.accessibilityservice"-->
+        <!--                android:resource="@xml/wxtool_accessibility_add_friend" />-->
+        <!--        </service>-->
+        <service
+            android:name="com.jelly.wxtool.search.service.AddBySearchService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/wxtool_accessibility_add_friend" />
+        </service>
+    </application>
+</manifest>

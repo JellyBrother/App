@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+     Copyright (c) 2014-2015 pci-suntektech Technologies, Inc.  All Rights Reserved.
+     pci-suntektech Technologies Proprietary and Confidential.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rcs_chat_member_list_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/othertool_color_ffffffff"
+    android:clickable="false"
+    android:focusable="false"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:id="@+id/tv_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="#909090"
+        android:textDirection="anyRtl"
+        android:textSize="@dimen/othertool_dimen_14sp" />
+</LinearLayout>
