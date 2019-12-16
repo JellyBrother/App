@@ -21,10 +21,10 @@ android {
             abiFilters('armeabi', 'armeabi-v7a', 'arm64-v8a')
         }
         // 添加自定义字段
-        buildConfigField "boolean", "enableLog", project.common_enableLog
-        buildConfigField "boolean", "enableChat", project.module_enableChat
-        buildConfigField "boolean", "enableOtherTool", project.module_enableOtherTool
-        buildConfigField "boolean", "enableWxTool", project.module_enableWxTool
+        buildConfigField "boolean", "enableLog", project.common_enable_log
+        buildConfigField "boolean", "enableChat", project.module_enable_chat
+        buildConfigField "boolean", "enableOtherTool", project.module_enable_othertool
+        buildConfigField "boolean", "enableWxTool", project.module_enable_wxtool
     }
     repositories {
         flatDir {
@@ -63,18 +63,18 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // 其他依赖
     implementation project(':baselibrary')
-    if (project.module_enableChat && project.module_enableChat == "true") {
+    if (project.module_enable_chat && project.module_enable_chat == "true") {
         implementation project(':chat')
     }
-    if (project.module_enableOtherTool && project.module_enableOtherTool == "true") {
-        implementation project(':otherTool')
+    if (project.module_enable_othertool && project.module_enable_othertool == "true") {
+        implementation project(':othertool')
     }
-    if (project.module_enableWxTool && project.module_enableWxTool == "true") {
-        implementation project(':wxTool')
+    if (project.module_enable_wxtool && project.module_enable_wxtool == "true") {
+        implementation project(':wxtool')
     }
-    if (project.module_enableProvider && project.module_enableProvider == "true") {
+    if (project.module_enable_provider && project.module_enable_provider == "true") {
         runtimeOnly project(':provider')
-        implementation project(':baseProviderLibrary')
+        implementation project(':baseproviderlibrary')
     }
 
 //    compileOnly project.androidSupport

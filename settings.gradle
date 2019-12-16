@@ -7,29 +7,29 @@ include ':app'
 // 真实base库，参与主工程的编译和打包。
 include ':baselibrary'
 // 不含资源文件的假base库，参与编译不参与打包。
-include ':baseEmptyLibrary'
+include ':baseemptylibrary'
 
 // 配置各个模块
 Properties properties = new Properties()
 if (new File('gradle.properties').exists()) {
     properties.load(new FileInputStream('gradle.properties'))
 }
-if (properties['module_enableChat'] && properties['module_enableChat'] == "true") {
+if (properties['module_enable_chat'] && properties['module_enable_chat'] == "true") {
     include ':chat'
 }
-if (properties['module_enableWxTool'] && properties['module_enableWxTool'] == "true") {
-    include ':wxTool'
+if (properties['module_enable_wxtool'] && properties['module_enable_wxtool'] == "true") {
+    include ':wxtool'
 }
-if (properties['module_enableOtherTool'] && properties['module_enableOtherTool'] == "true") {
-    include ':otherTool'
+if (properties['module_enable_othertool'] && properties['module_enable_othertool'] == "true") {
+    include ':othertool'
 }
-if (properties['module_enableProvider'] && properties['module_enableProvider'] == "true") {
+if (properties['module_enable_provider'] && properties['module_enable_provider'] == "true") {
     include ':provider'
-    include ':baseProviderLibrary'
+    include ':baseproviderlibrary'
 }
 
 // 这里是测试各个组件独立运行
-//include ':standalone:appmodule'
+include ':standalone:wxtoolmodule'
 
 
 

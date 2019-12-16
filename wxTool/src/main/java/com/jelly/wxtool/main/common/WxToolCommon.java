@@ -13,8 +13,10 @@ public class WxToolCommon {
      * Description：消息列表常量类
      */
     public static final class WxTool {
-        // 查看更多显示-刚开始不显示
-        public static final int LOAD_MORE_STATE_INIT = 0;
+        // 是否跳转从聊天开始添加好友
+        public static boolean enableChat = false;
+        // 是否跳转从搜索开始添加好友
+        public static boolean enableSearch = true;
     }
 
     public static final class AdbExec {

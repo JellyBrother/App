@@ -39,7 +39,7 @@ public class AppJumpUtil {
             return;
         }
         try {
-            Intent intent = new Intent("com.jelly.wxtool.main.activity.WxToolMainActivity");
+            Intent intent = new Intent("com.jelly.wxtool.main.activity.WxToolMainAct");
             mActivity.startActivity(intent);
         } catch (ActivityNotFoundException e) {
             LogUtil.getInstance().e(TAG, "打开WxToolMainActivity页面失败");

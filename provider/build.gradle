@@ -27,6 +27,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     // 兼容库
-    compileOnly project(':baseEmptyLibrary')
-    compileOnly project(':baseProviderLibrary')
+    compileOnly project(':baseemptylibrary')
+    compileOnly project(':baseproviderlibrary')
 }
