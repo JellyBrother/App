@@ -1,7 +1,0 @@
-<resources>
-    <string name="othertool_search">搜索</string>
-    <string name="othertool_search_list_cancel">取消</string>
-    <string name="othertool_search_empty">无搜索结果</string>
-    <string name="othertool_search_local">本地搜索</string>
-    <string name="othertool_search_net">网络搜索</string>
-</resources>
