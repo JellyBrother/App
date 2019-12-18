@@ -12,6 +12,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import com.jelly.baselibrary.common.BaseCommon;
 import com.jelly.baselibrary.utils.LogUtil;
 import com.jelly.baselibrary.utils.PublicUtil;
+import com.jelly.wxtool.main.common.WxToolCommon;
 
 import java.util.List;
 
@@ -48,9 +49,19 @@ public class AccessibilityServiceUtil {
             return;
         }
         try {
-            Thread.sleep(1000);
+            Thread.sleep(WxToolCommon.Search.THREAD_SLEEP_TIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+        service.performGlobalAction(service.GLOBAL_ACTION_BACK);
+    }
+
+    /**
+     * 模拟返回操作
+     */
+    public static void fastBackClick(AccessibilityService service) {
+        if (service == null) {
+            return;
         }
         service.performGlobalAction(service.GLOBAL_ACTION_BACK);
     }

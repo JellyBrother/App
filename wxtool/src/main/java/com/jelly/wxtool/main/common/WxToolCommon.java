@@ -32,4 +32,9 @@ public class WxToolCommon {
         //输入文本，eg：文本内容是1234567890
         public static final String INPUT_TEXT_1234567890 = "input text 1234567890\n";
     }
+
+    public static final class Search {
+        // 是否跳转从聊天开始添加好友
+        public static int THREAD_SLEEP_TIME = 2000;
+    }
 }

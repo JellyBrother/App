@@ -6,6 +6,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.jelly.baselibrary.utils.LogUtil;
 import com.jelly.baselibrary.utils.PublicUtil;
+import com.jelly.wxtool.main.common.WxToolCommon;
 import com.jelly.wxtool.search.widget.AddBySearchView;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  */
 public class WxUtil {
     private static final String TAG = "WxUtil";
+    private static boolean isBackSayHiWithSnsPermissionUI = false;
 
     public static void beginOnClick(AccessibilityService service, AddBySearchView view) {
         view.isBegin = true;
@@ -38,6 +40,11 @@ public class WxUtil {
     }
 
     public static void clickChatroomInfoUI(AccessibilityService service, AddBySearchView view) {
+        try {
+            Thread.sleep(WxToolCommon.Search.THREAD_SLEEP_TIME);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         LogUtil.getInstance().d(TAG, "clickChatroomInfoUI");
         // 群聊详情界面 com.tencent.mm.chatroom.ui.ChatroomInfoUI
         AccessibilityNodeInfo roomInfoListViewNode = AccessibilityServiceUtil.findNode(service, "android:id/list",
@@ -54,19 +61,20 @@ public class WxUtil {
                     clickChattingUI(service);
                 } else {
                     //进行添加
-                    view.addFriend = 0;
-                    if (roomInfoHeadNode.size() > view.addFriend) {
-                        AccessibilityNodeInfo nodeInfo = roomInfoHeadNode.get(view.addFriend);
-                        CharSequence contentDescription = nodeInfo.getContentDescription();
-                        if (!TextUtils.isEmpty(contentDescription) && (TextUtils.equals(contentDescription, "添加成员") ||
-                                TextUtils.equals(contentDescription, "删除成员"))) {
-                            // 最后都添加完成后，剩下添加成员和删除成员按钮
-                            view.setStop();
+                    for (int i = 0; i < roomInfoHeadNode.size(); i++) {
+                        if (roomInfoHeadNode.size() > view.addFriend) {
+                            AccessibilityNodeInfo nodeInfo = roomInfoHeadNode.get(view.addFriend);
+                            CharSequence contentDescription = nodeInfo.getContentDescription();
+                            if (!TextUtils.isEmpty(contentDescription) && (TextUtils.equals(contentDescription, "添加成员") ||
+                                    TextUtils.equals(contentDescription, "删除成员"))) {
+                                // 最后都添加完成后，剩下添加成员和删除成员按钮
+                                view.setStop();
+                            } else {
+                                AccessibilityServiceUtil.performViewClick(nodeInfo);
+                            }
                         } else {
-                            AccessibilityServiceUtil.performViewClick(nodeInfo);
+                            view.setStop();
                         }
-                    } else {
-                        view.setStop();
                     }
                 }
             } else {
@@ -76,6 +84,11 @@ public class WxUtil {
     }
 
     public static void clickSeeRoomMemberUI(AccessibilityService service, AddBySearchView view) {
+        try {
+            Thread.sleep(WxToolCommon.Search.THREAD_SLEEP_TIME);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         LogUtil.getInstance().d(TAG, "clickSeeRoomMemberUI");
         //群成员列表界面 com.tencent.mm.chatroom.ui.SeeRoomMemberUI
         AccessibilityNodeInfo memberSearchEdiNode = AccessibilityServiceUtil.findNode(service, "com.tencent.mm:id/bdo",
@@ -85,7 +98,6 @@ public class WxUtil {
         List<AccessibilityNodeInfo> memberSearchNodeList = AccessibilityServiceUtil.findNodeById(service, "com.tencent.mm:id/a");
         if (memberSearchEdiNode != null && memberSearchGriNode != null && !PublicUtil.isEmptyList(memberSearchNodeList)) {
             //一个个点击添加
-            view.addFriend = 0;
 
 //            for (int i = 0; i < root.getChildCount(); i++) {
 //                AccessibilityNodeInfo result = findNodeByDescription(root.getChild(i), description);
@@ -99,7 +111,15 @@ public class WxUtil {
     }
 
     public static void clickContactInfoUI(AccessibilityService service, AddBySearchView view) {
+        try {
+            Thread.sleep(WxToolCommon.Search.THREAD_SLEEP_TIME);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         LogUtil.getInstance().d(TAG, "clickContactInfoUI");
+        if (!isBackSayHiWithSnsPermissionUI) {
+            view.addFriend++;
+        }
         // 联系人详情界面 com.tencent.mm.plugin.profile.ui.ContactInfoUI
         AccessibilityNodeInfo tipNode = AccessibilityServiceUtil.findNode(service, "com.tencent.mm:id/djs",
                 "提示", null, "android.widget.TextView");
@@ -136,12 +156,22 @@ public class WxUtil {
         if (!PublicUtil.isEmptyList(settingNodeList) && !PublicUtil.isEmptyList(signatureNodeList) &&
                 circleFriendsNode != null && !PublicUtil.isEmptyList(addContactNodeList)) {
             // 添加好友界面
-            AccessibilityServiceUtil.performViewClick(addContactNodeList.get(0));
+            if (isBackSayHiWithSnsPermissionUI) {
+                isBackSayHiWithSnsPermissionUI = false;
+                AccessibilityServiceUtil.performBackClick(service);
+            } else {
+                AccessibilityServiceUtil.performViewClick(addContactNodeList.get(0));
+            }
             return;
         }
     }
 
     public static void clickSayHiWithSnsPermissionUI(AccessibilityService service, AddBySearchView view) {
+        try {
+            Thread.sleep(WxToolCommon.Search.THREAD_SLEEP_TIME);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         LogUtil.getInstance().d(TAG, "clickSayHiWithSnsPermissionUI");
         // 申请添加朋友 com.tencent.mm.plugin.profile.ui.SayHiWithSnsPermissionUI
         AccessibilityNodeInfo applyAddFriendNode = AccessibilityServiceUtil.findNode(service, "com.tencent.mm:id/dd",
@@ -158,8 +188,8 @@ public class WxUtil {
                 "不看她", null, "android.widget.TextView");
         if (applyAddFriendNode != null && sendNode != null && sendAddNode != null && settingNode != null &&
                 noSeeMeNode != null && noSeeHeNode != null) {
-            view.addFriend++;
             AccessibilityServiceUtil.performViewClick(sendNode);
+            isBackSayHiWithSnsPermissionUI = true;
             AccessibilityServiceUtil.performBackClick(service);
         }
     }

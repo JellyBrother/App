@@ -66,7 +66,7 @@ public class SearchListAct extends BaseLifecycleActivity<SearchListActViewModel>
     // 是否是搜索默认false不是搜索
     private boolean mIsInSearchMode = false;
     // Handler
-    private ChatbotMainHandler mHandler;
+    private SearchListHandler mHandler;
     // FragmentManager
     private FragmentManager mFragmentManager;
     // 是否搜索完成,用来同步本地和网络搜索展示的，true是本地和网络搜索都完成了
@@ -76,11 +76,11 @@ public class SearchListAct extends BaseLifecycleActivity<SearchListActViewModel>
     private InputMethodManager mInputMethodManager;
     private PullListFooterView mSearchListHeaderView;
 
-    private static class ChatbotMainHandler extends Handler {
+    private static class SearchListHandler extends Handler {
         // 弱引用activity
         private WeakReference<BaseActivity> mActivity;
 
-        public ChatbotMainHandler(BaseActivity activity) {
+        public SearchListHandler(BaseActivity activity) {
             mActivity = new WeakReference<>(activity);
         }
 
@@ -182,7 +182,7 @@ public class SearchListAct extends BaseLifecycleActivity<SearchListActViewModel>
         mEtSearch = findViewById(R.id.et_search);
         mEmptyView = findViewById(R.id.rl_search_empty);
         mSearchListView = findViewById(R.id.lv_search_list_view);
-        mHandler = new ChatbotMainHandler(this);
+        mHandler = new SearchListHandler(this);
         mChatbotSearchListAdapter = new SearchListAdapter(mActivity);
         mSearchListView.setAdapter(mChatbotSearchListAdapter);
         mSearchListHeaderView = new PullListFooterView(mActivity);
