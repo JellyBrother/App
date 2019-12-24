@@ -30,12 +30,15 @@ public class WxUtil {
     public static void clickChattingUI(AccessibilityService service) {
         LogUtil.getInstance().d(TAG, "clickChattingUI");
         // 群聊界面 com.tencent.mm.ui.chatting.ChattingUI
+        // todo 这里需要多加判断，很多页面都有这两个节点
         AccessibilityNodeInfo chattingBackNode = AccessibilityServiceUtil.findNode(service, "com.tencent.mm:id/lt",
                 "", "", "android.widget.TextView");
         AccessibilityNodeInfo chattingMoreNode = AccessibilityServiceUtil.findNode(service, "com.tencent.mm:id/lo",
                 "聊天信息", null, "android.widget.ImageButton");
         if (chattingBackNode != null && chattingMoreNode != null) {
             AccessibilityServiceUtil.performViewClick(chattingMoreNode);
+            chattingBackNode.recycle();
+            chattingMoreNode.recycle();
         }
     }
 
@@ -59,6 +62,8 @@ public class WxUtil {
                     //需要上滑
                     AccessibilityServiceUtil.performScrollForward(service);
                     clickChattingUI(service);
+
+                    AccessibilityUtil.recycleData(roomInfoListViewNode, roomInfoHeadNode, roomInfoNameNode, roomInfoViewNode, roomNameNode);
                 } else {
                     //进行添加
                     for (int i = 0; i < roomInfoHeadNode.size(); i++) {
@@ -69,16 +74,24 @@ public class WxUtil {
                                     TextUtils.equals(contentDescription, "删除成员"))) {
                                 // 最后都添加完成后，剩下添加成员和删除成员按钮
                                 view.setStop();
+
+                                AccessibilityUtil.recycleData(roomInfoListViewNode, roomInfoHeadNode, roomInfoNameNode, roomInfoViewNode, roomNameNode);
                             } else {
                                 AccessibilityServiceUtil.performViewClick(nodeInfo);
+
+                                AccessibilityUtil.recycleData(roomInfoListViewNode, roomInfoHeadNode, roomInfoNameNode, roomInfoViewNode, roomNameNode);
                             }
                         } else {
                             view.setStop();
+
+                            AccessibilityUtil.recycleData(roomInfoListViewNode, roomInfoHeadNode, roomInfoNameNode, roomInfoViewNode, roomNameNode);
                         }
                     }
                 }
             } else {
                 AccessibilityServiceUtil.performViewClick(roomInfoViewNode.get(0));
+
+                AccessibilityUtil.recycleData(roomInfoListViewNode, roomInfoHeadNode, roomInfoNameNode, roomInfoViewNode, roomNameNode);
             }
         }
     }
@@ -97,7 +110,7 @@ public class WxUtil {
                 "", null, "android.widget.GridView");
         List<AccessibilityNodeInfo> memberSearchNodeList = AccessibilityServiceUtil.findNodeById(service, "com.tencent.mm:id/a");
         if (memberSearchEdiNode != null && memberSearchGriNode != null && !PublicUtil.isEmptyList(memberSearchNodeList)) {
-            //一个个点击添加
+            //一个个点击添加 todo
 
 //            for (int i = 0; i < root.getChildCount(); i++) {
 //                AccessibilityNodeInfo result = findNodeByDescription(root.getChild(i), description);
@@ -130,6 +143,8 @@ public class WxUtil {
             // 添加好友界面,弹框不能加好友
             AccessibilityServiceUtil.performBackClick(service);
             AccessibilityServiceUtil.performBackClick(service);
+
+            AccessibilityUtil.recycleData(tipNode, contentNodeList, yesNode);
             return;
         }
         List<AccessibilityNodeInfo> settingNodeList = AccessibilityServiceUtil.findNodeByText(service, "设置备注和标签");
@@ -142,6 +157,8 @@ public class WxUtil {
                 !PublicUtil.isEmptyList(sendMessageNodeList) && !PublicUtil.isEmptyList(videoCallNodeList)) {
             // 好友详情界面
             AccessibilityServiceUtil.performBackClick(service);
+
+            AccessibilityUtil.recycleData(tipNode, contentNodeList, yesNode, settingNodeList, powerNode, moreNodeList, sendMessageNodeList, videoCallNodeList);
             return;
         }
         AccessibilityNodeInfo circleFriendsNode = AccessibilityServiceUtil.findNode(service, "com.tencent.mm:id/dl4",
@@ -149,6 +166,9 @@ public class WxUtil {
         if (circleFriendsNode != null && !PublicUtil.isEmptyList(sendMessageNodeList)) {
             // 个人详情界面
             AccessibilityServiceUtil.performBackClick(service);
+
+            AccessibilityUtil.recycleData(tipNode, contentNodeList, yesNode, settingNodeList,
+                    powerNode, moreNodeList, sendMessageNodeList, videoCallNodeList, circleFriendsNode);
             return;
         }
         List<AccessibilityNodeInfo> signatureNodeList = AccessibilityServiceUtil.findNodeByText(service, "个性签名");
@@ -159,8 +179,16 @@ public class WxUtil {
             if (isBackSayHiWithSnsPermissionUI) {
                 isBackSayHiWithSnsPermissionUI = false;
                 AccessibilityServiceUtil.performBackClick(service);
+
+                AccessibilityUtil.recycleData(tipNode, contentNodeList, yesNode, settingNodeList,
+                        powerNode, moreNodeList, sendMessageNodeList, videoCallNodeList, circleFriendsNode, signatureNodeList,
+                        addContactNodeList);
             } else {
                 AccessibilityServiceUtil.performViewClick(addContactNodeList.get(0));
+
+                AccessibilityUtil.recycleData(tipNode, contentNodeList, yesNode, settingNodeList,
+                        powerNode, moreNodeList, sendMessageNodeList, videoCallNodeList, circleFriendsNode, signatureNodeList,
+                        addContactNodeList);
             }
             return;
         }
@@ -191,6 +219,8 @@ public class WxUtil {
             AccessibilityServiceUtil.performViewClick(sendNode);
             isBackSayHiWithSnsPermissionUI = true;
             AccessibilityServiceUtil.performBackClick(service);
+
+            AccessibilityUtil.recycleData(applyAddFriendNode, sendNode, sendAddNode, settingNode, noSeeMeNode, noSeeHeNode);
         }
     }
 }

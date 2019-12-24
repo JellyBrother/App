@@ -103,4 +103,24 @@ public class AccessibilityUtil {
             }
         }
     }
+
+    public static void recycleData(Object... params) {
+        if (params == null) {
+            return;
+        }
+        int length = params.length;
+        if (length == 0) {
+            return;
+        }
+        for (int i = 0; i < length; i++) {
+            Object object = params[i];
+            if (object instanceof AccessibilityNodeInfo) {
+                ((AccessibilityNodeInfo) object).recycle();
+            }
+            if (object instanceof List) {
+                ((List) object).clear();
+                object = null;
+            }
+        }
+    }
 }

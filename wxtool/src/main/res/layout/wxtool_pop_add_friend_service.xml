@@ -16,6 +16,7 @@
             android:background="@color/wxtool_color_6668d2ae"
             android:padding="10dp"
             android:text="隐藏"
+            android:visibility="gone"
             android:textColor="@color/wxtool_color_b2b2b2"
             android:textSize="14sp" />
 

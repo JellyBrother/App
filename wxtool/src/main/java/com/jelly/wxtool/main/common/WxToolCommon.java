@@ -35,6 +35,6 @@ public class WxToolCommon {
 
     public static final class Search {
         // 是否跳转从聊天开始添加好友
-        public static int THREAD_SLEEP_TIME = 2000;
+        public static int THREAD_SLEEP_TIME = 1000;
     }
 }

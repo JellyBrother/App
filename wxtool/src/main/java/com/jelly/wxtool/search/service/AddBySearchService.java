@@ -77,13 +77,16 @@ public class AddBySearchService extends BaseService {
             }
             String packageName = rootNode.getPackageName().toString();
             if (TextUtils.isEmpty(packageName)) {
+                rootNode.recycle();
                 return;
             }
             if (!packageName.contains("com.tencent.mm")) {
+                rootNode.recycle();
                 return;
             }
             String className = event.getClassName().toString();
             if (TextUtils.isEmpty(className)) {
+                rootNode.recycle();
                 return;
             }
             int eventType = event.getEventType();
