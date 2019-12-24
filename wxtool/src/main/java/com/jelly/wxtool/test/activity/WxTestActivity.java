@@ -15,7 +15,6 @@ import com.jelly.baselibrary.base.BaseLifecycleActivity;
 import com.jelly.baselibrary.utils.LogUtil;
 import com.jelly.wxtool.R;
 import com.jelly.wxtool.test.viewmodel.WxToolTestActViewModel;
-
 import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;

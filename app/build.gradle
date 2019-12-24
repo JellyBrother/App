@@ -80,10 +80,11 @@ dependencies {
 //    compileOnly project.androidSupport
 //    compileOnly project.androidSupportDesign
     // 内存监控
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
-    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+//    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+//    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+
+//    implementation 'com.google.code.gson:gson:2.8.5'
+//    implementation 'com.github.bumptech.glide:glide:4.8.0'
+//    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 }

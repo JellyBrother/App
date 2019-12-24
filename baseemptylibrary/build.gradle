@@ -25,12 +25,12 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
     // 兼容库
     api project.dependencies_androidSupport
     api project.dependencies_androidSupportDesign
-    api project.dependencies_easypermissions
-    api project.dependencies_glide
-    annotationProcessor project.dependencies_glide_compiler
+//    api project.dependencies_easypermissions
+//    api project.dependencies_glide
+//    annotationProcessor project.dependencies_glide_compiler
 //    api project.dependencies_easypermissions
 }
