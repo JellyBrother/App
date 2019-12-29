@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+
+android {
+    //设置编译工具版本
+    compileSdkVersion Integer.parseInt(project.common_compileSdkVersion)
+    buildToolsVersion project.common_buildToolsVersion
+    defaultConfig {
+        //支持最低的API版本
+        minSdkVersion Integer.parseInt(project.common_minSdkVersion)
+        //当前编译的API版本
+        targetSdkVersion Integer.parseInt(project.common_targetSdkVersion)
+        // 版本号
+        versionCode Integer.parseInt(project.common_versionCode)
+        // 版本名称
+        versionName project.common_versionName
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    // 兼容库
+    api project.dependencies_x_appcompat
+    api project.dependencies_x_constraintlayout
+    api project.dependencies_x_viewpager2
+    api project.dependencies_x_recyclerview
+    api project.dependencies_x_material
+    api project.dependencies_glide
+//    api project.dependencies_androidSupport
+//    api project.dependencies_androidSupportDesign
+//    api project.dependencies_viewpager2
+//    api project.dependencies_easypermissions
+//    api project.dependencies_glide
+//    annotationProcessor project.dependencies_glide_compiler
+//    api project.dependencies_easypermissions
+}

@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+
+def projectName = getName();
+android {
+    //设置编译工具版本
+    compileSdkVersion Integer.parseInt(project.common_compileSdkVersion)
+    buildToolsVersion project.common_buildToolsVersion
+    defaultConfig {
+        //定义包名，将会替换Manifest中的包名
+        applicationId project.common_applicationId + '.' + projectName
+        //支持最低的API版本
+        minSdkVersion Integer.parseInt(project.common_minSdkVersion)
+        //当前编译的API版本
+        targetSdkVersion Integer.parseInt(project.common_targetSdkVersion)
+        // 版本号
+        versionCode Integer.parseInt(project.common_versionCode)
+        // 版本名称
+        versionName project.common_versionName
+        vectorDrawables.useSupportLibrary = project.common_vectorDrawables_useSupportLibrary
+        ndk {
+            abiFilters('armeabi', 'armeabi-v7a', 'arm64-v8a')
+        }
+        // 添加自定义字段
+        buildConfigField "boolean", "enableLog", project.common_enable_log
+        buildConfigField "boolean", "enableChat", project.module_enable_chat
+        buildConfigField "boolean", "enableOtherTool", project.module_enable_othertool
+        buildConfigField "boolean", "enableWxTool", project.module_enable_wxtool
+    }
+    repositories {
+        flatDir {
+            dirs 'libs', "$rootDir/baselibrary/libs"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro', "../proguard.flags"
+        }
+    }
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+//            resources.srcDirs = ['src/main']
+//            aidl.srcDirs = ['src/main/java']
+            jniLibs.srcDirs = ['src/main/jniLibs']
+            assets.srcDirs = ['src/main/assets']
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "Chat.apk"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // 其他依赖
+    implementation project(path: ':baselibrary')
+    implementation project(path: ':wxtool')
+    implementation project(':chat')
+
+//    implementation 'com.google.code.gson:gson:2.8.5'
+//    implementation 'com.github.bumptech.glide:glide:4.8.0'
+//    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+}

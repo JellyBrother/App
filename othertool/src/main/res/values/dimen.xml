@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="othertool_dimen_12sp">12sp</dimen>
+    <dimen name="othertool_dimen_14sp">14sp</dimen>
+    <dimen name="othertool_dimen_16sp">16sp</dimen>
+    <dimen name="othertool_dimen_8dp">8dp</dimen>
+    <dimen name="othertool_dimen_10dp">10dp</dimen>
+    <dimen name="othertool_dimen_20dp">20dp</dimen>
+</resources>

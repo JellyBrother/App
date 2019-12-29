@@ -1,0 +1,7 @@
+<resources>
+    <string name="wbt_main_act_name">主activity</string>
+    <string name="wbt_home_fra_name">首页</string>
+    <string name="wbt_shop_act_name">优选</string>
+    <string name="wbt_profit_fra_name">收益</string>
+    <string name="wbt_me_fra_name">我的</string>
+</resources>

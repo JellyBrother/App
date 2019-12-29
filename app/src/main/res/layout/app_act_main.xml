@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_jump_chat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/base_color_b2b2b2"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="跳转ChatMainActivity聊天页面"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_jump_wx_tool"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/base_color_b2b2b2"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="跳转微信工具类"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_jump_other_tool"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/base_color_b2b2b2"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="跳转其他工具类"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_jump_WechatBusinessTool"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/base_color_b2b2b2"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="跳转微商工具箱"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

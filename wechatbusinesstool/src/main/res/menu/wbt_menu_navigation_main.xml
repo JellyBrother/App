@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/i_navigation_home"
+        android:icon="@drawable/wbt_navigation_home"
+        android:title="@string/wbt_home_fra_name" />
+
+    <item
+        android:id="@+id/i_navigation_shop"
+        android:icon="@drawable/wbt_navigation_shop"
+        android:title="@string/wbt_shop_act_name" />
+
+    <item
+        android:id="@+id/i_navigation_profit"
+        android:icon="@drawable/wbt_navigation_profit"
+        android:title="@string/wbt_profit_fra_name" />
+
+    <item
+        android:id="@+id/i_navigation_me"
+        android:icon="@drawable/wbt_navigation_me"
+        android:title="@string/wbt_me_fra_name" />
+</menu>

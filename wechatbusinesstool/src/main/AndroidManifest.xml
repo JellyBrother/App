@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jelly.wechatbusinesstool">
+
+    <application>
+        <activity android:name="com.jelly.wechatbusinesstool.main.activity.WechatBusinessToolMainAct">
+            <intent-filter>
+                <action android:name="com.jelly.wechatbusinesstool.main.activity.WechatBusinessToolMainAct" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

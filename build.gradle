@@ -1,0 +1,30 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+import javax.tools.JavaCompiler
+// 对配置文件进行初始化
+apply from: "config.gradle"
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.2'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+//解决乱码问题
+tasks.withType(JavaCompiler) {
+    options.encoding = "UTF-8"
+}
