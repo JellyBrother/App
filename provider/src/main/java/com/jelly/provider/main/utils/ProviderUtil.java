@@ -33,7 +33,6 @@ import java.util.regex.Pattern;
 
 public class ProviderUtil {
     private final static String TAG = "ProviderUtil";
-    private static final String ACTION_VIVO_EXTERNAL_PROVIDER_CHANGE = "android.provider.action.VIVO_EXTERNAL_PROVIDER_CHANGE";
     private static final long MIN_DELETE_WARING_TIME = 1000;//1s
     private static final Uri BACKUP_SMS = Uri.parse("content://backup-sms/");
     public static final int MAX_NOTIFY_ID_COUNT = 50;//通知给全局搜索删除信息的id的最大个数，超过该值减一，认为批量删除
@@ -174,34 +173,10 @@ public class ProviderUtil {
             if (defaultSmsApplication != null && defaultSmsApplication.equals(packageName)) {
                 return true;
             }
-
-            if ("com.vivo.PCTools".equals(packageName) || "com.vivo.easyshare".equals(packageName)
-                    || "com.vivo.browser".equals(packageName) || "com.vivo.childrenmode".equals(packageName)) {
-                return true;
-            }
         } catch (PackageManager.NameNotFoundException e) {
 
         }
         return false;
-    }
-
-    /**
-     * Notify the default SMS app of an SMS/MMS provider change if the change is being made
-     * by a package other than the default SMS app itself.
-     *
-     * @param uri            The uri the provider change applies to
-     * @param callingPackage The package name of the provider caller
-     * @param context
-     */
-    public static void notifyIfNotDefaultSmsApp(final Uri uri, final String callingPackage, final Context context) {
-        Intent intent = new Intent();
-        intent.setAction(ACTION_VIVO_EXTERNAL_PROVIDER_CHANGE);
-        intent.setPackage("com.android.providers.telephony");
-        intent.putExtra("callingPackage", callingPackage);
-        intent.putExtra("cursor_uri", uri);
-        intent.putExtra("isFromSms", true);
-        context.sendBroadcast(intent);
-        LogUtil.getInstance().d(TAG, "notifyIfNotDefaultSmsApp - callingPackage: " + callingPackage + ", uri: " + uri);
     }
 
     public static boolean isMultiSimEnabled(Context context) {
@@ -329,22 +304,6 @@ public class ProviderUtil {
             LogUtil.getInstance().w(TAG, "updateDeleteBackupSms failed " + e.getMessage());
         }
         return count;
-    }
-
-    public static void upateBackupSmsAndSendBC(Context context, String packagename, Uri uri, boolean isThreadDelete) {
-        LogUtil.getInstance().d(TAG, "upateBackupSmsAndSendBC");
-        ContentValues values = new ContentValues();
-        values.put("delete_packagename", packagename);
-        int count = updateDeleteBackupSms(context, values, uri, isThreadDelete);
-        if (count <= 0) {
-            return;
-        }
-        Intent intent = new Intent("com.vivo.mms.DELETE_MESSAGE_WARNING_ACTION");
-        intent.setPackage("com.android.mms");
-        Bundle bundle = new Bundle();
-        bundle.putString("packagename", packagename);
-        intent.putExtras(bundle);
-        context.sendBroadcast(intent);
     }
 
     public static boolean isQuicklyDelete(Context context, String id, boolean isThreadDelete) {

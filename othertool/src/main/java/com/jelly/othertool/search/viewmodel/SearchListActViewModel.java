@@ -70,7 +70,6 @@ public class SearchListActViewModel extends BaseViewModel {
     public void inputDbSearch() {
 //        LogUtil.getInstance().d(TAG, "inputDbSearch");
 //        mQueryResultHandler.cancelOperation(OtherToolCommon.SearchList.TOKEN_SEARCH_CHATBOT_LOCAL);
-//        Uri searchUri = Uri.parse("content://vivo-rcs-chatbot/search").buildUpon().appendQueryParameter("pattern", mSearchText).build();
 //        mQueryResultHandler.startQuery(OtherToolCommon.SearchList.TOKEN_SEARCH_CHATBOT_LOCAL, mSearchText, searchUri, null, null, null, null);
 
         ArrayList<SearchListEntity> list = new ArrayList<>();

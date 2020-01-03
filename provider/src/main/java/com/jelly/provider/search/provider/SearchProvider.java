@@ -111,21 +111,6 @@ public class SearchProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues initialValues) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-//        switch (sUriMatcher.match(uri)) {
-//            case UriType.Chatbot.ALL:
-//                long rowIdChatbot = db.insert(BaseProviderCommon.Search.TABLE_CHATBOT_NAME, null, initialValues);
-//                if (rowIdChatbot == BaseProviderCommon.Search.INVALID_ROW_ID) {
-//                    throw new UnsupportedOperationException("Unable to insert row for URI "
-//                            + uri + '!');
-//                }
-//                Uri notificationUriChatbot = Uri.parse("content://vivo-rcs-chatbot" + "/id/" + rowIdChatbot);
-//                if (rowIdChatbot > 0) {
-//                    getContext().getContentResolver().notifyChange(BaseProviderCommon.Search.CONTENT_URI, null, true);
-//                }
-//                return notificationUriChatbot;
-//            default:
-//                throw new IllegalArgumentException("insert Unsupported URI " + uri + "!");
-//        }
         return null;
     }
 
