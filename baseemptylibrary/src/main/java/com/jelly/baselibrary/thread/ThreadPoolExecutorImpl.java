@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Created by YangLei-11036126 on 2019/01/28.
  * 定义线程池，UI线程池和后台线程池。
  */
 public class ThreadPoolExecutorImpl {
@@ -99,8 +98,6 @@ public class ThreadPoolExecutorImpl {
     }
 
     /**
-     * Author：liwanbing 11002396
-     * Date：2019.11.07 23:20
      * Description: 带有返回值的异步任务
      *
      * @param <T>      返回值类型
@@ -152,8 +149,6 @@ public class ThreadPoolExecutorImpl {
     }
 
     /**
-     * Author：yanglei 11036126
-     * Date：2019.10.17 15:07
      * Description:通过handler将runnable post到主线程执行
      *
      * @param runnable

@@ -12,8 +12,6 @@ import android.widget.ListView;
 import com.jelly.baselibrary.utils.LogUtil;
 
 /**
- * Author：
- * Date：2019.11.23 11:33
  * Description：带上拉加载和下拉刷新的ListView
  */
 public class PullListView extends ListView {
@@ -138,8 +136,6 @@ public class PullListView extends ListView {
     }
 
     /**
-     * Author：
-     * Date：2019.11.28 17:35
      * Description：设置上拉加载监听
      *
      * @param onPullUpToLoadMoreListener 上拉加载监听
@@ -149,8 +145,6 @@ public class PullListView extends ListView {
     }
 
     /**
-     * Author：
-     * Date：2019.11.28 17:36
      * Description：设置下拉刷新监听
      *
      * @param onPullDownToRefreshListener 下拉刷新监听
@@ -160,8 +154,6 @@ public class PullListView extends ListView {
     }
 
     /**
-     * Author：
-     * Date：2019.11.28 17:58
      * Description：设置当前上拉加载的滑动状态
      *
      * @param state 滑动状态
@@ -171,8 +163,6 @@ public class PullListView extends ListView {
     }
 
     /**
-     * Author：
-     * Date：2019.11.28 17:58
      * Description：设置当前下拉刷新的滑动状态
      *
      * @param state 滑动状态

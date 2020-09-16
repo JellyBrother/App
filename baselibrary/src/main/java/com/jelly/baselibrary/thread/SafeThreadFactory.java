@@ -3,7 +3,6 @@ package com.jelly.baselibrary.thread;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * Created by YangLei-11036126 on 2019/01/26.
  * 对线程池中新创建的线程作保护
  */
 public class SafeThreadFactory implements ThreadFactory {

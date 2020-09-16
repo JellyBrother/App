@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentActivity;
 import com.jelly.baselibrary.utils.LogUtil;
 
 /**
- * Author：
- * Date：2019.11.20 14:21
  * Description：Activity的基类
  */
 public abstract class BaseActivity extends FragmentActivity {
@@ -45,8 +43,6 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 14:15
      * Description：初始化控件
      *
      * @param savedInstanceState Bundle

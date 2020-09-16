@@ -5,8 +5,6 @@ import android.os.Bundle;
 import com.jelly.baselibrary.base.BaseViewModel;
 
 /**
- * Author：
- * Date：2019.11.20 14:21
  * Description：ChatbotSearchList的ViewModel
  */
 public class AddBySearchActViewModel extends BaseViewModel {

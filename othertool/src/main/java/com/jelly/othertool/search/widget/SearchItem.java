@@ -71,8 +71,6 @@ public class SearchItem extends FrameLayout {
     }
 
     /**
-     * Author：liuguodong 72071152
-     * Date：2019.11.23 11:40
      * Description：设置数据
      *
      * @param entity 数据
@@ -107,8 +105,6 @@ public class SearchItem extends FrameLayout {
     }
 
     /**
-     * Author：liuguodong 72071152
-     * Date：2019.11.23 11:50
      * Description：获取实体类数据
      *
      * @return 实体类

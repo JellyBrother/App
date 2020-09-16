@@ -12,16 +12,12 @@ import androidx.fragment.app.Fragment;
 import com.jelly.baselibrary.utils.LogUtil;
 
 /**
- * Author：
- * Date：2019.11.20 14:21
  * Description：Activity的基类
  */
 public abstract class BaseFragment extends Fragment {
     private static String TAG = "BaseFragment";
     // 上下文
     protected Activity mActivity;
-    /** 根view */
-    protected View mRootView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,8 +48,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 14:15
      * Description：初始化控件
      *
      * @param inflater           LayoutInflater
@@ -64,8 +58,6 @@ public abstract class BaseFragment extends Fragment {
     protected abstract View getRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     /**
-     * Author：
-     * Date：2019.11.20 14:15
      * Description：初始化控件
      *
      * @param rootView           View

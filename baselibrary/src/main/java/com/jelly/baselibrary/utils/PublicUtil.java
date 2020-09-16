@@ -10,8 +10,6 @@ import com.jelly.baselibrary.common.BaseCommon;
 import java.util.List;
 
 /**
- * Author：
- * Date：2019.11.25 16:15
  * Description：工具类
  */
 public class PublicUtil {
@@ -20,8 +18,6 @@ public class PublicUtil {
     private static long mLastClickTime;
 
     /**
-     * Author：
-     * Date：2019.11.21 10:49
      * Description：判定集合是否为空
      *
      * @param list 集合
@@ -42,8 +38,6 @@ public class PublicUtil {
     }
 
     /**
-     * Author：
-     * Date：2019.11.21 15:26
      * Description：判断是否有网络
      *
      * @param context 上下文
@@ -63,8 +57,6 @@ public class PublicUtil {
     }
 
     /**
-     * Author：
-     * Date：2019.11.27 14:44
      * Description：判断是否快速点击
      *
      * @return true是快速点击

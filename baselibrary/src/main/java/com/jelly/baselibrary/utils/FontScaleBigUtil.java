@@ -7,9 +7,6 @@ import android.provider.Settings;
 
 import com.jelly.baselibrary.common.BaseCommon;
 
-/**
- * Created by Administrator on 2017/2/8.
- */
 public class FontScaleBigUtil {
     private static final String TAG = "FontScaleBig";
     private static final String FONT_SCALE_BIG = "font_scale_big";

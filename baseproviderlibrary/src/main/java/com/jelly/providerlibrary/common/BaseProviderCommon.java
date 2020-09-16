@@ -3,8 +3,6 @@ package com.jelly.providerlibrary.common;
 import android.net.Uri;
 
 /**
- * Author：
- * Date：2019.11.21 10:46
  * Description：常量类
  */
 public class BaseProviderCommon {

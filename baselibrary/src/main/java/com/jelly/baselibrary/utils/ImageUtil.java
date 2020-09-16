@@ -17,16 +17,11 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.jelly.baselibrary.R;
 
 /**
- * Author：zhuxudong 72064627
- * Date： 2019/11/19 17:35
- * <p>
  * Description: Glide封装 图片加载
  */
 public class ImageUtil {
 
     /**
-     * Author：
-     * Date：2019.11.27 18:49
      * Description：使用Glide 加载 网络图片 设置为圆形
      *
      * @param context      上下文

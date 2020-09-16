@@ -3,8 +3,6 @@ package com.jelly.baselibrary.common;
 import android.app.Application;
 
 /**
- * Author：
- * Date：2019.11.21 10:46
  * Description：常量类
  */
 public class BaseCommon {

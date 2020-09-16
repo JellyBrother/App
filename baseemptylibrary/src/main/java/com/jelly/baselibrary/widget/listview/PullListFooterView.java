@@ -13,8 +13,6 @@ import com.jelly.baselibrary.R;
 import com.jelly.baselibrary.utils.FontScaleBigUtil;
 
 /**
- * Author：liuguodong 72071152
- * Date：2019.11.23 11:33
  * Description：上拉加载的FooterView
  */
 public class PullListFooterView extends LinearLayout {
@@ -77,8 +75,6 @@ public class PullListFooterView extends LinearLayout {
     }
 
     /**
-     * Author：liuguodong 72071152
-     * Date：2019.11.28 17:35
      * Description：设置上拉加载监听
      *
      * @param onPullUpToRefreshListener 上拉加载监听
@@ -88,8 +84,6 @@ public class PullListFooterView extends LinearLayout {
     }
 
     /**
-     * Author：liuguodong 72071152
-     * Date：2019.11.28 17:58
      * Description：设置当前滑动状态
      *
      * @param state 滑动状态
@@ -117,8 +111,6 @@ public class PullListFooterView extends LinearLayout {
     }
 
     /**
-     * Author：liuguodong 72071152
-     * Date：2019.11.28 18:02
      * Description：获取footerview的转圈控件
      *
      * @return footerview的转圈控件
@@ -128,8 +120,6 @@ public class PullListFooterView extends LinearLayout {
     }
 
     /**
-     * Author：liuguodong 72071152
-     * Date：2019.11.28 18:02
      * Description：获取footerview文本控件
      *
      * @return footerview文本控件

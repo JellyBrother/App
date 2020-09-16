@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import com.jelly.baselibrary.utils.LogUtil;
 
 /**
- * Author：
- * Date：2019.11.20 14:21
  * Description：Activity的基类
  */
 public abstract class BaseFragment extends Fragment {
@@ -52,8 +50,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 14:15
      * Description：初始化控件
      *
      * @param inflater           LayoutInflater
@@ -64,8 +60,6 @@ public abstract class BaseFragment extends Fragment {
     protected abstract View getRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     /**
-     * Author：
-     * Date：2019.11.20 14:15
      * Description：初始化控件
      *
      * @param rootView           View

@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 /**
- * Author：
- * Date：2019.11.20 14:21
  * Description：Activity的基类
  */
 public abstract class BaseLifecycleFragment<T extends BaseViewModel> extends BaseFragment {
@@ -34,8 +32,6 @@ public abstract class BaseLifecycleFragment<T extends BaseViewModel> extends Bas
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 14:15
      * Description：初始化ViewModel
      *
      * @return ViewModel
@@ -43,8 +39,6 @@ public abstract class BaseLifecycleFragment<T extends BaseViewModel> extends Bas
     protected abstract T initViewModel();
 
     /**
-     * Author：
-     * Date：2019.11.20 14:15
      * Description：数据操作
      */
     protected abstract void observerData();

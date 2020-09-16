@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author：liuguodong 72071152
- * Date：2019.11.20 14:21
  * Description：ChatbotMainActivity的ViewModel
  */
 public class SearchListActViewModel extends BaseViewModel {
@@ -52,8 +50,6 @@ public class SearchListActViewModel extends BaseViewModel {
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 20:42
      * Description：开始数据库和网络搜索
      */
     public void initAllSearch(String searchText) {
@@ -63,8 +59,6 @@ public class SearchListActViewModel extends BaseViewModel {
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 20:42
      * Description：输入框输入开始数据库搜索
      */
     public void inputDbSearch() {
@@ -86,8 +80,6 @@ public class SearchListActViewModel extends BaseViewModel {
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 20:42
      * Description：输入框输入开始网络搜索
      */
     public void inputNetSearch() {
@@ -106,8 +98,6 @@ public class SearchListActViewModel extends BaseViewModel {
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 20:42
      * Description：上拉加载开始网络搜索
      */
     public void loadMoreNetSearch() {

@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Author：
- * Date：2019.11.20 14:13
  * Description：ViewModel的基类
  */
 public abstract class BaseViewModel extends AndroidViewModel {
@@ -33,8 +31,6 @@ public abstract class BaseViewModel extends AndroidViewModel {
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 14:15
      * Description：初始化数据
      *
      * @param bundle Bundle
@@ -42,8 +38,6 @@ public abstract class BaseViewModel extends AndroidViewModel {
     protected abstract void initData(Bundle bundle);
 
     /**
-     * Author：
-     * Date：2019.11.20 14:15
      * Description：销毁数据
      */
     protected void destroyData() {

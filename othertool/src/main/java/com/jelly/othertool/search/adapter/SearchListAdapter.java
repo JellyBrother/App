@@ -117,8 +117,6 @@ public class SearchListAdapter extends BaseAdapter {
     }
 
     /**
-     * Author：liuguodong 72071152
-     * Date：2019.11.20 21:19
      * Description：设置输入框搜索回来的数据
      *
      * @param list 输入框搜索回来的数据
@@ -167,8 +165,6 @@ public class SearchListAdapter extends BaseAdapter {
     }
 
     /**
-     * Author：liuguodong 72071152
-     * Date：2019.11.20 21:19
      * Description：设置上拉加载搜索回来的数据
      *
      * @param list 上拉加载搜索回来的数据

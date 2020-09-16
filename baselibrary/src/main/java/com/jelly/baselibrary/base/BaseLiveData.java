@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 /**
- * Author：
- * Date：2019.11.20 14:09
  * Description：LiveData的实现类，自动根据上下文的生命周期管理数据。
  */
 public class BaseLiveData<T> extends LiveData<T> {
@@ -31,8 +29,6 @@ public class BaseLiveData<T> extends LiveData<T> {
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 14:11
      * Description：开始订阅
      *
      * @param observer 观察者
@@ -42,8 +38,6 @@ public class BaseLiveData<T> extends LiveData<T> {
     }
 
     /**
-     * Author：
-     * Date：2019.11.20 14:11
      * Description：移除观察者
      */
     public void removeObserver() {
