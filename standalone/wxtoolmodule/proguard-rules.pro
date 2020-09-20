@@ -4,7 +4,7 @@
 # You can edit the include path and order by changing the proguardFiles
 # directive in build.gradle.
 #
-# For knowledge_more details, see
+# For _more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 # Add any project specific keep options here:
 # If your project uses WebView with JS, uncomment the following
@@ -45,7 +45,7 @@
 -keep public class * extends android.support.**   #如果有引用v4或者v7包，需添加
 -keep class com.classtc.test.entity.**{*;}        #过滤掉自己编写的实体类
 -keep class * extends java.lang.annotation.Annotation
--keep class com.huawei.android.knowledge.commonui.business.reply.**{*;}
+-keep class com..android..commonui.business.reply.**{*;}
 
 
 #----------------保护指定的类和类的成员，但条件是所有指定的类和类成员是要存在------------------------------------
@@ -143,42 +143,42 @@
 -keep class com.google.gson.examples.android.model.** { *; }
 
 #-----------------不需要混淆第三方类库------------------------------------------------------------------
--keep class com.huawei.android.knowledge.commonui.detail.helper.UriCallBackHelper{*;}
+-keep class com..android..commonui.detail.helper.UriCallBackHelper{*;}
 -keep class com.google.android.exoplayer.**  { *; }   # 对exoplayer.jar的混淆处理
 -keep class merge.tv.danmaku.ijk.media.player.**  { *; }   # welive的混淆处理
--keep class com.huawei.works.welive.**  { *; }   # welive的混淆处理
--keep class com.huawei.android.it.dynamic.**  { *; }   # dynamic的混淆处理
--keep class com.huawei.android.knowledge.commonui.dynamic.**  { *; }
+-keep class com..works.welive.**  { *; }   # welive的混淆处理
+-keep class com..android.it.dynamic.**  { *; }   # dynamic的混淆处理
+-keep class com..android..commonui.dynamic.**  { *; }
 -keep class com.ucloud.uvod.**  { *; }   # welive的混淆处理
--keep class com.huawei.android.knowledge.commonui.detail.nativedetail.**  { *; }
--keep class com.huawei.android.knowledge.core.entity.**{*;}
--keep class com.huawei.android.knowledge.core.acache.**{*;}
--keep class com.huawei.android.knowledge.core.dbhelper.**{*;}
--keep class com.huawei.android.knowledge.commondata.bean.**{*;}
--keep class com.huawei.android.knowledge.commonui.detail.webdetail.**  { *; }
--keep class com.huawei.android.knowledge.commonui.detail.webdetail.ui.**$XHR{*;}
--keep class com.huawei.android.knowledge.commonui.detail.webdetail.ui.**$JavaCallJs{*;}
--keep class com.huawei.android.knowledge.commonui.detail.webdetail.ui.**$JavacallJs{*;}
--keep class com.huawei.android.knowledge.commonui.detail.webdetail.ui.**$JsCallJava{*;}
--keep class com.huawei.android.knowledge.commonui.detail.webdetail.androidjs.**{*;}
--keep class com.huawei.android.knowledge.commonui.detail.bean.**{*;}
--keep class com.huawei.android.knowledge.commonui.morelists.bean.**{*;}
--keep class com.huawei.android.knowledge.business.base.BaseBean{*;}
--keep class com.huawei.android.knowledge.business.cc3team.talent.bean.**{*;}
--keep class com.huawei.android.knowledge.business.cc3team.me.bean.**{*;}
--keep class com.huawei.android.knowledge.business.detail.bean.**{*;}
--keep class com.huawei.android.knowledge.business.team.home.bean.**{*;}
--keep class com.huawei.android.knowledge.business.team.list.bean.**{*;}
--keep class com.huawei.android.knowledge.business.team.list.h5.**{*;}
--keep class com.huawei.android.knowledge.business.team.post.bean.**{*;}
--keep class com.huawei.android.knowledge.business.team.search.bean.**{*;}
--keep class com.huawei.android.knowledge.business.team.search.ui.SearchResultFragment$*{*;}
--keep class com.huawei.android.knowledge.business.whitepaper.bean.**{*;}
--keep class com.huawei.works.knowledge.**{*;}
+-keep class com..android..commonui.detail.nativedetail.**  { *; }
+-keep class com..android..core.entity.**{*;}
+-keep class com..android..core.acache.**{*;}
+-keep class com..android..core.dbhelper.**{*;}
+-keep class com..android..commondata.bean.**{*;}
+-keep class com..android..commonui.detail.webdetail.**  { *; }
+-keep class com..android..commonui.detail.webdetail.ui.**$XHR{*;}
+-keep class com..android..commonui.detail.webdetail.ui.**$JavaCallJs{*;}
+-keep class com..android..commonui.detail.webdetail.ui.**$JavacallJs{*;}
+-keep class com..android..commonui.detail.webdetail.ui.**$JsCallJava{*;}
+-keep class com..android..commonui.detail.webdetail.androidjs.**{*;}
+-keep class com..android..commonui.detail.bean.**{*;}
+-keep class com..android..commonui.morelists.bean.**{*;}
+-keep class com..android..business.base.BaseBean{*;}
+-keep class com..android..business.cc3team.talent.bean.**{*;}
+-keep class com..android..business.cc3team.me.bean.**{*;}
+-keep class com..android..business.detail.bean.**{*;}
+-keep class com..android..business.team.home.bean.**{*;}
+-keep class com..android..business.team.list.bean.**{*;}
+-keep class com..android..business.team.list.h5.**{*;}
+-keep class com..android..business.team.post.bean.**{*;}
+-keep class com..android..business.team.search.bean.**{*;}
+-keep class com..android..business.team.search.ui.SearchResultFragment$*{*;}
+-keep class com..android..business.whitepaper.bean.**{*;}
+-keep class com..works..**{*;}
 
 -keep class Constant {*;}
 -keep class com.alipay.euler.andfix.**{*;}
-#-keep class com.huawei.zelda.plugin.**{*;}
--keep class com.huawei.works.knowledge.**{*;}
+#-keep class com..zelda.plugin.**{*;}
+-keep class com..works..**{*;}
 
--keep class * implements com.huawei.we.base.IBundleCache,com.huawei.we.base.IBundleService {*;}
+-keep class * implements com..we.base.IBundleCache,com..we.base.IBundleService {*;}

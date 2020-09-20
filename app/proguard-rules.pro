@@ -19,8 +19,8 @@
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
 -keep public class com.android.vending.licensing.ILicensingService
--keep public class * extends com.android.mms.smart.dot.DotItem
--keep public class com.android.mms.smart.dot.TedDotting
+-keep public class * extends *.smart.dot.DotItem
+-keep public class *.smart.dot.TedDotting
 -ignorewarning
 -keepattributes SourceFile,LineNumberTable
 -keepclasseswithmembernames class * {
@@ -80,7 +80,7 @@
 }
 -keep class * extends **.RequestParams{*;}
 -keep class * extends **.DefaultParamsBuilder{*;}
--keep class com.android.mms.easytransfer.MmsBackupRestoreDataChunk { *; }
+-keep class *.easytransfer.MmsBackupRestoreDataChunk { *; }
 
 
 

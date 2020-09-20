@@ -1,4 +1,4 @@
- -keep class com.android.mms.ui.MmsThumbnailPresenter {
+ -keep class *.ui.ThumbnailPresenter {
 *;
 }
 # LeakCanary
