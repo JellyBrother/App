@@ -29,6 +29,7 @@ public class WxToolTestActViewModel extends BaseViewModel {
 
     @Override
     public void initData(Bundle bundle) {
+        
     }
 
     @Override
