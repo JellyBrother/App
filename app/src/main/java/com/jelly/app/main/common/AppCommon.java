@@ -14,5 +14,7 @@ public class AppCommon {
 
     public static final class App {
         public static final int LOAD_MORE_STATE_INIT = 0;
+
+        
     }
 }

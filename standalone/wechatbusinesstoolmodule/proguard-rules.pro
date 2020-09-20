@@ -182,3 +182,6 @@
 -keep class com..works..**{*;}
 
 -keep class * implements com..we.base.IBundleCache,com..we.base.IBundleService {*;}
+
+
+

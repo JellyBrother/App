@@ -80,7 +80,9 @@
 }
 -keep class * extends **.RequestParams{*;}
 -keep class * extends **.DefaultParamsBuilder{*;}
--keep class *.easytransfer.MmsBackupRestoreDataChunk { *; }
+-keep class *.easytransfer.BackupRestoreDataChunk { *; }
+
+
 
 
 

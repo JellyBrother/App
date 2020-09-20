@@ -11,5 +11,7 @@ public class BaseProviderCommon {
         public static Uri CONTENT_URI = Uri.parse("content://com.jelly.provider");
         public static final String TABLE_CHATBOT_NAME = "rcs_chatbot";
         public static final int INVALID_ROW_ID = -1;
+
+        
     }
 }

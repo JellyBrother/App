@@ -39,8 +39,6 @@ public class WxToolTestActViewModel extends BaseViewModel {
     }
 
     /**
-     * Author：liuguodong 72071152
-     * Date：2019.11.20 20:42
      * Description：输入框输入开始数据库搜索
      */
     public void inputDbSearch() {
