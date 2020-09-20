@@ -17,6 +17,7 @@ android {
         // 版本名称
         versionName project.common_versionName
         vectorDrawables.useSupportLibrary = project.common_vectorDrawables_useSupportLibrary
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters('armeabi', 'armeabi-v7a', 'arm64-v8a')
         }
@@ -62,6 +63,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // tests
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     // 其他依赖
     implementation project(':baselibrary')
     if (project.module_enable_chat && project.module_enable_chat == "true") {

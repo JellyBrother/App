@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class PublicUtil {
     private static final String TAG = "PublicUtils";
-    // 防止快速点击，最后点击时间
-    private static long mLastClickTime;
 
     /**
      * Description：判定集合是否为空
@@ -53,19 +51,6 @@ public class PublicUtil {
         }
         //没有网络
         ToastUtil.makeText(R.string.base_no_net);
-        return true;
-    }
-
-    /**
-     * Description：判断是否快速点击
-     *
-     * @return true是快速点击
-     */
-    public static boolean isFastClik() {
-        if (System.currentTimeMillis() - mLastClickTime >= BaseCommon.Base.INTERVAL_TIME_START_ACTIVITY) {
-            mLastClickTime = System.currentTimeMillis();
-            return false;
-        }
         return true;
     }
 
