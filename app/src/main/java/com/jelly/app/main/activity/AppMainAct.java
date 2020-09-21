@@ -10,6 +10,8 @@ import com.jelly.app.main.utils.AppJumpUtil;
 import com.jelly.baselibrary.base.BaseActivity;
 import com.jelly.baselibrary.common.BaseCommon;
 
+import java.util.concurrent.CountDownLatch;
+
 public class AppMainAct extends BaseActivity {
     private static final String TAG = "AppMainAct";
     private TextView mTvJumpChat;
