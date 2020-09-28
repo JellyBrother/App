@@ -1,9 +1,12 @@
 package com.jelly.app.main.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.jelly.app.R;
 import com.jelly.app.main.utils.AppJumpUtil;

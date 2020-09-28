@@ -1,5 +1,17 @@
 package com.jelly.app;
 
+import com.jelly.app.main.designpatterns.ITest;
+import com.jelly.app.main.designpatterns.behavioral.ChainResponsibilityPattern;
+import com.jelly.app.main.designpatterns.behavioral.CommandPattern;
+import com.jelly.app.main.designpatterns.behavioral.InterpreterPattern;
+import com.jelly.app.main.designpatterns.behavioral.IteratorPattern;
+import com.jelly.app.main.designpatterns.behavioral.MediatorPattern;
+import com.jelly.app.main.designpatterns.behavioral.MementoPattern;
+import com.jelly.app.main.designpatterns.behavioral.ObserverPattern;
+import com.jelly.app.main.designpatterns.behavioral.StatePattern;
+import com.jelly.app.main.designpatterns.behavioral.StrategyPattern;
+import com.jelly.app.main.designpatterns.behavioral.TemplateMethod;
+import com.jelly.app.main.designpatterns.behavioral.VisitorPattern;
 import com.jelly.app.main.designpatterns.create.AbstractFactory;
 import com.jelly.app.main.designpatterns.create.BuilderPattern;
 import com.jelly.app.main.designpatterns.create.BuilderPattern2;
@@ -7,8 +19,10 @@ import com.jelly.app.main.designpatterns.create.FactoryMethod;
 import com.jelly.app.main.designpatterns.create.SimpleFactory;
 import com.jelly.app.main.designpatterns.structural.AdapterPattern;
 import com.jelly.app.main.designpatterns.structural.BridgePattern;
+import com.jelly.app.main.designpatterns.structural.CompositePattern;
 import com.jelly.app.main.designpatterns.structural.DecoratorPattern;
 import com.jelly.app.main.designpatterns.structural.FacadePattern;
+import com.jelly.app.main.designpatterns.structural.FlyweightPattern;
 import com.jelly.app.main.designpatterns.structural.ProxyPattern;
 
 import org.junit.Test;
@@ -16,82 +30,139 @@ import org.junit.Test;
 public class DesignPatternsTest {
     @Test
     public void testSimpleFactory() throws Exception {
-        SimpleFactory simpleFactory = new SimpleFactory();
-        SimpleFactory.Factory factory = simpleFactory.new Factory();
-        SimpleFactory.IProduct product = factory.newProduct(SimpleFactory.Factory.FACTORY_TYPE1);
-        product.show();
+        ITest test = new SimpleFactory();
+        test.test();
     }
 
     @Test
     public void testFactoryMethod() throws Exception {
-        FactoryMethod factoryMethod = new FactoryMethod();
-        FactoryMethod.IFactory factory1 = factoryMethod.new Factory1();
-        FactoryMethod.IProduct product = factory1.newProduct(FactoryMethod.Factory1.FACTORY_TYPE1);
-        product.show();
+        ITest test = new FactoryMethod();
+        test.test();
     }
 
     @Test
     public void testAbstractFactory() throws Exception {
-        AbstractFactory abstractFactory = new AbstractFactory();
-        AbstractFactory.IFactory factory1 = abstractFactory.new Factory1();
-        AbstractFactory.IClothe clothe1 = factory1.newClothe(AbstractFactory.Factory1.FACTORY_TYPE1);
-        AbstractFactory.IToy toy2 = factory1.newToy(AbstractFactory.Factory1.FACTORY_TYPE2);
-        clothe1.show();
-        toy2.show();
+        ITest test = new AbstractFactory();
+        test.test();
     }
 
     @Test
     public void testBuilderPattern() throws Exception {
-        BuilderPattern.Product product = new BuilderPattern.Product.Builder()
-                .partA("aa").partB("bb").partC("cc")
-                .builder();
-        product.show();
-        BuilderPattern.Product product2 = product.newBuilder()
-                .partA("aaaa").partB("bbbb")
-                .builder();
-        product2.show();
+        ITest test = new BuilderPattern();
+        test.test();
     }
 
     @Test
     public void testBuilderPattern2() throws Exception {
-        BuilderPattern2.Product product = new BuilderPattern2.Product.Builder("aa")
-                .partB("bb").partC("cc").builder();
-        product.show();
+        ITest test = new BuilderPattern2();
+        test.test();
     }
 
     @Test
     public void testProxyPattern() throws Exception {
-        ProxyPattern proxyPattern = new ProxyPattern();
-        ProxyPattern.Proxy proxy = proxyPattern.new Proxy();
-        proxy.request();
+        ITest test = new ProxyPattern();
+        test.test();
     }
 
     @Test
     public void testAdapterPattern() throws Exception {
-        AdapterPattern adapterPattern = new AdapterPattern();
-        AdapterPattern.FuTeAdapter fuTeAdapter = adapterPattern.new FuTeAdapter();
-        fuTeAdapter.run();
+        ITest test = new AdapterPattern();
+        test.test();
     }
 
     @Test
     public void testBridgePattern() throws Exception {
-        BridgePattern bridgePattern = new BridgePattern();
-        BridgePattern.F1Car f1Car = bridgePattern.new F1Car();
-        BridgePattern.F2Car f2Car = bridgePattern.new F2Car(f1Car);
-        f2Car.video();
+        ITest test = new BridgePattern();
+        test.test();
     }
 
     @Test
     public void testDecoratorPattern() throws Exception {
-        DecoratorPattern decoratorPattern = new DecoratorPattern();
-        DecoratorPattern.FuTeCar fuTeCar = decoratorPattern.new FuTeCar();
-        fuTeCar.run();
-        DecoratorPattern.RedCar redCar = decoratorPattern.new RedCar(fuTeCar);
-        redCar.run();
+        ITest test = new DecoratorPattern();
+        test.test();
     }
 
     @Test
     public void testFacadePattern() throws Exception {
-        FacadePattern.SystemManager.getInstance().show();
+        ITest test = new FacadePattern();
+        test.test();
+    }
+
+    @Test
+    public void testFlyweightPattern() throws Exception {
+        ITest test = new FlyweightPattern();
+        test.test();
+    }
+
+    @Test
+    public void testCompositePattern() throws Exception {
+        ITest test = new CompositePattern();
+        test.test();
+    }
+
+    @Test
+    public void testTemplateMethod() throws Exception {
+        ITest test = new TemplateMethod();
+        test.test();
+    }
+
+    @Test
+    public void testStrategyPattern() throws Exception {
+        ITest test = new StrategyPattern();
+        test.test();
+    }
+
+    @Test
+    public void testCommandPattern() throws Exception {
+        ITest test = new CommandPattern();
+        test.test();
+    }
+
+    @Test
+    public void testChainResponsibilityPattern() throws Exception {
+        ITest test = new ChainResponsibilityPattern();
+        test.test();
+    }
+
+    @Test
+    public void testStatePattern() throws Exception {
+        ITest test = new StatePattern();
+        test.test();
+    }
+
+    @Test
+    public void testObserverPattern() throws Exception {
+        ITest test = new ObserverPattern();
+        test.test();
+    }
+
+    @Test
+    public void testMediatorPattern() throws Exception {
+        ITest test = new MediatorPattern();
+        test.test();
+    }
+
+    @Test
+    public void testIteratorPattern() throws Exception {
+        ITest test = new IteratorPattern();
+        test.test();
+    }
+
+    @Test
+    public void testVisitorPattern() throws Exception {
+        ITest test = new VisitorPattern();
+        test.test();
+    }
+
+    @Test
+    public void testMementoPattern() throws Exception {
+        ITest test = new MementoPattern();
+        test.test();
+    }
+
+    @Test
+    public void testInterpreterPattern() throws Exception {
+        ITest test = new InterpreterPattern();
+        test.test();
     }
 }
