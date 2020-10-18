@@ -10,6 +10,7 @@ public class AppCommon {
         BaseCommon.Base.enableOtherTool = BuildConfig.enableOtherTool;
         BaseCommon.Base.enableWxTool = BuildConfig.enableWxTool;
         BaseCommon.Base.enableWechatBusinessTool = BuildConfig.enableWechatBusinessTool;
+        BaseCommon.Base.isDebug = BuildConfig.DEBUG;
     }
 
     public static final class App {

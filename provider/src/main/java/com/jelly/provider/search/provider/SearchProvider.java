@@ -19,8 +19,8 @@ public class SearchProvider extends ContentProvider {
     private SQLiteOpenHelper mOpenHelper;
 
     static {
-        sUriMatcher.addURI(BaseProviderCommon.Search.AUTHORITY, "search", UriType.Chatbot.CHATBOT_SEARCH);// 小程序本地搜索查询
-        sUriMatcher.addURI(BaseProviderCommon.Search.AUTHORITY, "local", UriType.Chatbot.CHATBOT_LOCAL);//本地小程序
+        sUriMatcher.addURI(BaseProviderCommon.Search.AUTHORITY, "search", UriType.Chatbot.CHATBOT_SEARCH);
+        sUriMatcher.addURI(BaseProviderCommon.Search.AUTHORITY, "local", UriType.Chatbot.CHATBOT_LOCAL);
     }
 
     @Override
@@ -58,9 +58,8 @@ public class SearchProvider extends ContentProvider {
                     cursor = db.rawQuery(searchRawQuery, null);
                     break;
                 case UriType.Chatbot.CHATBOT_LOCAL:
-                    //本地小程序
-                    String selections = BaseProviderCommon.Search.KEY_FAVORITE + " = 1";
-                    cursor = db.query(BaseProviderCommon.Search.TABLE_CHATBOT_NAME, projection, selections, null, null, null, null);
+//                    String selections = BaseProviderCommon.Search.KEY_FAVORITE + " = 1";
+//                    cursor = db.query(BaseProviderCommon.Search.TABLE_CHATBOT_NAME, projection, selections, null, null, null, null);
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported URI " + uri + "!");

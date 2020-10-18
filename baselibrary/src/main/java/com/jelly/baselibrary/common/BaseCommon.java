@@ -24,5 +24,7 @@ public class BaseCommon {
         public static boolean enableWxTool = false;
         // WechatBusinessTool组件
         public static boolean enableWechatBusinessTool = false;
+        // WechatBusinessTool组件
+        public static boolean isDebug = false;
     }
 }
