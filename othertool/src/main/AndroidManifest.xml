@@ -17,5 +17,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.jelly.othertool.column.ColumnSystemMainAct"
+            android:configChanges="mcc|mnc|locale|layoutDirection|orientation|smallestScreenSize|screenLayout|screenSize|keyboardHidden"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
     </application>
 </manifest>

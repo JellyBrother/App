@@ -22,4 +22,14 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="点击跳转list刷新" />
+
+    <TextView
+        android:id="@+id/tv_jump_column"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/othertool_color_b2b2b2"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="测试栅格化系统" />
 </LinearLayout>

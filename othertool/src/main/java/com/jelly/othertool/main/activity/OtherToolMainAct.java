@@ -18,6 +18,7 @@ public class OtherToolMainAct extends BaseLifecycleActivity<OtherToolMainActView
     private static final String TAG = "OtherToolMainAct";
     private TextView mTvCopy;
     private TextView mTvJumpPullList;
+    private TextView mTvJumpColumn;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class OtherToolMainAct extends BaseLifecycleActivity<OtherToolMainActView
     private void initViews() {
         mTvCopy = findViewById(R.id.tv_copy);
         mTvJumpPullList = findViewById(R.id.tv_jump_pull_list);
+        mTvJumpColumn = findViewById(R.id.tv_jump_column);
     }
 
     private void initListeners() {
@@ -62,6 +64,12 @@ public class OtherToolMainAct extends BaseLifecycleActivity<OtherToolMainActView
             @Override
             public void onClick(View v) {
                 OtherToolJumpUtil.startSearchListAct(mActivity);
+            }
+        });
+        mTvJumpColumn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OtherToolJumpUtil.startColumnMainAct(mActivity);
             }
         });
     }
