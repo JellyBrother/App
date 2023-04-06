@@ -26,7 +26,7 @@ android {
 
 dependencies {
     api project(':external:external_aar')
-    api project(':external:external_agentweb_core')
+//    api project(':external:external_agentweb_core')
     api project(':lib:lib_base')
     api project(':lib:lib_resource')
     api project(':lib:lib_net')

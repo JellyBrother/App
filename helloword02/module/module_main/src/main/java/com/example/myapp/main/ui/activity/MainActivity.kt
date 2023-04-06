@@ -79,7 +79,7 @@ class MainActivity : BaseActivity() {
             ARouter.getInstance().build(ARouterConstant.Home.HOME_FRAGMENT).navigation()
         // 用户
         val userFragment =
-            ARouter.getInstance().build(ARouterConstant.Home.HOME_FRAGMENT).navigation()
+            ARouter.getInstance().build(ARouterConstant.User.USER_FRAGMENT).navigation()
 
         val mFragments: MutableList<BaseFragment> = ArrayList()
         if (homeFragment != null) {
@@ -106,14 +106,6 @@ class MainActivity : BaseActivity() {
     private fun setNavigationStatus(position: Int) {
         if (position == MainConstant.Index.NAVIGATION_POSITION_HOME) {
             setHomeChecked()
-            setCommunityUnChecked()
-            setUserUnChecked()
-            ImmersionBar.with(this).statusBarDarkFont(true) // 状态栏字体是深色，不写默认为亮色
-                .init()
-            return
-        }
-        if (position == MainConstant.Index.NAVIGATION_POSITION_PRODUCT) {
-            setHomeUnChecked()
             setCommunityUnChecked()
             setUserUnChecked()
             ImmersionBar.with(this).statusBarDarkFont(true) // 状态栏字体是深色，不写默认为亮色

@@ -38,7 +38,7 @@ include ':app'
 
 // 外部第三方功能接入
 include ':external:external_aar'
-include ':external:external_agentweb_core'
+//include ':external:external_agentweb_core'
 
 // 基础库
 include ':lib:lib_resource'
@@ -51,3 +51,4 @@ include ':lib:lib_widget'
 // 业务模块
 include ':module:module_main'
 include ':module:module_home'
+include ':module:module_user'
