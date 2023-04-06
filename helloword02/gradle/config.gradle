@@ -12,7 +12,7 @@ ext {
             channel           : "common",
     ]
     android = [
-            compileSdk   : 33,
+            compileSdk   : 31,
             minSdk       : 24,
             targetSdk    : 33,
             versionCode  : 1,//这里是各个的默认配置，不是真正的版本号
@@ -173,11 +173,11 @@ ext {
              * activity ktx https://developer.android.google.cn/jetpack/androidx/releases/activity?hl=zh-cn#1.6.1
              * 安卓13图片选择器适配 https://developer.android.google.cn/training/data-storage/shared/photopicker?hl=zh-cn
              */
-            activity_ktx             : "androidx.activity:activity-ktx:1.6.1",
+//            activity_ktx             : "androidx.activity:activity-ktx:1.6.1",
             // fragment ktx
-            fragment_ktx             : "androidx.fragment:fragment-ktx:1.5.5",
+//            fragment_ktx             : "androidx.fragment:fragment-ktx:1.5.5",
             // work ktx https://developer.android.google.cn/jetpack/androidx/releases/work?hl=zh-cn#kts
-            work_runtime             : "androidx.work:work-runtime:2.7.1",
+//            work_runtime             : "androidx.work:work-runtime:2.7.1",
             // videocache https://github.com/danikula/AndroidVideoCache
             video_cache              : "com.danikula:videocache:2.7.1",
     ]

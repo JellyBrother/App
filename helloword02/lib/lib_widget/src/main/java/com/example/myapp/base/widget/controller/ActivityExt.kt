@@ -1,18 +1,13 @@
 package com.example.myapp.base.widget.controller
 
 import android.app.Activity
-import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.myapp.base.ui.activity.BaseActivity
 import com.example.myapp.base.ui.fragment.BaseFragment
-import com.example.myapp.base.utils.ViewUtils
-import com.example.myapp.base.widget.R
 import com.example.myapp.base.widget.controller.viewmodel.LoadingViewModel
 import com.example.myapp.base.widget.helper.ToastHelper
 import com.example.myapp.base.widget.multistate.FrameStateLayout
@@ -82,11 +77,11 @@ fun <T> Flow<T>.flowWithLifecycle(
     lifecycle: Lifecycle,
     minActiveState: Lifecycle.State = Lifecycle.State.RESUMED
 ): Flow<T> = callbackFlow {
-//    lifecycle.repeatOnLifecycle(minActiveState) {
-//        this@flowWithLifecycle.collect {
-//            send(it)
-//        }
-//    }
+    lifecycle.repeatOnLifecycle(minActiveState) {
+        this@flowWithLifecycle.collect {
+            send(it)
+        }
+    }
     close()
 }
 

@@ -35,8 +35,8 @@ dependencies {
     api rootProject.ext.dependencies.lifecycle_viewmodel
     api rootProject.ext.dependencies.lifecycle_livedata
     api rootProject.ext.dependencies.lifecycle_common
-    api rootProject.ext.dependencies.activity_ktx
-    api rootProject.ext.dependencies.fragment_ktx
+//    api rootProject.ext.dependencies.activity_ktx
+//    api rootProject.ext.dependencies.fragment_ktx
     api rootProject.ext.dependencies.google_material
     api rootProject.ext.dependencies.google_gson
     api rootProject.ext.dependencies.gsonFactory
@@ -72,7 +72,7 @@ dependencies {
     api rootProject.ext.dependencies.hilt_viewmodel
     api rootProject.ext.dependencies.tencent_bugly
     api rootProject.ext.dependencies.video_cache
-    api rootProject.ext.dependencies.work_runtime
+//    api rootProject.ext.dependencies.work_runtime
     api rootProject.ext.dependencies.downloader
 //    api rootProject.ext.dependencies.baidu_mobstat
 }
