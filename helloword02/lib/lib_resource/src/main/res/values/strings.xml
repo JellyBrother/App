@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--  字体样式 start  -->
+    <string name="base_widget_font_family_condensed" tools:ignore="ExtraTranslation,MissingTranslation">sans-serif-condensed</string>
+    <string name="base_widget_font_family_black" tools:ignore="ExtraTranslation,MissingTranslation">sans-serif-black</string>
+    <string name="base_widget_font_family_serif_medium" tools:ignore="ExtraTranslation,MissingTranslation">sans-serif-medium</string>
+    <string name="base_widget_font_family_condensed_medium" tools:ignore="ExtraTranslation,MissingTranslation">sans-serif-condensed-medium</string>
+    <string name="base_widget_font_family_condensed_serif" tools:ignore="ExtraTranslation,MissingTranslation">serif</string>
+    <string name="base_widget_font_family_condensed_monospace" tools:ignore="ExtraTranslation,MissingTranslation">monospace</string>
+    <string name="base_widget_font_family_condensed_regular2" tools:ignore="ExtraTranslation,MissingTranslation">sans-serif-regular</string>
+    <string name="base_widget_font_family_condensed_regular" tools:ignore="ExtraTranslation,MissingTranslation"></string>
+    <!--  字体样式 end  -->
+    <string name="app_name">app</string>
+    <string name="app_name_sit">appdev</string>
+    <string name="app_name_uat">apptest</string>
+
+    <string name="main_bottom_navigation_text_home">首页</string>
+    <string name="main_bottom_navigation_text_community">社区</string>
+    <string name="main_bottom_navigation_text_mine">我的</string>
+</resources>

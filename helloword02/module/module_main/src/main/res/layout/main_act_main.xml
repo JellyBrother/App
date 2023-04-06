@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlt_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/main_navigation_height_" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_navigation_height_"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_navigation_height_"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/llt_home"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_navigation_height_"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:background="@color/common_white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivw_home"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/tvw_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_bottom_navigation_text_home"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llt_community"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_navigation_height_"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivw_community"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/tvw_community"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_bottom_navigation_text_community"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llt_user"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_navigation_height_"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivw_user"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/tvw_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_bottom_navigation_text_mine"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

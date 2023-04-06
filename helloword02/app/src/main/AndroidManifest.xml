@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.myapp">
+
+    <!--  相机  -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--  闪光灯  -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!--  ShareSdk用于高版本Android系统手机中判断第三方平台是否安装  -->
+    <!--  组件使用信息  -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <!--  判断某个应用是否已安装 危险权限，上不了谷歌应用市场  -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+    <!-- 2百度统计 https://mtj.baidu.com/static/userguide/book/android/sdk/gradle.html -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 访问网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--  读写系统设置  -->
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <!--  访问Wi-Fi网络信息  -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--  改变网络状态如是否能联网  -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!--  查询安装列表，用于应用内安装  -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!--  安卓10以下需要保存图片到本地  -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <!--  下载升级前台服务  -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!--  访问电话状态  -->
+    <!--    <uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <!--  扩展状态栏 允许一个程序扩展收缩在状态栏,android开发网提示应该是一个类似Windows Mobile中的托盘程序  -->
+    <!--    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />-->
+    <!-- ShareSdk跟百度统计重复的权限  -->
+    <!--        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+    <!--    <uses-permission android:name="android.permission.INTERNET" />-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
+    <!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
+    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <!--  根据检测报告清理没用到的权限  -->
+    <!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+    <!--    <uses-permission android:name="android.permission.GET_TASKS" />-->
+    <!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
+    <!--    <uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <!--    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />-->
+    <!--    <uses-permission-->
+    <!--        android:name="android.permission.SHUTDOWN"-->
+    <!--        tools:ignore="ProtectedPermissions" />-->
+    <!--    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />-->
+    <!--    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />-->
+    <!--    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />-->
+    <!--    <uses-permission android:name="android.permission.BLUETOOTH" />-->
+    <!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
+    <!--    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
+    <!--    <uses-permission android:name="android.permission.VIBRATE" />-->
+    <!--    <uses-permission android:name="android.permission.REORDER_TASKS" />-->
+
+    <application
+        android:name=".PalmHouseApp"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:exported="false"
+        android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/app_launcher"
+        android:label="${APP_NAME}"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:resizeableActivity="false"
+        android:roundIcon="@mipmap/app_launcher_round"
+        android:screenOrientation="portrait"
+        android:supportsRtl="false"
+        android:theme="@style/App.Theme"
+        android:windowBackground="@color/common_white"
+        tools:targetApi="33">
+
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/App.Theme.White">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!--
+                 一条<intent-filter>元素至少应该包含一个<action>
+                 只有当Intent请求中所有的Category与组件中某一个IntentFilter的<category>完全匹配时，才会让该 Intent请求通过测试
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!--  专属H5端通过浏览器打开：zshc://com.example.myapp?actiontype=24&url=1,1&name=women&source=banner -->
+                <data
+                    android:host="com.example.myapp"
+                    android:scheme="aa" />
+            </intent-filter>
+            <!--按如下格式添加整个intent-filter块，其中data字段只能有一个，其内容是mtj拼接上您的appkey-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
+            <!--                <data android:scheme="mtj${BAIDU_MOB_STAT_ID}" />-->
+            <!--            </intent-filter>-->
+
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
+            <!--            </intent-filter>-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.VIEW" />-->
+            <!--                <category android:name="android.intent.category.BROWSABLE" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--                <data android:scheme="http" />-->
+            <!--                <data android:scheme="https" />-->
+            <!--            </intent-filter>-->
+        </activity>
+
+        <provider
+            android:name=".JellyProvider"
+            android:authorities="${APP_ID}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/app_provider_palmhouse_paths" />
+        </provider>
+        <!--在安卓7.0以上禁止在应用外部公开 file://URI-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${APP_ID}.imageCrop.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+            <!--上面的resource="xxx"指的是一个文件,file_path是文件名-->
+        </provider>
+        <!-- 表示当前已经适配了分区存储 -->
+        <meta-data
+            android:name="ScopedStorage"
+            android:value="true" />
+        <!--适配华为（huawei）刘海屏-->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" />
+        <!--适配小米（xiaomi）刘海屏-->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
+
+        <!-- 您从百度网站获取的APP KEY，根据实际您的APP申请的APP_KEY进行修改 -->
+        <meta-data
+            android:name="BaiduMobAd_STAT_ID"
+            android:value="${BAIDU_MOB_STAT_ID}" />
+        <!-- 渠道商编号 -->
+        <meta-data
+            android:name="BaiduMobAd_CHANNEL"
+            android:value="${BAIDU_MOB_STAT_CHANNEL}" />
+        <!-- 是否开启错误日志统计，默认为false -->
+        <meta-data
+            android:name="BaiduMobAd_EXCEPTION_LOG"
+            android:value="true" />
+        <!-- 日志发送策略，可选值：APP_START、ONCE_A_DAY、SET_TIME_INTERVAL，默认为APP_START -->
+        <meta-data
+            android:name="BaiduMobAd_SEND_STRATEGY"
+            android:value="SET_TIME_INTERVAL" />
+        <!-- 日志发送策略 为SET_TIME_INTERVAL时，需设定时间间隔(取消下行注释)。取值为1-24的整数，默认为1 -->
+        <meta-data
+            android:name="BaiduMobAd_TIME_INTERVAL"
+            android:value="1" />
+        <!-- 日志仅在wifi网络下发送，默认为false -->
+        <meta-data
+            android:name="BaiduMobAd_ONLY_WIFI"
+            android:value="false" />
+        <!-- 是否获取基站位置信息 ,默认为true -->
+        <meta-data
+            android:name="BaiduMobAd_CELL_LOCATION"
+            android:value="false" />
+        <!-- 是否获取GPS位置信息，默认为true -->
+        <meta-data
+            android:name="BaiduMobAd_GPS_LOCATION"
+            android:value="false" />
+        <!-- 是否获取WIFI位置信息，默认为true -->
+        <meta-data
+            android:name="BaiduMobAd_WIFI_LOCATION"
+            android:value="false" />
+    </application>
+
+    <!-- Android 11 软件包可见性适配：https://www.jianshu.com/p/d1ccd425c4ce -->
+    <queries>
+        <!-- 拍照意图：MediaStore.ACTION_IMAGE_CAPTURE -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <!-- 拍摄意图：MediaStore.ACTION_VIDEO_CAPTURE -->
+        <intent>
+            <action android:name="android.media.action.VIDEO_CAPTURE" />
+        </intent>
+        <!-- 图片裁剪意图 -->
+        <intent>
+            <action android:name="com.android.camera.action.CROP" />
+        </intent>
+        <!-- 打电话意图：Intent.ACTION_DIAL -->
+        <!--        <intent>-->
+        <!--            <action android:name="android.intent.action.DIAL" />-->
+        <!--        </intent>-->
+
+        <!-- 调起分享意图：Intent.ACTION_SEND -->
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+        </intent>
+        <!-- 调起其他页面意图：Intent.ACTION_VIEW -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+        </intent>
+        <!-- 调起系统文件选择器：Intent.ACTION_GET_CONTENT -->
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+        </intent>
+        <!-- 手机 QQ 的包名 -->
+        <package android:name="com.tencent.mobileqq" />
+        <!-- 微信的包名 -->
+        <package android:name="com.tencent.mm" />
+    </queries>
+
+</manifest>

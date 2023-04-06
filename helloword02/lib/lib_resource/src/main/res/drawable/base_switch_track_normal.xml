@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--此处设置宽度无效-->
+    <size android:height="26dp" />
+    <corners android:radius="13dp" />
+    <gradient
+        android:endColor="@color/common_light_gray"
+        android:startColor="@color/common_light_gray" />
+</shape>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="common_bg_gray">#F5F7F8</color>
+    <color name="common_border_gray">#C7CFD8</color>
+    <color name="common_transparent">#00000000</color>
+    <color name="common_white">#FFFFFF</color>
+    <color name="common_white50">#80FFFFFF</color>
+    <color name="common_white35">#59FFFFFF</color>
+    <color name="common_white25">#40FFFFFF</color>
+    <color name="common_black">#000000</color>
+    <color name="common_black_35">#59000000</color>
+    <color name="common_color_1382FF">#1382FF</color>
+    <color name="common_blue">#0099F2</color>
+    <color name="common_deep_blue">#0086D1</color>
+    <color name="common_dark_blue">#0079D1</color>
+    <color name="common_light_blue">#E0F7FE</color>
+    <color name="common_light_blue_">#E6F3FB</color>
+    <color name="common_sky_blue">#00D1B1</color>
+    <color name="common_red">#EA2F31</color>
+    <color name="common_red_light">#FB4242</color>
+    <color name="common_grey">#C7CFD8</color>
+    <color name="common_divider_view">#F5F7F8</color>
+    <color name="common_divider_color">#E9EEF2</color>
+
+    <color name="common_text_dark">#000000</color>
+    <color name="common_text_dark99" tools:ignore="MissingDefaultResource">#99000000</color>
+    <color name="common_text_light_dark">#4D515A</color>
+    <color name="common_text_normal">#222222</color>
+    <color name="common_text_light">#788295</color>
+    <color name="common_text_desc">#666666</color>
+    <color name="common_text_title">#383838</color>
+    <color name="common_text_gray">#A7B1BC</color>
+
+    <color name="common_cell_gray">#F7F7F7</color>
+    <color name="common_light_gray">#EAEAEC</color>
+
+    <color name="common_yellow">#FF8B19</color>
+    <color name="common_color_33000000">#33000000</color>
+    <color name="common_color_c7cfd8">#c7cfd8</color>
+    <color name="common_color_800099F2">#800099F2</color>
+    <color name="common_color_b3fb4242">#b3FB4242</color>
+    <color name="common_color_0069D1">#0069D1</color>
+    <color name="common_color_b30099f2">#b30099f2</color>
+    <color name="common_color_CCEFFD">#CCEFFD</color>
+    <color name="common_color_80222222">#80222222</color>
+    <color name="common_color_f0f5ff">#F0F5FF</color>
+    <color name="common_color_ff7214">#FF7214</color>
+    <color name="common_color_7999ff">#7999FF</color>
+    <color name="common_color_cf5000">#CF5000</color>
+</resources>

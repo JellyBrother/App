@@ -1,0 +1,131 @@
+android {
+//////////////////////////////////////////////// 签名打包 star ////////////////////////////////////////////////////////////////
+    // 打包时间
+    def buildTime = new Date().format('yyyyMMddHHmm')
+    //签名 签名的那些事：https://www.jianshu.com/p/a1f8e5896aa2
+    signingConfigs {
+        config {
+            storeFile file('../jelly.jks')
+            storePassword '123456'
+            keyAlias '123456'
+            keyPassword '123456'
+            v1SigningEnabled true //是否开启V1签名
+            v2SigningEnabled true //是否开启V2签名
+        }
+    }
+    //多渠道打包
+    productFlavors {
+        if (rootProject.ext.config.sit) {
+            sit {
+                applicationId rootProject.ext.android.applicationId
+                versionCode rootProject.ext.sit.versionCode
+                versionName rootProject.ext.sit.versionName
+                buildConfigField 'String', 'ENVIRONMENT', '"sit"'
+                buildConfigField 'String', 'BUILD_TIME', '"' + buildTime + '"'
+                // 添加清单占位符
+                addManifestPlaceholders([
+                        'APP_NAME'              : '@string/app_name_sit',
+                        'APP_ID'                : applicationId,
+                        'BAIDU_MOB_STAT_ID'     : '11',
+                        'BAIDU_MOB_STAT_CHANNEL': rootProject.ext.config.channel,
+                ])
+            }
+        }
+        if (rootProject.ext.config.uat) {
+            uat {
+                applicationId rootProject.ext.android.applicationId
+                versionCode rootProject.ext.uat.versionCode
+                versionName rootProject.ext.uat.versionName
+                buildConfigField 'String', 'ENVIRONMENT', '"uat"'
+                buildConfigField 'String', 'BUILD_TIME', '"' + buildTime + '"'
+                // 添加清单占位符
+                addManifestPlaceholders([
+                        'APP_NAME'              : '@string/app_name_uat',
+                        'APP_ID'                : applicationId,
+                        'BAIDU_MOB_STAT_ID'     : '11',
+                        'BAIDU_MOB_STAT_CHANNEL': rootProject.ext.config.channel,
+                ])
+            }
+        }
+        if (rootProject.ext.config.pro) {
+            pro {
+                applicationId rootProject.ext.android.applicationId
+                versionCode rootProject.ext.pro.versionCode
+                versionName rootProject.ext.pro.versionName
+                buildConfigField 'String', 'ENVIRONMENT', '"pro"'
+                buildConfigField 'String', 'BUILD_TIME', '"' + buildTime + '"'
+                // 添加清单占位符
+                addManifestPlaceholders([
+                        'APP_NAME'              : '@string/app_name',
+                        'APP_ID'                : applicationId,
+                        'BAIDU_MOB_STAT_ID'     : '11',
+                        'BAIDU_MOB_STAT_CHANNEL': rootProject.ext.config.channel,
+                ])
+            }
+        }
+    }
+    buildTypes {
+        debug {
+            // 调试模式开关
+            debuggable true
+            jniDebuggable true
+            // 压缩对齐开关
+            zipAlignEnabled true
+            // 移除无用的资源
+            shrinkResources true
+            // 代码混淆开关
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // 签名信息配置
+            signingConfig signingConfigs.config
+            buildConfigField 'String', 'STATISTICS_STRATEGY', '"' + rootProject.ext.config.statisticsStrategy + '"'
+            resValue "xml", "network_security_config", "@xml/network_security_config_debug"
+            ndk {
+                abiFilters('armeabi', 'armeabi-v7a', 'arm64-v8a', "x86", "x86_64")
+            }
+        }
+        release {
+            // 调试模式开关
+            debuggable false
+            jniDebuggable false
+            // 压缩对齐开关
+            zipAlignEnabled true
+            // 移除无用的资源
+            shrinkResources true
+            // 代码混淆开关
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // 签名信息配置
+            signingConfig signingConfigs.config
+            buildConfigField 'String', 'STATISTICS_STRATEGY', '"' + rootProject.ext.config.statisticsStrategy + '"'
+            resValue "xml", "network_security_config", "@xml/network_security_config_debug"
+            // 仅保留两种架构的 so 库，根据 Bugly 统计得出
+            ndk {
+                // armeabi：万金油架构平台（占用率：0%）
+                // armeabi-v7a：曾经主流的架构平台（占用率：10%）
+                // arm64-v8a：目前主流架构平台（占用率：95%）
+                abiFilters('armeabi-v7a', 'arm64-v8a')
+            }
+        }
+    }
+    applicationVariants.all { variant ->
+        // apk 输出文件名配置
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = outputFile.name
+                boolean isRelease = !fileName.contains("debug")
+                def channel = rootProject.ext.config.channel
+                if (fileName.contains("pro")) {
+                    fileName = "myapp_" + "pro_" + versionName + "_" + buildTime + "_" + channel + (!isRelease ? "_debug_测试抓包版" : "_release") + ".apk"
+                } else if (fileName.contains("uat")) {
+                    fileName = "myapp_" + "uat_" + versionName + "_" + buildTime + "_" + channel + (!isRelease ? "_debug_测试抓包版" : "_release") + ".apk"
+                } else {
+                    fileName = "myapp_" + "sit_" + versionName + "_" + buildTime + "_" + channel + (!isRelease ? "_debug_测试抓包版" : "_release") + ".apk"
+                }
+                outputFileName = fileName
+            }
+        }
+    }
+//////////////////////////////////////////////// 签名打包 end ////////////////////////////////////////////////////////////////
+}

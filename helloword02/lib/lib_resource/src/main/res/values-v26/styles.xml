@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--
+        https://blog.csdn.net/jdsjlzx/article/details/104763447
+        解决安卓8.0报错：IllegalStateException: Only fullscreen opaque activities can request orientation
+      -->
+
+    <!--  白色背景主题（默认）  -->
+    <style name="App.PalmHouse.Theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 状态栏颜色       -->
+        <item name="android:statusBarColor">@color/common_transparent</item>
+        <!-- 系统导航栏颜色       -->
+        <item name="android:navigationBarColor">@color/common_transparent</item>
+        <!-- ActionMode 的颜色 -->
+        <item name="actionModeBackground">@color/common_transparent</item>
+        <!-- 窗口背景颜色 -->
+        <item name="android:windowBackground">@null</item>
+        <!-- 应用的主要色调，ActionBar Toolbar 默认使用该颜色 -->
+        <item name="colorPrimary">@color/common_transparent</item>
+        <!-- 应用的主要暗色调，状态栏默认使用该颜色 -->
+        <item name="colorPrimaryDark">@color/common_transparent</item>
+        <!-- 应用的强调色，CheckBox RadioButton Switch 等一般控件的选中效果默认采用该颜色 -->
+        <item name="colorAccent">@color/common_blue</item>
+        <!-- 默认文本颜色，Button、TextView 的文字颜色 -->
+        <item name="android:textColor">@color/common_text_normal</item>
+        <!-- 默认字体大小，Button、TextView 的字体大小 -->
+        <item name="android:textSize">@dimen/common_text_middle_size</item>
+        <!-- 默认提示颜色，Button、TextView 的提示文字颜色 -->
+        <item name="android:textColorHint">@color/common_text_desc</item>
+        <!-- ActionMode 覆盖 Actionbar 不被顶下来 -->
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 解决 Android 5.1 及以上版本 Button 英文字符串自动变大写的问题 -->
+        <item name="android:textAllCaps">false</item>
+        <!-- 解决 ImageView 不能自动等比拉伸图片的问题 -->
+        <item name="android:adjustViewBounds">true</item>
+        <!-- 默认隐藏输入法，开启这个选项后会导致输入对话框在关闭之后不能关闭软键盘 -->
+        <!--<item name="android:windowSoftInputMode">stateHidden</item>-->
+        <!-- 关闭 RecyclerView NestedScrollView ViewPager 水波纹效果 -->
+        <item name="android:overScrollMode">never</item>
+        <!-- 关闭 TextView 自带的文字间距 -->
+        <item name="android:includeFontPadding">false</item>
+        <!-- 是否使用半透明 true是半透明不会显示背景，页面加载完成才展示-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 是否不使用预览 -->
+        <item name="android:windowDisablePreview">true</item>
+        <!-- 暗黑模式暂时不适配 -->
+        <item name="android:forceDarkAllowed" tools:ignore="NewApi">false</item>
+    </style>
+    <!-- 更新弹框 -->
+    <style name="UpdateDialogActivity" parent="Theme.AppCompat.Light.Dialog">
+        <!--没有标题-->
+        <item name="windowNoTitle">true</item>
+        <!--背景透明-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--是否有覆盖-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!--是否浮动-->
+        <item name="android:windowIsFloating">true</item>
+        <!--边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--背景：透明-->
+        <item name="android:windowBackground">@color/common_white</item>
+        <!--dialog的整个屏幕的背景是否有遮障层-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--动画-->
+        <item name="android:windowAnimationStyle">@style/ResourceAnimationDialog</item>
+        <!-- 暗黑模式暂时不适配 -->
+        <item name="android:forceDarkAllowed" tools:ignore="NewApi">false</item>
+    </style>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="common_divider_height">1dp</dimen>
+    <dimen name="common_divider_width">1dp</dimen>
+    <dimen name="common_divider_margin">2dp</dimen>
+
+    <dimen name="common_input_padding_top">10dp</dimen>
+    <dimen name="common_input_padding_bottom">10dp</dimen>
+    <dimen name="common_input_padding_left">24dp</dimen>
+    <dimen name="common_input_padding_right">12dp</dimen>
+    <dimen name="common_input_margin_top">16dp</dimen>
+    <dimen name="common_input_margin_bottom">16dp</dimen>
+    <dimen name="common_input_margin_left">16dp</dimen>
+    <dimen name="common_input_margin_right">16dp</dimen>
+    <dimen name="common_margin_horizontal">16dp</dimen>
+    <dimen name="common_margin_vertical">16dp</dimen>
+    <dimen name="common_margin_left">16dp</dimen>
+    <dimen name="common_margin_right">16dp</dimen>
+    <dimen name="common_padding_horizontal">16dp</dimen>
+    <dimen name="common_padding_vertical">16dp</dimen>
+    <dimen name="common_label_height">54dp</dimen>
+
+    <dimen name="common_text_min_size">8sp</dimen>
+    <dimen name="common_text_little_size">10sp</dimen>
+    <dimen name="common_text_size_11">11sp</dimen>
+    <dimen name="common_text_small_size">12sp</dimen>
+    <dimen name="common_text_middle_size">14sp</dimen>
+    <dimen name="common_text_big_size">16sp</dimen>
+    <dimen name="common_text_large_size">18sp</dimen>
+    <dimen name="common_text_big_large_size">20sp</dimen>
+    <dimen name="common_text_big_large_size_">22sp</dimen>
+    <dimen name="common_text_big_big_size">24sp</dimen>
+
+    <!-- 底部导航栏高度 -->
+    <dimen name="main_navigation_height">75dp</dimen>
+    <dimen name="main_navigation_height_">52dp</dimen>
+    <dimen name="main_navigation_text_size">12sp</dimen>
+</resources>

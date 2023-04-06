@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- HouseToolBar自定义属性 -->
+    <declare-styleable name="HouseToolbar">
+        <attr name="leftViewMarginStart" format="dimension" />
+        <attr name="isShowBack" format="boolean" />
+        <attr name="backIconId" format="reference" />
+        <attr name="backTintColorId" format="reference" />
+        <attr name="titleContentText" format="string" />
+        <attr name="titleTextColorId" format="reference" />
+        <attr name="rightText" format="string" />
+        <attr name="rightTextColor" format="reference" />
+        <attr name="rightTextSize" format="dimension" />
+        <attr name="rightIconId" format="reference" />
+        <attr name="rightViewMarginEnd" format="dimension" />
+    </declare-styleable>
+    <!-- LabelItem自定义属性 -->
+    <declare-styleable name="LabelItem">
+        <attr name="labelIconId" format="reference" />
+        <attr name="labelText" format="string" />
+        <attr name="labelTextColor" format="reference" />
+        <attr name="labelTextSize" format="dimension" />
+        <attr name="contentText" format="string" />
+        <attr name="contentTextColor" format="reference" />
+        <attr name="contentTextSize" format="dimension" />
+        <attr name="contentIconId" format="reference" />
+    </declare-styleable>
+    <!-- SwipeMenuLayout自定义属性 -->
+    <declare-styleable name="SwipeMenuLayout">
+        <attr name="leftMenuView" format="reference" />
+        <attr name="rightMenuView" format="reference" />
+        <attr name="contentView" format="reference" />
+        <attr name="canRightSwipe" format="boolean" />
+        <attr name="canLeftSwipe" format="boolean" />
+        <attr name="fraction" format="float" />
+    </declare-styleable>
+    <!-- VerticalTabLayout自定义属性 -->
+    <declare-styleable name="VerticalTabLayout">
+        <attr name="indicator_color" format="color" />
+        <attr name="indicator_width" format="dimension" />
+        <attr name="indicator_corners" format="dimension" />
+        <attr name="indicator_gravity" format="enum">
+            <enum name="bottom" value="80" />
+            <enum name="left" value="3" />
+            <enum name="right" value="5" />
+            <enum name="fill" value="119" />
+        </attr>
+        <attr name="tab_margin" format="dimension" />
+        <attr name="tab_mode" format="enum">
+            <enum name="fixed" value="10" />
+            <enum name="scrollable" value="11" />
+        </attr>
+        <attr name="tab_height" format="dimension" />
+    </declare-styleable>
+    <!-- PageRefreshLayout自定义属性 -->
+    <declare-styleable name="PageRefreshLayout">
+        <attr name="canRefresh" format="boolean" />
+        <attr name="canLoadMore" format="boolean" />
+        <attr name="pageSize" format="integer" />
+    </declare-styleable>
+    <!-- FrameStateLayout自定义属性 -->
+    <declare-styleable name="FrameStateLayout">
+        <attr name="loadingView" format="integer" />
+        <attr name="errorView" format="integer" />
+        <attr name="emptyView" format="integer" />
+        <attr name="noNetworkView" format="integer" />
+    </declare-styleable>
+    <!-- ListImageView自定义属性 -->
+    <declare-styleable name="ListImageView">
+        <!--    默认圆角8dp    -->
+        <attr name="radius" format="dimension" />
+        <!--    默认分割线颜色 common_divider_color    -->
+        <attr name="background_color" format="reference" />
+        <!--    默认12dp    -->
+        <attr name="padding" format="dimension" />
+    </declare-styleable>
+</resources>

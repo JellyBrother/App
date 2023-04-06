@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <!--边框的颜色-->
+            <solid android:color="@color/common_border_gray" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+    <item
+        android:bottom="1dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="1dp">
+        <shape>
+            <!--里面的颜色-->
+            <solid android:color="@color/common_white" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+</layer-list>

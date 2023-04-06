@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 标题栏 -->
+    <style name="HouseToolbar">
+        <item name="android:layout_width">match_parent</item>
+        <!--        <item name="android:layout_height">?attr/actionBarSize</item>-->
+        <item name="android:layout_height">?attr/actionBarSize</item>
+    </style>
+
+    <style name="HouseSearchView">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">34dp</item>
+    </style>
+    <!-- 横向分隔线 -->
+    <style name="DividerHorizontal">
+        <item name="android:background">@color/common_divider_color</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/common_divider_height</item>
+    </style>
+    <!-- 竖向分隔线 -->
+    <style name="DividerVertical">
+        <item name="android:background">@color/common_divider_color</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/common_divider_width</item>
+    </style>
+    <!-- 竖向分隔线 带上下间距 -->
+    <style name="DividerVertical.MarginTopBottom">
+        <item name="android:layout_marginTop">@dimen/common_divider_margin</item>
+        <item name="android:layout_marginBottom">@dimen/common_divider_margin</item>
+    </style>
+    <!-- 自定义Dialog -->
+    <style name="FullHeightDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 标题 -->
+        <item name="android:windowBackground">@color/common_transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 暗黑模式暂时不适配 -->
+        <item name="android:forceDarkAllowed" tools:ignore="NewApi">false</item>
+    </style>
+
+    <!-- 自定义Dialog -->
+    <style name="MoreFilterDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 标题 -->
+        <item name="android:windowBackground">@color/common_white</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 暗黑模式暂时不适配 -->
+        <item name="android:forceDarkAllowed" tools:ignore="NewApi">false</item>
+    </style>
+
+    <style name="ResourceAnimationDialog">
+        <item name="android:windowEnterAnimation">@anim/base_anim_dialog_enter</item>
+        <!--        <item name="android:windowExitAnimation">@anim/base_anim_dialog_exit</item>-->
+        <!-- 暗黑模式暂时不适配 -->
+        <item name="android:forceDarkAllowed" tools:ignore="NewApi">false</item>
+    </style>
+
+    <style name="ResourceSelectClassificationDialog" parent="FullHeightDialog">
+        <item name="android:windowAnimationStyle">@style/ResourceAnimationDialog</item>
+    </style>
+
+    <style name="CommonButton">
+        <item name="android:textSize">@dimen/common_text_middle_size</item>
+        <item name="android:paddingLeft">@dimen/common_padding_horizontal</item>
+        <item name="android:paddingRight">@dimen/common_padding_horizontal</item>
+        <item name="android:layout_marginLeft">@dimen/common_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/common_margin_right</item>
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">9dp</item>
+    </style>
+
+    <style name="CommonButton.SpecialLeft">
+        <item name="android:background">@drawable/base_special_btn_left</item>
+        <item name="android:textColor">@color/common_blue</item>
+    </style>
+
+    <style name="CommonButton.SpecialRight">
+        <item name="android:background">@drawable/base_special_btn_right</item>
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="CommonButton.HouseRight">
+        <item name="android:background">@drawable/base_two_btn_right</item>
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="CommonButton.LightBlue">
+        <item name="android:background">@drawable/base_btn_light_blue</item>
+        <item name="android:textColor">@color/common_blue</item>
+    </style>
+
+    <style name="CommonButton.Blue">
+        <item name="android:background">@drawable/base_btn_blue</item>
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="CommonButton.White">
+        <item name="android:background">@drawable/base_btn_white</item>
+        <item name="android:textColor">@color/common_red</item>
+    </style>
+
+    <style name="CommonButton.EnableDisable">
+        <item name="android:background">@drawable/base_btn_selector</item>
+        <item name="android:enabled">false</item>
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+    <!-- 通用列表样式-->
+    <style name="CommonRecyclerView">
+        <item name="android:scrollbars">none</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:overScrollMode">never</item>
+    </style>
+    <!-- 通用复选框样式-->
+    <style name="CommonCheckBox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/common_text_light</item>
+        <item name="android:textSize">@dimen/common_text_small_size</item>
+        <item name="android:button">@null</item>
+    </style>
+    <!-- 通用输入框样式-->
+    <style name="CommonEditText">
+        <item name="android:textSize">@dimen/common_text_middle_size</item>
+        <item name="android:textColorHint">@color/common_text_light</item>
+        <item name="android:textColor">@color/common_text_normal</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="CommonClearEditText">
+        <item name="android:paddingTop">@dimen/common_input_padding_top</item>
+        <item name="android:paddingBottom">@dimen/common_input_padding_bottom</item>
+        <item name="android:paddingLeft">@dimen/common_input_padding_left</item>
+        <item name="android:paddingRight">@dimen/common_input_padding_right</item>
+        <item name="android:layout_marginLeft">@dimen/common_input_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/common_input_margin_right</item>
+        <item name="android:textSize">@dimen/common_text_middle_size</item>
+        <item name="android:textColorHint">@color/common_text_light</item>
+        <item name="android:textColor">@color/common_text_normal</item>
+        <item name="android:textCursorDrawable">@drawable/base_cursor_color</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="CommonClearEditText.Phone">
+        <item name="android:inputType">phone</item>
+        <item name="android:maxLength">11</item>
+    </style>
+
+    <style name="CommonItemProductRecommendTagText">
+        <item name="android:textSize">@dimen/common_text_little_size</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@string/base_widget_font_family_condensed_regular</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="base_text_before">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">@color/common_black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="base_es_text_after">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/common_grey</item>
+    </style>
+</resources>

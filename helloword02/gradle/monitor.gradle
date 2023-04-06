@@ -1,0 +1,37 @@
+boolean isMonitor = rootProject.ext.config.monitor
+/**
+ * app测试配置，取决于android-house\gradle\config.gradle的rootProject.ext.config.pro和rootProject.ext.config.proDebug值，生产正式包一定要关闭
+ * leakcanary，内存泄漏监控
+ * monitor 测试抓包 https://github.com/lygttpod/AndroidMonitor
+ */
+//if (rootProject.ext.config.pro) {
+////    app测试配置，取决于android-house\gradle.properties的palmHouse_debug值，生产正式包一定要关闭
+////    Properties properties = new Properties()
+////    properties.load(project.rootProject.file('gradle.properties').newDataInputStream())
+////    def enableMonitor = properties.getProperty("palmHouse_debug")
+////    isMonitor = Boolean.parseBoolean(enableMonitor)
+//
+//    isMonitor = rootProject.ext.config.monitor
+//} else {
+//    isMonitor = true
+//}
+
+//def localProperties = new Properties()
+//def localPropertiesFile = rootProject.file('local.properties')
+//if (localPropertiesFile.exists()) {
+//    localPropertiesFile.withReader('UTF-8') { reader ->
+//        localProperties.load(reader)
+//    }
+//}
+
+System.out.println("isMonitor:" + isMonitor)
+if (isMonitor) {
+    apply plugin: 'monitor-plugin'
+
+    dependencies {
+        //内存泄漏监控
+        debugImplementation rootProject.ext.test.leakcanary
+        //测试本地抓包
+        implementation rootProject.ext.test.monitor
+    }
+}

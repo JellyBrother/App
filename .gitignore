@@ -1,0 +1,14 @@
+*.iml
+.gradle
+/local.properties
+!.idea
+.idea/*
+!.idea/codeStyles
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.gradletasknamecache
+.cxx
+local.properties
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/app/src/main/res/layout/app_act_splash.xml" value="0.358695652173913" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_resource/src/main/res/drawable/base_common_checkbox.xml" value="0.199" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_ada_left_vertical.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_adapter_filter_secondary_footer.xml" value="0.36614583333333334" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_detail_view_top.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_dialog.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_dialog_more_filter.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_dialog_parts_item.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_dialog_warehouse_item.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_item_item_dialog_classification.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_tag_item_blue_end.xml" value="0.36614583333333334" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_toolbar_layout.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_top_icon_toast.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_view_home_marquee.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_view_list_image.xml" value="0.1875" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_view_post_detail_title.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_view_state_empty_product.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_view_state_error.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/lib/lib_widget/src/main/res/layout/base_view_state_no_net.xml" value="0.19114583333333332" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/module/module_home/src/main/res/layout/home_fra_main.xml" value="0.3591485507246377" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/module/module_main/src/main/res/layout/main_act_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/module/module_main/src/main/res/layout/main_act_main2.xml" value="0.36614583333333334" />
+        <entry key="..\:/workspace/code/demo/helloword03-jelly/module/mylibrary/src/main/res/layout/activity_main2.xml" value="0.3515625" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

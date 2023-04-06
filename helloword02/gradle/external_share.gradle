@@ -1,0 +1,58 @@
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+    appKey rootProject.ext.share.mobsdk_appKey
+    appSecret rootProject.ext.share.mobsdk_appSecret
+
+    ShareSDK {
+        loopShare true
+
+        //平台配置信息 参考：https://mob.com/wiki/detailed?wiki=575&id=14
+        devInfo {
+            /* Wechat微信和WechatMoments微信朋友圈的appid是一样的；
+      注意：开发者不能用我们这两个平台的appid,否则分享不了
+      微信测试的时候，微信测试需要先签名打包出apk,
+      sample测试微信，要先签名打包，keystore在sample项目中，密码123456
+
+      BypassApproval是绕过审核的标记，设置为true后AppId将被忽略，故不经过
+      审核的应用也可以执行分享，但是仅限于分享文字和图片，不能分享其他类型，
+      默认值为false。此外，微信收藏不支持此字段。wx4868b35061f87885
+      <!--要分享微信小应用程序时用userName,path-->*/
+            Wechat {
+                id 1
+                sortId 1
+                appId "88"
+                appSecret "88"
+                bypassApproval false  //是否绕过微信审核
+                enable true //表示此平台是否启用
+            }
+            WechatMoments {
+                id 2
+                sortId 2
+                appId "88"
+                appSecret "88"
+                bypassApproval false
+                enable true
+            }
+            // qq开发者平台：https://wiki.connect.qq.com/%e5%85%ac%e5%85%b1%e8%bf%94%e5%9b%9e%e7%a0%81%e8%af%b4%e6%98%8e
+            QQ {
+                id 3
+                sortId 3
+                appId "88"
+                appKey "88"
+                shareByAppClient true//是否使用客户端分享
+                bypassApproval false
+                enable true
+            }
+            SinaWeibo {
+                id 4
+                sortId 4
+                appKey "88"
+                appSecret "88"
+                callbackUri "http://www.sharesdk.cn"
+                shareByAppClient true
+                enable true
+            }
+        }
+    }
+}
