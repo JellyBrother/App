@@ -1,21 +1,21 @@
-package com.example.myapp.base.ui.activity;
+package com.jelly.myapp2.base.ui;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapp.base.constant.BaseConstant;
-import com.example.myapp.base.utils.LogUtils;
+import com.jelly.myapp2.base.constant.Constant;
 
 /**
  * 基类
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends Activity {
     protected String TAG = "BaseActivity";
     private final String BUNDLE_KEY_ISONSAVEINSTANCE = "Bundle_key_IsOnSaveInstance";
     protected long mOnCreateTime;
@@ -27,14 +27,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            TAG = getClass().getSimpleName();
+            TAG = Constant.Log.TAG + getClass().getSimpleName();
             mOnCreateTime = System.currentTimeMillis();
+            if (Constant.App.app == null) {
+                Constant.App.app = getApplication();
+            }
             log("onCreate");
             initIntent(savedInstanceState);
             initContentView();
             initObserver();
         } catch (Throwable t) {
-            LogUtils.e(TAG, "onCreate t:", t);
+            Log.e(TAG, "onCreate t:", t);
         }
     }
 
@@ -48,7 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             setViewSize(getResources().getConfiguration());
             initData();
         } catch (Throwable t) {
-            LogUtils.e(TAG, "onContentChanged t:", t);
+            Log.e(TAG, "onContentChanged t:", t);
         }
     }
 
@@ -112,7 +115,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void log(String msg) {
         long intervalTime = System.currentTimeMillis() - mOnCreateTime;
-        LogUtils.d(BaseConstant.Log.PAGE_LIFE, TAG + " " + msg + ",Interval time:" + intervalTime);
+        Log.d(TAG, " " + msg + ",Interval time:" + intervalTime);
     }
 
     protected void initIntent(Bundle bundle) {

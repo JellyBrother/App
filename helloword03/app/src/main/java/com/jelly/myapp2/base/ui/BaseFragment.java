@@ -1,18 +1,16 @@
-package com.example.myapp.base.ui.fragment;
+package com.jelly.myapp2.base.ui;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import com.example.myapp.base.constant.BaseConstant;
-import com.example.myapp.base.utils.LogUtils;
 
 /**
  * 基类
@@ -45,7 +43,7 @@ public abstract class BaseFragment extends Fragment {
             }
             initIntent(savedInstanceState);
         } catch (Throwable e) {
-            LogUtils.e(TAG, "onCreate Throwable:", e);
+            Log.e(TAG, "onCreate Throwable:", e);
         }
     }
 
@@ -75,7 +73,7 @@ public abstract class BaseFragment extends Fragment {
             setViewSize(getResources().getConfiguration());
             initData();
         } catch (Throwable e) {
-            LogUtils.e(TAG, "onActivityCreated Throwable:", e);
+            Log.e(TAG, "onActivityCreated Throwable:", e);
         }
     }
 
@@ -84,7 +82,7 @@ public abstract class BaseFragment extends Fragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             // 相当于onResume()方法
-            LogUtils.d(TAG, "当前可见Fragment:" + this.getClass().getSimpleName());
+            Log.d(TAG, "当前可见Fragment:" + this.getClass().getSimpleName());
         } else {
             // 相当于onPause()方法
         }
@@ -97,7 +95,7 @@ public abstract class BaseFragment extends Fragment {
             // 相当于onPause()方法
         } else {
             // 相当于onResume()方法
-            LogUtils.d(TAG, "当前可见Fragment:" + this.getClass().getSimpleName());
+            Log.d(TAG, "当前可见Fragment:" + this.getClass().getSimpleName());
         }
     }
 
@@ -161,7 +159,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected void log(String msg) {
         long intervalTime = System.currentTimeMillis() - onCreateTime;
-        LogUtils.d(BaseConstant.Log.PAGE_LIFE, TAG + " " + msg + ",Interval time:" + intervalTime);
+        Log.d(TAG, " " + msg + ",Interval time:" + intervalTime);
     }
 
     protected abstract View getLayoutView();

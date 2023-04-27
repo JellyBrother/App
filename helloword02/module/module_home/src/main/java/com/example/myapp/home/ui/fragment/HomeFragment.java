@@ -19,6 +19,11 @@ public class HomeFragment extends BaseListFragment<HomeFragmentVm> {
     }
 
     @Override
+    protected Class<HomeFragmentVm> getDefaultViewModel() {
+        return HomeFragmentVm.class;
+    }
+
+    @Override
     protected View getLayoutView() {
         mBinding = HomeFraMainBinding.inflate(getLayoutInflater());
         return mBinding.getRoot();

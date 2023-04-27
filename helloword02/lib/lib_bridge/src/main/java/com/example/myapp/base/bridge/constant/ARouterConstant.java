@@ -26,6 +26,7 @@ public class ARouterConstant {
 
     public static final class User {
         public static final String USER_FRAGMENT = "/module_user/userFragment";
+        public static final String USER_SERVICE_ACTIVITY = "/module_user/serviceActivity";
     }
 
     public static final class Detail {

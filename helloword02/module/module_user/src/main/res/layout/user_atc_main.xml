@@ -8,17 +8,26 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="30dp" />
-
         <TextView
             android:id="@+id/tvw_test1"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:background="@color/colorYellow"
             android:gravity="center"
-            android:text="启动UserActivity" />
+            android:text="启动Service1Service"
+            android:textColor="@color/colorLightBlue" />
+
+        <TextView
+            android:id="@+id/tvw_test2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorYellow"
+            android:gravity="center"
+            android:text="启动绑定Service1Service"
+            android:textColor="@color/colorLightBlue" />
     </LinearLayout>
 </ScrollView>
