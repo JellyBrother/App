@@ -9,6 +9,11 @@ import android.util.Log;
 import com.jelly.myapp2.IBindService;
 
 public class UserServiceConnection implements ServiceConnection {
+    private IBindService anInterface;
+
+    public IBindService getIBindService() {
+        return anInterface;
+    }
 
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
