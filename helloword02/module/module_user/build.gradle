@@ -43,5 +43,5 @@ android {
 dependencies {
     kapt rootProject.ext.dependencies.arouterCompiler
 
-    compileOnly project(':lib:lib_aar')
+    compileOnly project(':lib_aar')
 }

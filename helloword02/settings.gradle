@@ -3,6 +3,7 @@ pluginManagement {
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'dexguard-agent/lib' }
 
         gradlePluginPortal()
         google()
@@ -36,19 +37,47 @@ dependencyResolutionManagement {// 指定Gradle需要的用来搜索或下载【
 rootProject.name = "MyApp"
 include ':app'
 
-// 外部第三方功能接入
-include ':external:external_aar'
-//include ':external:external_agentweb_core'
-
-// 基础库
-include ':lib:lib_resource'
-include ':lib:lib_base'
-include ':lib:lib_aar'
-include ':lib:lib_net'
-include ':lib:lib_bridge'
-include ':lib:lib_widget'
-
-// 业务模块
-include ':module:module_main'
-include ':module:module_home'
-include ':module:module_user'
+// 工程构建
+Properties localProperties = new Properties()
+localProperties.load(new File(rootDir, 'local.properties').newDataInputStream())
+def localProject = localProperties.getProperty('local.project') == 'true'
+if (!localProject) {
+    println('当前以远程依赖形式编译')
+} else {
+    println('当前以本地工程形式编译')
+    // 外部第三方功能接入
+    def externalModules = ['external_aar']
+//    def externalModules = ['external_aar', 'external_agentweb_core']
+    def externalPath = rootDir.path + "/external/"
+    println('当前externalPath:' + externalPath)
+    externalModules.each { name ->
+        def libProjectDir = new File(externalPath, name)
+        if (libProjectDir.exists() && libProjectDir.list().length > 0) {
+            def includeName = ":$name"
+            include includeName
+            project(includeName).projectDir = libProjectDir
+        }
+    }
+    // 基础库
+    def libModules = ['lib_aar', 'lib_base', 'lib_bridge', 'lib_net', 'lib_resource', 'lib_widget']
+    def libPath = rootDir.path + "/lib/"
+    libModules.each { name ->
+        def libProjectDir = new File(libPath, name)
+        if (libProjectDir.exists() && libProjectDir.list().length > 0) {
+            def includeName = ":$name"
+            include includeName
+            project(includeName).projectDir = libProjectDir
+        }
+    }
+    // 业务模块
+    def moduleModules = ['module_main', 'module_home', 'module_user']
+    def modulePath = rootDir.path + "/module/"
+    moduleModules.each { name ->
+        def libProjectDir = new File(modulePath, name)
+        if (libProjectDir.exists() && libProjectDir.list().length > 0) {
+            def includeName = ":$name"
+            include includeName
+            project(includeName).projectDir = libProjectDir
+        }
+    }
+}

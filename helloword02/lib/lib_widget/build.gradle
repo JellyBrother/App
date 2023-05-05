@@ -45,8 +45,8 @@ dependencies {
     kapt rootProject.ext.dependencies.hilt_complier
 
     compileOnly rootProject.ext.dependencies.hilt
-    compileOnly project(':external:external_aar')
-    compileOnly project(':lib:lib_resource')
-    compileOnly project(':lib:lib_base')
-    compileOnly project(':lib:lib_net')
+    compileOnly project(':external_aar')
+    compileOnly project(':lib_resource')
+    compileOnly project(':lib_base')
+    compileOnly project(':lib_net')
 }

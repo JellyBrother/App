@@ -11,16 +11,13 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/external" />
             <option value="$PROJECT_DIR$/external/external_aar" />
-            <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/lib/lib_aar" />
             <option value="$PROJECT_DIR$/lib/lib_base" />
             <option value="$PROJECT_DIR$/lib/lib_bridge" />
             <option value="$PROJECT_DIR$/lib/lib_net" />
             <option value="$PROJECT_DIR$/lib/lib_resource" />
             <option value="$PROJECT_DIR$/lib/lib_widget" />
-            <option value="$PROJECT_DIR$/module" />
             <option value="$PROJECT_DIR$/module/module_home" />
             <option value="$PROJECT_DIR$/module/module_main" />
             <option value="$PROJECT_DIR$/module/module_user" />

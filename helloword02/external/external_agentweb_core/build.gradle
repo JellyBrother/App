@@ -43,5 +43,5 @@ dependencies {
 
     // 解决com.just.agentweb.AgentActionFragment cannot be cast to android.app.Activity
     compileOnly fileTree(include: ['*.jar'], dir: 'libs')
-    compileOnly project(':external:external_aar')
+    compileOnly project(':external_aar')
 }
