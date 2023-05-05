@@ -48,7 +48,7 @@ if (!localProject) {
     // 外部第三方功能接入
     def externalModules = ['external_aar']
 //    def externalModules = ['external_aar', 'external_agentweb_core']
-    def externalPath = rootDir.path + "/external/"
+    def externalPath = "$rootDir\\external"
     println('当前externalPath:' + externalPath)
     externalModules.each { name ->
         def libProjectDir = new File(externalPath, name)
@@ -60,7 +60,7 @@ if (!localProject) {
     }
     // 基础库
     def libModules = ['lib_aar', 'lib_base', 'lib_bridge', 'lib_net', 'lib_resource', 'lib_widget']
-    def libPath = rootDir.path + "/lib/"
+    def libPath = "$rootDir\\lib"
     libModules.each { name ->
         def libProjectDir = new File(libPath, name)
         if (libProjectDir.exists() && libProjectDir.list().length > 0) {
@@ -71,7 +71,7 @@ if (!localProject) {
     }
     // 业务模块
     def moduleModules = ['module_main', 'module_home', 'module_user']
-    def modulePath = rootDir.path + "/module/"
+    def modulePath = "$rootDir\\module"
     moduleModules.each { name ->
         def libProjectDir = new File(modulePath, name)
         if (libProjectDir.exists() && libProjectDir.list().length > 0) {

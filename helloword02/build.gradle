@@ -10,6 +10,8 @@ buildscript {
         classpath "com.alibaba:arouter-register:1.0.2"
         // 基于AndroidLocalService实现的抓取OKHTTP请求的工具 https://github.com/lygttpod/AndroidMonitor
         classpath 'io.github.lygttpod:monitor-plugin:0.0.2'
+        // 将项目发布到JCenter 所需要的jar   添加依赖
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.0'
     }
 }
 plugins {
@@ -17,7 +19,6 @@ plugins {
     id 'com.android.library' version '7.2.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
 }
-apply from: "$rootDir/gradle/config.gradle"
 subprojects {
     project.configurations.all {
         resolutionStrategy.eachDependency { details ->
@@ -30,4 +31,20 @@ subprojects {
 }
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+apply from: "$rootDir\\gradle\\config.gradle"
+Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+rootProject.ext.config.localProject = localProperties.getProperty("local.project") == 'true'
+// 配置每个库都有发布脚本，可以发布到远程仓库
+def publishModules = ['lib_aar', 'lib_base', 'lib_bridge', 'lib_net', 'lib_resource', 'lib_widget']
+rootProject.getSubprojects().forEach { subproject ->
+    subproject.afterEvaluate {
+        if (publishModules.contains(subproject.name)) {
+            project(subproject.name) {
+                apply from: new File("$rootDir\\gradle", 'artifactory.gradle')
+            }
+        }
+    }
 }

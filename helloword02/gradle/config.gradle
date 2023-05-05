@@ -10,6 +10,8 @@ ext {
             statisticsStrategy: 2,
             // 渠道：common通用包，huawei华为包，oppo欧珀包，vivo维沃包，xiaomi小米包，honor荣耀包，tencent腾讯应用宝
             channel           : "common",
+            // 是否以本地工程形式编译 false：以远程依赖形式编译
+            localProject      : false,
     ]
     android = [
             compileSdk   : 31,
@@ -36,17 +38,18 @@ ext {
             mobsdk_appSecret: "88",
     ]
     sdkVersion = [
-            lifecycle   : "2.5.0",
-            arouter     : "1.5.2",
+            lifecycle     : "2.5.0",
+            arouter       : "1.5.2",
             //解决安卓26以下版本运行崩溃问题，2.8.0开始不兼容高版本
-            retrofit    : "2.7.1",
-            rxjava      : "3.1.5",
-            okhttp      : "4.10.0",
-            room_version: "2.4.3",
-            cameraX     : "1.1.0",
-            hilt        : "2.44.2",
-            videoPlayer : "v8.3.4",
-            smartRefresh: "2.0.5",
+            retrofit      : "2.7.1",
+            rxjava        : "3.1.5",
+            okhttp        : "4.10.0",
+            room_version  : "2.4.3",
+            cameraX       : "1.1.0",
+            hilt          : "2.44.2",
+            videoPlayer   : "v8.3.4",
+            smartRefresh  : "2.0.5",
+            libVersionName: "1.0.0",
     ]
     test = [
             hilt_android_testing : "com.google.dagger:hilt-android-testing:${sdkVersion.hilt}",
