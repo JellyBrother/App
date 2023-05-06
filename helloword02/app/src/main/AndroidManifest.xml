@@ -72,7 +72,7 @@
     <!--    <uses-permission android:name="android.permission.REORDER_TASKS" />-->
 
     <application
-        android:name=".PalmHouseApp"
+        android:name=".App"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:exported="false"

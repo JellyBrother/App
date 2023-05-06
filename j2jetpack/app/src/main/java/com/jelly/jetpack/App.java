@@ -1,17 +1,14 @@
-package com.example.myapp;
+package com.jelly.jetpack;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.myapp.base.constant.BaseConstant;
-import com.example.myapp.base.utils.LogUtils;
+import com.jelly.jetpack.module.base.constant.BaseConstant;
 
-import dagger.hilt.android.HiltAndroidApp;
-
-@HiltAndroidApp
-public class PalmHouseApp extends Application {
+public class App extends Application {
     protected String TAG = "BaseViewModel";
     protected long onCreateTime;
 
@@ -54,7 +51,7 @@ public class PalmHouseApp extends Application {
 
     protected void log(String msg) {
         long intervalTime = System.currentTimeMillis() - onCreateTime;
-        LogUtils.d(BaseConstant.Log.PAGE_LIFE, TAG + " " + msg + ",Interval time:" + intervalTime);
+        Log.d(BaseConstant.Log.PAGE_LIFE, TAG + " " + msg + ",Interval time:" + intervalTime);
     }
 
     private void event() {

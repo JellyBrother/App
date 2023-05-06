@@ -1,0 +1,40 @@
+pluginManagement {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'dexguard-agent/lib' }
+
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {// 指定Gradle需要的用来搜索或下载【依赖dependency】的代码库，加快构建速度
+    /**
+     * 存储库模式：
+     * PREFER_PROJECT(true)--首选项目存储库
+     * PREFER_SETTINGS(false)--首选设置存储库
+     * FAIL_ON_PROJECT_REPOS(false)--强制设置存储库，对MobSDK分享sdk有影响
+     */
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url 'https://repo1.maven.org/maven2' }
+        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/grails-core' }
+        maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        //分享sdk集成步骤1：在项目Gradle文件中注册MobSDK https://mob.com/wiki/detailed?wiki=9&id=14
+        maven { url "https://mvn.mob.com/android" }
+        maven { url "https://jitpack.io" }
+
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "Jetpack"
+include ':app'
+include ':external_aar'
+include ':module_main'

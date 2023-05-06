@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jelly.jetpack">
+
+    <!--  相机  -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--  闪光灯  -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!--  ShareSdk用于高版本Android系统手机中判断第三方平台是否安装  -->
+    <!--  组件使用信息  -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+    <!--  判断某个应用是否已安装 危险权限，上不了谷歌应用市场  -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+    <!-- 2百度统计 https://mtj.baidu.com/static/userguide/book/android/sdk/gradle.html -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 访问网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--  读写系统设置  -->
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <!--  访问Wi-Fi网络信息  -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--  改变网络状态如是否能联网  -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!--  查询安装列表，用于应用内安装  -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!--  安卓10以下需要保存图片到本地  -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <!--android 9.0上使用前台服务，需要添加权限-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Jetpack"
+        tools:targetApi="31">
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".AppProvider"
+            android:authorities="com.jelly.jetpack.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/app_provider_palmhouse_paths" />
+        </provider>
+        <!-- 表示当前已经适配了分区存储 -->
+        <meta-data
+            android:name="ScopedStorage"
+            android:value="true" />
+        <!--适配华为（huawei）刘海屏-->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true" />
+        <!--适配小米（xiaomi）刘海屏-->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
+    </application>
+
+    <!-- Android 11 软件包可见性适配：https://www.jianshu.com/p/d1ccd425c4ce -->
+    <queries>
+        <!-- 拍照意图：MediaStore.ACTION_IMAGE_CAPTURE -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <!-- 拍摄意图：MediaStore.ACTION_VIDEO_CAPTURE -->
+        <intent>
+            <action android:name="android.media.action.VIDEO_CAPTURE" />
+        </intent>
+        <!-- 图片裁剪意图 -->
+        <intent>
+            <action android:name="com.android.camera.action.CROP" />
+        </intent>
+        <!-- 打电话意图：Intent.ACTION_DIAL -->
+        <!--        <intent>-->
+        <!--            <action android:name="android.intent.action.DIAL" />-->
+        <!--        </intent>-->
+
+        <!-- 调起分享意图：Intent.ACTION_SEND -->
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+        </intent>
+        <!-- 调起其他页面意图：Intent.ACTION_VIEW -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+        </intent>
+        <!-- 调起系统文件选择器：Intent.ACTION_GET_CONTENT -->
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+        </intent>
+        <!-- 手机 QQ 的包名 -->
+        <package android:name="com.tencent.mobileqq" />
+        <!-- 微信的包名 -->
+        <package android:name="com.tencent.mm" />
+    </queries>
+</manifest>
