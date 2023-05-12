@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvw_test1"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/design_default_color_primary"
+                android:gravity="center"
+                android:text="代理对象"
+                android:textColor="@color/design_default_color_surface" />
+
+            <TextView
+                android:id="@+id/tvw_test2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/design_default_color_primary"
+                android:gravity="center"
+                android:text="代理静态方法"
+                android:textColor="@color/design_default_color_surface" />
+
+            <TextView
+                android:id="@+id/tvw_test3"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/design_default_color_primary"
+                android:gravity="center"
+                android:text="没hook前的tvw_test3"
+                android:textColor="@color/design_default_color_surface" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,0 +1,79 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdk rootProject.ext.android.compileSdk
+
+    defaultConfig {
+        minSdk rootProject.ext.android.minSdk
+        targetSdk rootProject.ext.android.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.aar'], dir: 'libs')
+    api rootProject.ext.dependencies.arouterApi
+    api rootProject.ext.dependencies.android_appcompat
+    api rootProject.ext.dependencies.google_material
+
+    api rootProject.ext.dependencies.recyclerViewAdapter
+
+    
+//    api rootProject.ext.dependencies.android_core
+//    api rootProject.ext.dependencies.android_constraintlayout
+
+
+
+//    api rootProject.ext.dependencies.android_viewpager
+//    api rootProject.ext.dependencies.lifecycle
+//    api rootProject.ext.dependencies.lifecycle_viewmodel
+//    api rootProject.ext.dependencies.lifecycle_livedata
+//    api rootProject.ext.dependencies.lifecycle_common
+//    api rootProject.ext.dependencies.google_gson
+//    api rootProject.ext.dependencies.gsonFactory
+//    api rootProject.ext.dependencies.retrofit
+//    api rootProject.ext.dependencies.retrofit_scalars
+//    api rootProject.ext.dependencies.retrofit_adapter_rxjava2
+//    api rootProject.ext.dependencies.rxjava
+//    api rootProject.ext.dependencies.rxjava_android
+//    api rootProject.ext.dependencies.okhttp
+//    api rootProject.ext.dependencies.okhttp_logging
+//    api rootProject.ext.dependencies.immersionbar
+//    api rootProject.ext.dependencies.immersionbar_ktx
+//    api rootProject.ext.dependencies.permissions
+//    api rootProject.ext.dependencies.linkage_recyclerview
+//    api rootProject.ext.dependencies.flexbox
+//    api rootProject.ext.dependencies.smartRefreshLayout
+//    api rootProject.ext.dependencies.smartRefreshLayout_header
+//    api rootProject.ext.dependencies.smartRefreshLayout_footer
+//    api rootProject.ext.dependencies.banner
+//    api rootProject.ext.dependencies.glide
+//    api rootProject.ext.dependencies.room
+//    api rootProject.ext.dependencies.room_ktx
+//    api rootProject.ext.dependencies.camera_core
+//    api rootProject.ext.dependencies.camera_view
+//    api rootProject.ext.dependencies.camera_camera
+//    api rootProject.ext.dependencies.camera_lifecycle
+//    api rootProject.ext.dependencies.zxing
+//    api rootProject.ext.dependencies.eventbus
+//    api rootProject.ext.dependencies.photoView
+//    api rootProject.ext.dependencies.hilt
+//    api rootProject.ext.dependencies.hilt_viewmodel
+//    api rootProject.ext.dependencies.tencent_bugly
+//    api rootProject.ext.dependencies.video_cache
+//    api rootProject.ext.dependencies.downloader
+}

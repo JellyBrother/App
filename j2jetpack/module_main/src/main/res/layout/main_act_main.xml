@@ -23,6 +23,7 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/colorLightBlue"
+                android:gravity="center"
                 android:text="tvw_test1"
                 android:textColor="@color/colorYellow" />
         </LinearLayout>

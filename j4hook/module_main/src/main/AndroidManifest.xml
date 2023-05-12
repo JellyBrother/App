@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jelly.hook.module.main">
+
+    <application>
+        <activity android:name="com.jelly.hook.module.main.ui.activity.MainActivity" />
+        <activity android:name="com.jelly.hook.module.main.ui.activity.HookActivity" />
+        <activity
+            android:name="com.jelly.hook.module.main.ui.activity.PictureInPictureActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true" />
+    </application>
+</manifest>
