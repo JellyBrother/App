@@ -48,6 +48,7 @@ dependencies {
     api rootProject.ext.dependencies.rxjava_android
     api rootProject.ext.dependencies.okhttp
     api rootProject.ext.dependencies.okhttp_logging
+    api rootProject.ext.dependencies.http_dns
     api rootProject.ext.dependencies.immersionbar
     api rootProject.ext.dependencies.immersionbar_ktx
     api rootProject.ext.dependencies.permissions

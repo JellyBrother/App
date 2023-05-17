@@ -20,11 +20,18 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
 }
 subprojects {
+    //解决支持库版本不兼容问题
     project.configurations.all {
         resolutionStrategy.eachDependency { details ->
+            def requested = details.requested
             // 版本对齐，不然会自动升级
-            if (details.requested.group == 'androidx.lifecycle') {
+            if (requested.group == 'androidx.lifecycle') {
                 details.useVersion sdkVersion.lifecycle
+            }
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '26.1.0'
+                }
             }
         }
     }
