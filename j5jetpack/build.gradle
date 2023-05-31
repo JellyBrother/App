@@ -1,0 +1,30 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    // Studio 插件推荐：https://github.com/getActivity/StudioPlugins
+    dependencies {
+        //注入框架 https://dagger.dev/
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.44.2'
+    }
+}
+plugins {
+    id 'com.android.application' version '8.0.2' apply false
+    id 'com.android.library' version '8.0.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
+}
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            // 版本对齐，不然会自动升级
+            if (details.requested.group == 'androidx.lifecycle') {
+                details.useVersion sdkVersion.lifecycle
+            }
+        }
+    }
+}
+apply from: "$rootDir/gradle/config.gradle"
+Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file('gradle.properties').newDataInputStream())
+rootProject.ext.config.localProject = localProperties.getProperty("app.local.project") == 'true'

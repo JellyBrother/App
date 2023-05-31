@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace rootProject.ext.android.applicationId + '.external.aar'
+    compileSdk rootProject.ext.android.compileSdk
+
+    defaultConfig {
+        minSdk rootProject.ext.android.minSdk
+        targetSdk rootProject.ext.android.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.aar'], dir: 'libs')
+
+    api rootProject.ext.dependencies.android_core
+    api platform(rootProject.ext.dependencies.platform_kotlin_bom)
+    api rootProject.ext.dependencies.lifecycle_runtime
+    // compose
+    api rootProject.ext.dependencies.compose_activity
+    api platform(rootProject.ext.dependencies.platform_compose_bom)
+    api rootProject.ext.dependencies.compose_ui
+    api rootProject.ext.dependencies.compose_ui_graphics
+    api rootProject.ext.dependencies.compose_ui_tooling_preview
+    api rootProject.ext.dependencies.compose_material3
+}
