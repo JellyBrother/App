@@ -17,7 +17,7 @@ import com.example.myapp.base.utils.LogUtils;
 /**
  * 基类
  */
-public abstract class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment {
     protected String TAG = "BaseViewModel";
     protected long onCreateTime;
     protected long onResumeTime;
@@ -159,12 +159,26 @@ public abstract class BaseFragment extends Fragment {
         setViewSize(newConfig);
     }
 
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        log("onLowMemory");
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+        log("onPictureInPictureModeChanged isInPictureInPictureMode:" + isInPictureInPictureMode);
+    }
+
     protected void log(String msg) {
         long intervalTime = System.currentTimeMillis() - onCreateTime;
         LogUtils.d(BaseConstant.Log.PAGE_LIFE, TAG + " " + msg + ",Interval time:" + intervalTime);
     }
 
-    protected abstract View getLayoutView();
+    protected View getLayoutView() {
+        return null;
+    }
 
     protected void initIntent(Bundle bundle) {
     }

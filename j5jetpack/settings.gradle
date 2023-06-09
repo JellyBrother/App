@@ -17,7 +17,7 @@ dependencyResolutionManagement {// 指定Gradle需要的用来搜索或下载【
      * PREFER_SETTINGS(false)--首选设置存储库
      * FAIL_ON_PROJECT_REPOS(false)--强制设置存储库，对MobSDK分享sdk有影响
      */
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         maven { url "https://maven.aliyun.com/repository/public" }
         maven { url 'https://repo1.maven.org/maven2' }
@@ -68,15 +68,15 @@ if (!localProject) {
             project(includeName).projectDir = libProjectDir
         }
     }
-//    // 业务模块
-//    def moduleModules = ['module_main', 'module_home', 'module_user']
-//    def modulePath = "$rootDir\\module"
-//    moduleModules.each { name ->
-//        def libProjectDir = new File(modulePath, name)
-//        if (libProjectDir.exists() && libProjectDir.list().length > 0) {
-//            def includeName = ":$name"
-//            include includeName
-//            project(includeName).projectDir = libProjectDir
-//        }
-//    }
+    // 业务模块
+    def moduleModules = ['module_main', 'module_home', 'module_user']
+    def modulePath = "$rootDir\\module"
+    moduleModules.each { name ->
+        def libProjectDir = new File(modulePath, name)
+        if (libProjectDir.exists() && libProjectDir.list().length > 0) {
+            def includeName = ":$name"
+            include includeName
+            project(includeName).projectDir = libProjectDir
+        }
+    }
 }

@@ -4,7 +4,6 @@ plugins {
 }
 
 android {
-    namespace rootProject.ext.android.applicationId + '.external.aar'
     compileSdk rootProject.ext.android.compileSdk
 
     defaultConfig {
@@ -14,6 +13,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -34,13 +34,29 @@ dependencies {
     api fileTree(include: ['*.aar'], dir: 'libs')
 
     api rootProject.ext.dependencies.android_core
-    api platform(rootProject.ext.dependencies.platform_kotlin_bom)
-    api rootProject.ext.dependencies.lifecycle_runtime
-    // compose
-    api rootProject.ext.dependencies.compose_activity
-    api platform(rootProject.ext.dependencies.platform_compose_bom)
+    api rootProject.ext.dependencies.android_appcompat
+    api rootProject.ext.dependencies.android_constraintlayout
+    api rootProject.ext.dependencies.utilcodex
+
+    //jetpack
+    api rootProject.ext.dependencies.jetpack_work_runtime
+    //compose
+    api rootProject.ext.dependencies.compose_animation
+//    api rootProject.ext.dependencies.compose_compiler
+    api rootProject.ext.dependencies.compose_foundation
+    api rootProject.ext.dependencies.compose_material
+    api rootProject.ext.dependencies.compose_runtime
+    api rootProject.ext.dependencies.compose_runtime_livedata
+    api rootProject.ext.dependencies.compose_runtime_rxjava2
     api rootProject.ext.dependencies.compose_ui
-    api rootProject.ext.dependencies.compose_ui_graphics
-    api rootProject.ext.dependencies.compose_ui_tooling_preview
-    api rootProject.ext.dependencies.compose_material3
+
+
+
+//    api rootProject.ext.dependencies.google_material
+//    api rootProject.ext.dependencies.compose_activity
+//    api platform(rootProject.ext.dependencies.platform_compose_bom)
+//    api rootProject.ext.dependencies.compose_ui
+//    api rootProject.ext.dependencies.compose_ui_graphics
+//    api rootProject.ext.dependencies.compose_ui_tooling_preview
+
 }

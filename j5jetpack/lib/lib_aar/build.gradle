@@ -4,7 +4,6 @@ plugins {
 }
 
 android {
-    namespace rootProject.ext.android.applicationId + '.lib.aar'
     compileSdk rootProject.ext.android.compileSdk
 
     defaultConfig {

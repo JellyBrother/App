@@ -1,5 +1,6 @@
 package com.example.myapp.base.ui.activity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -15,7 +16,7 @@ import com.example.myapp.base.utils.LogUtils;
 /**
  * 基类
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
     protected String TAG = "BaseActivity";
     private final String BUNDLE_KEY_ISONSAVEINSTANCE = "Bundle_key_IsOnSaveInstance";
     protected long mOnCreateTime;
@@ -59,9 +60,27 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        log("onRestoreInstanceState");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        log("onRestart");
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         log("onStart");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        log("onNewIntent");
     }
 
     @Override
@@ -70,12 +89,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         log("onResume");
         mIsOnSaveInstance = false;
         onResumeTime = System.currentTimeMillis();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        log("onRestart");
     }
 
     @Override
@@ -110,6 +123,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         setViewSize(newConfig);
     }
 
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        log("onTrimMemory level:" + level);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        log("onLowMemory");
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+        log("onPictureInPictureModeChanged isInPictureInPictureMode:" + isInPictureInPictureMode);
+    }
+
     protected void log(String msg) {
         long intervalTime = System.currentTimeMillis() - mOnCreateTime;
         LogUtils.d(BaseConstant.Log.PAGE_LIFE, TAG + " " + msg + ",Interval time:" + intervalTime);
@@ -124,7 +155,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected abstract View getLayoutView();
+    protected View getLayoutView() {
+        return null;
+    }
 
     protected void initContentView() {
         mRootView = getLayoutView();

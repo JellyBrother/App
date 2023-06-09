@@ -267,4 +267,28 @@ public final class ProcessUtils {
         }
         return processName;
     }
+
+    /**
+     * Description：判断当前应用是否在前台
+     *
+     * @return true在前台
+     */
+    public static boolean isAppOnForeground() {
+        ActivityManager activityManager = (ActivityManager) Utils.getApp().getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager == null) {
+            return false;
+        }
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        if (appProcesses == null || appProcesses.isEmpty()) {
+            return false;
+        }
+        int pid = android.os.Process.myPid();
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess != null && appProcess.pid == pid
+                    && appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

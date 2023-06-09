@@ -1,5 +1,10 @@
 package com.example.myapp.main.ui.activity
 
+import android.app.ActivityManager
+import android.app.ActivityManager.RunningAppProcessInfo
+import android.content.ComponentCallbacks2
+import android.content.Context
+import android.os.Process
 import android.view.KeyEvent
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -9,9 +14,11 @@ import com.example.myapp.base.bridge.constant.ARouterConstant
 import com.example.myapp.base.ui.activity.BaseActivity
 import com.example.myapp.base.ui.adapter.BaseFragmentsAdapter
 import com.example.myapp.base.ui.fragment.BaseFragment
+import com.example.myapp.base.utils.ProcessUtils
 import com.example.myapp.main.constant.MainConstant
 import com.example.myapp.main.databinding.MainActMainBinding
 import com.gyf.immersionbar.ImmersionBar
+
 
 /**
  * 主界面
@@ -195,5 +202,16 @@ class MainActivity : BaseActivity() {
             return true
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
+            //清理内存 todo
+            // 当内存不够，并且不是前台进程的时候，页面才销毁。
+            if (level >= TRIM_MEMORY_BACKGROUND && !ProcessUtils.isAppOnForeground()) {
+                finish()
+            }
+        }
     }
 }
