@@ -1,4 +1,4 @@
-package com.jelly.myapp2.base.ui;
+package com.jelly.myapp.base.ui;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.jelly.myapp2.base.constant.BaseConstant;
+
 /**
  * 基类
  */
-public abstract class BaseFragment extends Fragment {
-    protected String TAG = "BaseViewModel";
+public class BaseFragment extends Fragment {
+    protected String TAG = "BaseFragment";
     protected long onCreateTime;
     protected long onResumeTime;
     protected boolean isOnPause = true;
@@ -157,12 +159,26 @@ public abstract class BaseFragment extends Fragment {
         setViewSize(newConfig);
     }
 
-    protected void log(String msg) {
-        long intervalTime = System.currentTimeMillis() - onCreateTime;
-        Log.d(TAG, " " + msg + ",Interval time:" + intervalTime);
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        log("onLowMemory");
     }
 
-    protected abstract View getLayoutView();
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+        log("onPictureInPictureModeChanged isInPictureInPictureMode:" + isInPictureInPictureMode);
+    }
+
+    protected void log(String msg) {
+        long intervalTime = System.currentTimeMillis() - onCreateTime;
+        Log.e(BaseConstant.Log.PAGE_LIFE, TAG + " " + msg + ",Interval time:" + intervalTime);
+    }
+
+    protected View getLayoutView() {
+        return null;
+    }
 
     protected void initIntent(Bundle bundle) {
     }

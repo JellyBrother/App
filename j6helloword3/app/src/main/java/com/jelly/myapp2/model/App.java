@@ -1,16 +1,23 @@
 package com.jelly.myapp2.model;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.jelly.myapp2.base.constant.Constant;
+import com.jelly.myapp2.base.constant.BaseConstant;
 
 public class App extends Application {
     protected String TAG = "App";
     protected long onCreateTime;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        BaseConstant.App.app = this;
+    }
 
     @Override
     public void onCreate() {
@@ -51,7 +58,7 @@ public class App extends Application {
 
     protected void log(String msg) {
         long intervalTime = System.currentTimeMillis() - onCreateTime;
-        Log.d(Constant.Log.TAG, TAG + " " + msg + ",Interval time:" + intervalTime);
+        Log.d(BaseConstant.Log.PAGE_LIFE, TAG + " " + msg + ",Interval time:" + intervalTime);
     }
 
     private void event() {

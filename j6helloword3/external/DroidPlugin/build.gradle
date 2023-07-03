@@ -1,0 +1,49 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk rootProject.ext.android.compileSdk
+
+    defaultConfig {
+        minSdk rootProject.ext.android.minSdk
+        targetSdk rootProject.ext.android.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        // 建议改为自己的 packageName + .droidplugin_stub ，防止跟其它本插件使用者冲突
+        def authorityName = "com.morgoo.droidplugin_stub"
+        buildConfigField "String", "AUTHORITY_NAME", "\"${authorityName}\""
+        manifestPlaceholders = [
+                authorityName:"${authorityName}",
+        ]
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        aidl true
+    }
+    namespace 'com.morgoo.droidplugin'
+}
+
+dependencies {
+    compileOnly fileTree(dir: 'lib', include: '*.jar')
+    implementation fileTree(dir: 'libs', include: '*.jar')
+
+//    api fileTree(include: ['*.jar'], dir: 'libs')
+//    api fileTree(include: ['*.aar'], dir: 'libs')
+}

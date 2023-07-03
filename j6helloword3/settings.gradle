@@ -46,7 +46,7 @@ if (!localProject) {
 } else {
     println('当前以本地工程形式编译')
     // 外部第三方功能接入
-    def externalModules = ['external_aar']
+    def externalModules = ['DroidPlugin']
 //    def externalModules = ['external_aar', 'external_agentweb_core']
     def externalPath = "$rootDir\\external"
     println('当前externalPath:' + externalPath)

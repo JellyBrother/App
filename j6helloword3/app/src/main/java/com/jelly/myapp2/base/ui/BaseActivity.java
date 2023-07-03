@@ -1,6 +1,7 @@
 package com.jelly.myapp2.base.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -10,12 +11,12 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.jelly.myapp2.base.constant.Constant;
+import com.jelly.myapp2.base.constant.BaseConstant;
 
 /**
  * 基类
  */
-public abstract class BaseActivity extends Activity {
+public class BaseActivity extends Activity {
     protected String TAG = "BaseActivity";
     private final String BUNDLE_KEY_ISONSAVEINSTANCE = "Bundle_key_IsOnSaveInstance";
     protected long mOnCreateTime;
@@ -27,11 +28,8 @@ public abstract class BaseActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            TAG = Constant.Log.TAG + getClass().getSimpleName();
+            TAG = getClass().getSimpleName();
             mOnCreateTime = System.currentTimeMillis();
-            if (Constant.App.app == null) {
-                Constant.App.app = getApplication();
-            }
             log("onCreate");
             initIntent(savedInstanceState);
             initContentView();
@@ -62,9 +60,27 @@ public abstract class BaseActivity extends Activity {
     }
 
     @Override
+    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        log("onRestoreInstanceState");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        log("onRestart");
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         log("onStart");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        log("onNewIntent");
     }
 
     @Override
@@ -73,12 +89,6 @@ public abstract class BaseActivity extends Activity {
         log("onResume");
         mIsOnSaveInstance = false;
         onResumeTime = System.currentTimeMillis();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        log("onRestart");
     }
 
     @Override
@@ -113,9 +123,27 @@ public abstract class BaseActivity extends Activity {
         setViewSize(newConfig);
     }
 
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        log("onTrimMemory level:" + level);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        log("onLowMemory");
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+        log("onPictureInPictureModeChanged isInPictureInPictureMode:" + isInPictureInPictureMode);
+    }
+
     protected void log(String msg) {
         long intervalTime = System.currentTimeMillis() - mOnCreateTime;
-        Log.d(TAG, " " + msg + ",Interval time:" + intervalTime);
+        Log.e(BaseConstant.Log.PAGE_LIFE, TAG + " " + msg + ",Interval time:" + intervalTime);
     }
 
     protected void initIntent(Bundle bundle) {
@@ -127,7 +155,9 @@ public abstract class BaseActivity extends Activity {
         }
     }
 
-    protected abstract View getLayoutView();
+    protected View getLayoutView() {
+        return null;
+    }
 
     protected void initContentView() {
         mRootView = getLayoutView();
