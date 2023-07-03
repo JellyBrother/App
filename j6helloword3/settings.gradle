@@ -1,0 +1,83 @@
+pluginManagement {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url 'dexguard-agent/lib' }
+
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {// 指定Gradle需要的用来搜索或下载【依赖dependency】的代码库，加快构建速度
+    /**
+     * 存储库模式：
+     * PREFER_PROJECT(true)--首选项目存储库
+     * PREFER_SETTINGS(false)--首选设置存储库
+     * FAIL_ON_PROJECT_REPOS(false)--强制设置存储库，对MobSDK分享sdk有影响
+     */
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url 'https://repo1.maven.org/maven2' }
+        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/grails-core' }
+        maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        //分享sdk集成步骤1：在项目Gradle文件中注册MobSDK https://mob.com/wiki/detailed?wiki=9&id=14
+        maven { url "https://mvn.mob.com/android" }
+        maven { url "https://jitpack.io" }
+
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "MyApp"
+include ':app'
+
+// 工程构建
+Properties localProperties = new Properties()
+localProperties.load(new File(rootDir, 'local.properties').newDataInputStream())
+def localProject = localProperties.getProperty('local.project') == 'true'
+if (!localProject) {
+    println('当前以远程依赖形式编译')
+} else {
+    println('当前以本地工程形式编译')
+    // 外部第三方功能接入
+    def externalModules = ['external_aar']
+//    def externalModules = ['external_aar', 'external_agentweb_core']
+    def externalPath = "$rootDir\\external"
+    println('当前externalPath:' + externalPath)
+    externalModules.each { name ->
+        def libProjectDir = new File(externalPath, name)
+        if (libProjectDir.exists() && libProjectDir.list().length > 0) {
+            def includeName = ":$name"
+            include includeName
+            project(includeName).projectDir = libProjectDir
+        }
+    }
+    // 基础库
+    def libModules = ['lib_aar', 'lib_base', 'lib_bridge', 'lib_net', 'lib_resource', 'lib_widget']
+    def libPath = "$rootDir\\lib"
+    libModules.each { name ->
+        def libProjectDir = new File(libPath, name)
+        if (libProjectDir.exists() && libProjectDir.list().length > 0) {
+            def includeName = ":$name"
+            include includeName
+            project(includeName).projectDir = libProjectDir
+        }
+    }
+    // 业务模块
+    def moduleModules = ['module_main', 'module_home', 'module_user']
+    def modulePath = "$rootDir\\module"
+    moduleModules.each { name ->
+        def libProjectDir = new File(modulePath, name)
+        if (libProjectDir.exists() && libProjectDir.list().length > 0) {
+            def includeName = ":$name"
+            include includeName
+            project(includeName).projectDir = libProjectDir
+        }
+    }
+}
