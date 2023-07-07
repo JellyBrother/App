@@ -24,4 +24,5 @@ import java.util.regex.Pattern;
 public class ShareConstants {
     public static final Pattern CLASS_N_PATTERN = Pattern.compile("classes(?:[2-9]?|[1-9][0-9]+)\\.dex(\\.jar)?");
     public static final String CHECK_RES_INSTALL_FAIL = "checkResInstall failed";
+    public static final String DEX_SUFFIX  = ".dex";
 }

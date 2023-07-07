@@ -67,6 +67,39 @@ public class TinkerLoadLibrary {
             }
         } else if (Build.VERSION.SDK_INT >= 14) {
             V14.install(classLoader, folder);
+        } else {
+            V4.install(classLoader, folder);
+        }
+    }
+
+    private static final class V4 {
+        private static void install(ClassLoader classLoader, File folder) throws Throwable {
+            String addPath = folder.getPath();
+            Field pathField = ReflectUtils.reflect(classLoader).getField("libPath");
+            final String origLibPaths = (String) pathField.get(classLoader);
+            final String[] origLibPathSplit = origLibPaths.split(":");
+            final StringBuilder newLibPaths = new StringBuilder(addPath);
+
+            for (String origLibPath : origLibPathSplit) {
+                if (origLibPath == null || addPath.equals(origLibPath)) {
+                    continue;
+                }
+                newLibPaths.append(':').append(origLibPath);
+            }
+            pathField.set(classLoader, newLibPaths.toString());
+
+            Field libraryPathElementsFiled = ReflectUtils.reflect(classLoader).getField("libraryPathElements");
+            final List<String> libraryPathElements = (List<String>) libraryPathElementsFiled.get(classLoader);
+            final Iterator<String> libPathElementIt = libraryPathElements.iterator();
+            while (libPathElementIt.hasNext()) {
+                final String libPath = libPathElementIt.next();
+                if (addPath.equals(libPath)) {
+                    libPathElementIt.remove();
+                    break;
+                }
+            }
+            libraryPathElements.add(0, addPath);
+            libraryPathElementsFiled.set(classLoader, libraryPathElements);
         }
     }
 

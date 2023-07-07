@@ -22,10 +22,12 @@ import android.os.Build;
 
 import com.jelly.app.base.fix.tinker.ShareConstants;
 import com.jelly.app.base.fix.tinker.ShareTinkerLog;
+import com.jelly.app.base.fix.utils.FileUtils;
 import com.jelly.app.base.fix.utils.ReflectUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -33,7 +35,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.zip.ZipFile;
+
+import dalvik.system.DexFile;
 
 /**
  * Created by zhangshaowen on 16/3/18.
@@ -65,6 +71,10 @@ public class SystemClassLoaderAdder {
             V23.install(cl, dexFiles, optimizeDir);
         } else if (Build.VERSION.SDK_INT >= 19) {
             V19.install(cl, dexFiles, optimizeDir);
+        } else if (Build.VERSION.SDK_INT >= 14) {
+            V14.install(cl, dexFiles, optimizeDir);
+        } else {
+            V4.install(cl, dexFiles, optimizeDir);
         }
     }
 
@@ -213,6 +223,75 @@ public class SystemClassLoaderAdder {
                 }
             }
             return (Object[]) makeDexElements.invoke(dexPathList, files, optimizedDirectory, suppressedExceptions);
+        }
+    }
+
+    /**
+     * Installer for platform versions 14, 15, 16, 17 and 18.
+     */
+    private static final class V14 {
+
+        private static void install(ClassLoader loader, List<File> additionalClassPathEntries,
+                                    File optimizedDirectory)
+                throws IllegalArgumentException, IllegalAccessException,
+                NoSuchFieldException, InvocationTargetException, NoSuchMethodException {
+            Object dexPathList = ReflectUtils.reflect(loader).field("pathList").get();
+            ReflectUtils.expandFieldArray(dexPathList, "dexElements", makeDexElements(dexPathList,
+                    new ArrayList<File>(additionalClassPathEntries), optimizedDirectory));
+        }
+
+        /**
+         * A wrapper around
+         * {@code private static final dalvik.system.DexPathList#makeDexElements}.
+         */
+        private static Object[] makeDexElements(
+                Object dexPathList, ArrayList<File> files, File optimizedDirectory)
+                throws IllegalAccessException, InvocationTargetException,
+                NoSuchMethodException {
+            Method makeDexElements = ReflectUtils.reflect(dexPathList).getMethod("makeDexElements", ArrayList.class, File.class);
+            return (Object[]) makeDexElements.invoke(dexPathList, files, optimizedDirectory);
+        }
+    }
+
+    /**
+     * Installer for platform versions 4 to 13.
+     */
+    private static final class V4 {
+        private static void install(ClassLoader loader, List<File> additionalClassPathEntries, File optimizedDirectory)
+                throws IllegalArgumentException, IllegalAccessException,
+                NoSuchFieldException, IOException {
+            int extraSize = additionalClassPathEntries.size();
+            Field pathField = ReflectUtils.reflect(loader).getField("path");
+
+            StringBuilder path = new StringBuilder((String) pathField.get(loader));
+            String[] extraPaths = new String[extraSize];
+            File[] extraFiles = new File[extraSize];
+            ZipFile[] extraZips = new ZipFile[extraSize];
+            DexFile[] extraDexs = new DexFile[extraSize];
+            for (ListIterator<File> iterator = additionalClassPathEntries.listIterator();
+                 iterator.hasNext(); ) {
+                File additionalEntry = iterator.next();
+                String entryPath = additionalEntry.getAbsolutePath();
+                path.append(':').append(entryPath);
+                int index = iterator.previousIndex();
+                extraPaths[index] = entryPath;
+                extraFiles[index] = additionalEntry;
+                extraZips[index] = new ZipFile(additionalEntry);
+                //edit by zhangshaowen
+                String outputPathName = FileUtils.optimizedPathFor(additionalEntry, optimizedDirectory);
+                //for below 4.0, we must input jar or zip
+                extraDexs[index] = DexFile.loadDex(entryPath, outputPathName, 0);
+            }
+
+            pathField.set(loader, path.toString());
+            ReflectUtils.expandFieldArray(loader, "mPaths", extraPaths);
+            ReflectUtils.expandFieldArray(loader, "mFiles", extraFiles);
+            ReflectUtils.expandFieldArray(loader, "mZips", extraZips);
+            try {
+                ReflectUtils.expandFieldArray(loader, "mDexs", extraDexs);
+            } catch (Exception e) {
+                // Ignored.
+            }
         }
     }
 }
