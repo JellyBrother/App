@@ -103,7 +103,7 @@ public class PluginLoader {
             list.add(new File(apkPath));
             ClassLoader classLoader = app.getClassLoader();
             SystemClassLoaderAdder.installDexes((Application) app, classLoader, FilePath.getOatDir(), list, true, true);
-//            SystemClassLoaderAdder.installDexes((Application) app, classLoader, FilePath.getOatDir(), list, false, true);
+            SystemClassLoaderAdder.installDexes((Application) app, classLoader, FilePath.getOatDir(), list, false, true);
             ShareTinkerLog.e(TAG, "attachBaseContext installDex end:");
         } catch (Throwable t) {
             ShareTinkerLog.e(TAG, "attachBaseContext installDex Throwable:", t);

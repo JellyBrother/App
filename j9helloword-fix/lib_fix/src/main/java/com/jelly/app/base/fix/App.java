@@ -7,13 +7,14 @@ public class App extends Application {
 
     @Override
     protected void attachBaseContext(Context base) {
-        PluginLoader.attachBaseContextBefore(base);
+//        PluginLoader.attachBaseContextBefore(base);
         super.attachBaseContext(base);
-        PluginLoader.attachBaseContextAfter(this);
+//        PluginLoader.attachBaseContextAfter(this);
     }
 
     @Override
     public void onCreate() {
+        PluginLoader.attachBaseContext(this);
         super.onCreate();
     }
 }

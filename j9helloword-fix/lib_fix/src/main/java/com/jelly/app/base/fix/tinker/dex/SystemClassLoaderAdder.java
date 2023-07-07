@@ -21,11 +21,12 @@ import android.app.Application;
 import android.os.Build;
 
 import com.jelly.app.base.fix.tinker.ShareConstants;
+import com.jelly.app.base.fix.tinker.ShareReflectUtil;
 import com.jelly.app.base.fix.tinker.ShareTinkerLog;
-import com.jelly.app.base.fix.utils.ReflectUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -124,10 +125,15 @@ public class SystemClassLoaderAdder {
                                     File optimizedDirectory)
                 throws IllegalArgumentException, IllegalAccessException,
                 NoSuchFieldException, InvocationTargetException, NoSuchMethodException, IOException {
-
-            Object dexPathList = ReflectUtils.reflect(loader).field("pathList").get();
+            /* The patched class loader is expected to be a descendant of
+             * dalvik.system.BaseDexClassLoader. We modify its
+             * dalvik.system.DexPathList pathList field to append additional DEX
+             * file entries.
+             */
+            Field pathListField = ShareReflectUtil.findField(loader, "pathList");
+            Object dexPathList = pathListField.get(loader);
             ArrayList<IOException> suppressedExceptions = new ArrayList<IOException>();
-            ReflectUtils.expandFieldArray(dexPathList, "dexElements", makePathElements(dexPathList,
+            ShareReflectUtil.expandFieldArray(dexPathList, "dexElements", makePathElements(dexPathList,
                     new ArrayList<File>(additionalClassPathEntries), optimizedDirectory,
                     suppressedExceptions));
             if (suppressedExceptions.size() > 0) {
@@ -150,11 +156,12 @@ public class SystemClassLoaderAdder {
 
             Method makePathElements;
             try {
-                makePathElements = ReflectUtils.reflect(dexPathList).getMethod("makePathElements", List.class, File.class, List.class);
+                makePathElements = ShareReflectUtil.findMethod(dexPathList, "makePathElements", List.class, File.class,
+                        List.class);
             } catch (NoSuchMethodException e) {
                 ShareTinkerLog.e(TAG, "NoSuchMethodException: makePathElements(List,File,List) failure");
                 try {
-                    makePathElements = ReflectUtils.reflect(dexPathList).getMethod("makePathElements", ArrayList.class, File.class, ArrayList.class);
+                    makePathElements = ShareReflectUtil.findMethod(dexPathList, "makePathElements", ArrayList.class, File.class, ArrayList.class);
                 } catch (NoSuchMethodException e1) {
                     ShareTinkerLog.e(TAG, "NoSuchMethodException: makeDexElements(ArrayList,File,ArrayList) failure");
                     try {
@@ -166,6 +173,7 @@ public class SystemClassLoaderAdder {
                     }
                 }
             }
+
             return (Object[]) makePathElements.invoke(dexPathList, files, optimizedDirectory, suppressedExceptions);
         }
     }
@@ -179,9 +187,15 @@ public class SystemClassLoaderAdder {
                                     File optimizedDirectory)
                 throws IllegalArgumentException, IllegalAccessException,
                 NoSuchFieldException, InvocationTargetException, NoSuchMethodException, IOException {
-            Object dexPathList = ReflectUtils.reflect(loader).field("pathList").get();
+            /* The patched class loader is expected to be a descendant of
+             * dalvik.system.BaseDexClassLoader. We modify its
+             * dalvik.system.DexPathList pathList field to append additional DEX
+             * file entries.
+             */
+            Field pathListField = ShareReflectUtil.findField(loader, "pathList");
+            Object dexPathList = pathListField.get(loader);
             ArrayList<IOException> suppressedExceptions = new ArrayList<IOException>();
-            ReflectUtils.expandFieldArray(dexPathList, "dexElements", makeDexElements(dexPathList,
+            ShareReflectUtil.expandFieldArray(dexPathList, "dexElements", makeDexElements(dexPathList,
                     new ArrayList<File>(additionalClassPathEntries), optimizedDirectory,
                     suppressedExceptions));
             if (suppressedExceptions.size() > 0) {
@@ -200,18 +214,21 @@ public class SystemClassLoaderAdder {
                 Object dexPathList, ArrayList<File> files, File optimizedDirectory,
                 ArrayList<IOException> suppressedExceptions)
                 throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+
             Method makeDexElements = null;
             try {
-                makeDexElements = ReflectUtils.reflect(dexPathList).getMethod("makeDexElements", ArrayList.class, File.class, ArrayList.class);
+                makeDexElements = ShareReflectUtil.findMethod(dexPathList, "makeDexElements", ArrayList.class, File.class,
+                        ArrayList.class);
             } catch (NoSuchMethodException e) {
                 ShareTinkerLog.e(TAG, "NoSuchMethodException: makeDexElements(ArrayList,File,ArrayList) failure");
                 try {
-                    makeDexElements = ReflectUtils.reflect(dexPathList).getMethod("makeDexElements", List.class, File.class, List.class);
+                    makeDexElements = ShareReflectUtil.findMethod(dexPathList, "makeDexElements", List.class, File.class, List.class);
                 } catch (NoSuchMethodException e1) {
                     ShareTinkerLog.e(TAG, "NoSuchMethodException: makeDexElements(List,File,List) failure");
                     throw e1;
                 }
             }
+
             return (Object[]) makeDexElements.invoke(dexPathList, files, optimizedDirectory, suppressedExceptions);
         }
     }

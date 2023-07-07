@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.jelly.app.base.fix.PluginLoader;
 import com.jelly.app.base.fix.utils.ReflectUtils;
 
-public class ApkMainActivity extends AppCompatActivity {
+public class ApkMainActivity extends BaseActivity {
 
     @SuppressLint("MissingInflatedId")
     @Override

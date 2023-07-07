@@ -19,6 +19,10 @@ package com.jelly.app.base.fix.tinker.res;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
 
+import static com.jelly.app.base.fix.tinker.ShareReflectUtil.findConstructor;
+import static com.jelly.app.base.fix.tinker.ShareReflectUtil.findField;
+import static com.jelly.app.base.fix.tinker.ShareReflectUtil.findMethod;
+
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
@@ -29,10 +33,10 @@ import android.os.Message;
 import android.util.ArrayMap;
 
 import com.jelly.app.base.fix.tinker.ShareConstants;
+import com.jelly.app.base.fix.tinker.ShareReflectUtil;
 import com.jelly.app.base.fix.tinker.ShareTinkerLog;
 import com.jelly.app.base.fix.tinker.TinkerRuntimeException;
 import com.jelly.app.base.fix.utils.FileUtils;
-import com.jelly.app.base.fix.utils.ReflectUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -90,7 +94,7 @@ public class TinkerResourcePatcher {
 
         // Find the ActivityThread instance for the current thread
         Class<?> activityThread = Class.forName("android.app.ActivityThread");
-        currentActivityThread = FileUtils.getActivityThread(context, activityThread);
+        currentActivityThread = ShareReflectUtil.getActivityThread(context, activityThread);
 
         // API version 8 has PackageInfo, 10 has LoadedApk. 9, I don't know.
         Class<?> loadedApkClass;
@@ -100,16 +104,16 @@ public class TinkerResourcePatcher {
             loadedApkClass = Class.forName("android.app.ActivityThread$PackageInfo");
         }
 
-        resDir = ReflectUtils.reflect(loadedApkClass).getField("mResDir");
+        resDir = findField(loadedApkClass, "mResDir");
         try {
-            resources = ReflectUtils.reflect(loadedApkClass).getField("mResources");
+            resources = findField(loadedApkClass, "mResources");
         } catch (Throwable thr) {
             ShareTinkerLog.printErrStackTrace(TAG, thr, "Fail to get LoadedApk.mResources field.");
             resources = null;
         }
-        packagesFiled = ReflectUtils.reflect(activityThread).getField("mPackages");
+        packagesFiled = findField(activityThread, "mPackages");
         try {
-            resourcePackagesFiled = ReflectUtils.reflect(activityThread).getField("mResourcePackages");
+            resourcePackagesFiled = findField(activityThread, "mResourcePackages");
         } catch (Throwable thr) {
             ShareTinkerLog.printErrStackTrace(TAG, thr, "Fail to get mResourcePackages field.");
             resourcePackagesFiled = null;
@@ -117,50 +121,51 @@ public class TinkerResourcePatcher {
 
         // Create a new AssetManager instance and point it to the resources
         final AssetManager assets = context.getAssets();
-        addAssetPathMethod = ReflectUtils.reflect(assets).getMethod("addAssetPath", String.class);
+        addAssetPathMethod = findMethod(assets, "addAssetPath", String.class);
         if (shouldAddSharedLibraryAssets(context.getApplicationInfo())) {
-            addAssetPathAsSharedLibraryMethod = ReflectUtils.reflect(assets).getMethod("addAssetPathAsSharedLibrary", String.class);
+            addAssetPathAsSharedLibraryMethod =
+                    findMethod(assets, "addAssetPathAsSharedLibrary", String.class);
         }
 
         // Kitkat needs this method call, Lollipop doesn't. However, it doesn't seem to cause any harm
         // in L, so we do it unconditionally.
         try {
-            stringBlocksField = ReflectUtils.reflect(assets).getField("mStringBlocks");
-            ensureStringBlocksMethod = ReflectUtils.reflect(assets).getMethod("ensureStringBlocks");
+            stringBlocksField = findField(assets, "mStringBlocks");
+            ensureStringBlocksMethod = findMethod(assets, "ensureStringBlocks");
         } catch (Throwable ignored) {
             // Ignored.
         }
 
         // Use class fetched from instance to avoid some ROMs that use customized AssetManager
         // class. (e.g. Baidu OS)
-        newAssetManagerCtor = ReflectUtils.reflect(assets).getConstructor();
+        newAssetManagerCtor = findConstructor(assets);
 
         // Iterate over all known Resources objects
         if (SDK_INT >= KITKAT) {
             //pre-N
             // Find the singleton instance of ResourcesManager
             final Class<?> resourcesManagerClass = Class.forName("android.app.ResourcesManager");
-            final Method mGetInstance = ReflectUtils.reflect(resourcesManagerClass).getMethod("getInstance");
+            final Method mGetInstance = findMethod(resourcesManagerClass, "getInstance");
             final Object resourcesManager = mGetInstance.invoke(null);
             try {
-                Field fMActiveResources = ReflectUtils.reflect(resourcesManagerClass).getField("mActiveResources");
+                Field fMActiveResources = findField(resourcesManagerClass, "mActiveResources");
                 final ArrayMap<?, WeakReference<Resources>> activeResources19 =
                         (ArrayMap<?, WeakReference<Resources>>) fMActiveResources.get(resourcesManager);
                 references = activeResources19.values();
-            } catch (Throwable ignore) {
+            } catch (NoSuchFieldException ignore) {
                 // N moved the resources to mResourceReferences
-                final Field mResourceReferences = ReflectUtils.reflect(resourcesManagerClass).getField("mResourceReferences");
+                final Field mResourceReferences = findField(resourcesManagerClass, "mResourceReferences");
                 references = (Collection<WeakReference<Resources>>) mResourceReferences.get(resourcesManager);
 
                 try {
-                    final Field mResourceImplsField = ReflectUtils.reflect(resourcesManagerClass).getField("mResourceImpls");
+                    final Field mResourceImplsField = findField(resourcesManagerClass, "mResourceImpls");
                     resourceImpls = (Map<Object, WeakReference<Object>>) mResourceImplsField.get(resourcesManager);
                 } catch (Throwable ignored) {
                     resourceImpls = null;
                 }
             }
         } else {
-            final Field fMActiveResources = ReflectUtils.reflect(activityThread).getField("mActiveResources");
+            final Field fMActiveResources = findField(activityThread, "mActiveResources");
             final HashMap<?, WeakReference<Resources>> activeResources7 =
                     (HashMap<?, WeakReference<Resources>>) fMActiveResources.get(currentActivityThread);
             references = activeResources7.values();
@@ -177,18 +182,18 @@ public class TinkerResourcePatcher {
         if (SDK_INT >= 24) {
             try {
                 // N moved the mAssets inside an mResourcesImpl field
-                resourcesImplFiled = ReflectUtils.reflect(resources).getField("mResourcesImpl");
+                resourcesImplFiled = findField(resources, "mResourcesImpl");
             } catch (Throwable ignore) {
                 // for safety
-                assetsFiled = ReflectUtils.reflect(resources).getField("mAssets");
+                assetsFiled = findField(resources, "mAssets");
             }
         } else {
-            assetsFiled = ReflectUtils.reflect(resources).getField("mAssets");
+            assetsFiled = findField(resources, "mAssets");
         }
 
         try {
-            publicSourceDirField = ReflectUtils.reflect(ApplicationInfo.class).getField("publicSourceDir");
-        } catch (Throwable ignore) {
+            publicSourceDirField = findField(ApplicationInfo.class, "publicSourceDir");
+        } catch (NoSuchFieldException ignore) {
             // Ignored.
         }
     }
@@ -279,7 +284,7 @@ public class TinkerResourcePatcher {
                 // N
                 final Object resourceImpl = resourcesImplFiled.get(resources);
                 // for Huawei HwResourcesImpl
-                final Field implAssets = ReflectUtils.reflect(resourceImpl).getField("mAssets");
+                final Field implAssets = findField(resourceImpl, "mAssets");
                 implAssets.set(resourceImpl, newAssetManager);
             }
 
@@ -293,7 +298,7 @@ public class TinkerResourcePatcher {
                 for (WeakReference<Object> wr : resourceImpls.values()) {
                     final Object resourceImpl = wr.get();
                     if (resourceImpl != null) {
-                        final Field implAssets = ReflectUtils.reflect(resourceImpl).getField("mAssets");
+                        final Field implAssets = findField(resourceImpl, "mAssets");
                         implAssets.set(resourceImpl, newAssetManager);
                     }
                 }
@@ -325,10 +330,10 @@ public class TinkerResourcePatcher {
 
     private static void installResourceInsuranceHacks(Context context, String patchedResApkPath) {
         try {
-            final Object activityThread = FileUtils.getActivityThread(context, null);
-            final Field mHField = ReflectUtils.reflect(activityThread).getField("mH");
+            final Object activityThread = ShareReflectUtil.getActivityThread(context, null);
+            final Field mHField = findField(activityThread, "mH");
             final Handler mH = (Handler) mHField.get(activityThread);
-            final Field mCallbackField = ReflectUtils.reflect(Handler.class).getField("mCallback");
+            final Field mCallbackField = findField(Handler.class, "mCallback");
             final Handler.Callback originCallback = (Handler.Callback) mCallbackField.get(mH);
             if (!(originCallback instanceof ResourceInsuranceHandlerCallback)) {
                 final ResourceInsuranceHandlerCallback hackCallback = new ResourceInsuranceHandlerCallback(
@@ -374,7 +379,7 @@ public class TinkerResourcePatcher {
         private int fetchMessageId(Class<?> hClazz, String name, int defVal) {
             int value;
             try {
-                value = ReflectUtils.reflect(hClazz).field(name).get();
+                value = findField(hClazz, name).getInt(null);
             } catch (Throwable e) {
                 value = defVal;
             }
@@ -412,7 +417,7 @@ public class TinkerResourcePatcher {
                         }
                         if (mGetCallbacksMethod == null) {
                             try {
-                                mGetCallbacksMethod = ReflectUtils.reflect(transaction).getMethod("getCallbacks");
+                                mGetCallbacksMethod = findMethod(transaction, "getCallbacks");
                             } catch (Throwable ignored) {
                                 // Ignored.
                             }
@@ -485,8 +490,9 @@ public class TinkerResourcePatcher {
         ShareTinkerLog.w(TAG, "try to clear typedArray cache!");
         // Clear typedArray cache.
         try {
-            Object origTypedArrayPool = ReflectUtils.reflect(Resources.class).field("mTypedArrayPool").get();
-            final Method acquireMethod = ReflectUtils.reflect(origTypedArrayPool).getMethod("acquire");
+            final Field typedArrayPoolField = findField(Resources.class, "mTypedArrayPool");
+            final Object origTypedArrayPool = typedArrayPoolField.get(resources);
+            final Method acquireMethod = findMethod(origTypedArrayPool, "acquire");
             while (true) {
                 if (acquireMethod.invoke(origTypedArrayPool) == null) {
                     break;

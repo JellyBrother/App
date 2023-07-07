@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace 'com.jelly.app.base.fix'
-    compileSdk 33
+    namespace rootProject.ext.android.applicationId
+    compileSdk rootProject.ext.android.compileSdk
 
     defaultConfig {
-        minSdk 19
-        targetSdk 33
+        minSdk rootProject.ext.android.minSdk
+        targetSdk rootProject.ext.android.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
