@@ -2,8 +2,10 @@ package com.example.myapplication;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.jelly.app.base.fix.PluginLoader;
 import com.jelly.app.base.fix.utils.ReflectUtils;
@@ -46,22 +48,30 @@ public class ApkMainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Object getString = ReflectUtils.reflect("com.example.myapplication.Test").method("getString", 33).get();
-                int a = 0;
+                toast(getString);
             }
         });
         findViewById(R.id.tvw5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Object getDrawable = ReflectUtils.reflect("com.example.myapplication.Test").method("getDrawable", v.getContext()).get();
-                int a = 0;
+                Drawable drawable = ReflectUtils.reflect("com.example.myapplication.Test").method("getDrawable", v.getContext()).get();
+                if (drawable == null) {
+                    toast("drawable == null");
+                } else {
+                    toast("drawable Width:" + drawable.getIntrinsicWidth() + ",Height:" + drawable.getIntrinsicHeight());
+                }
             }
         });
         findViewById(R.id.tvw6).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Object getNative = ReflectUtils.reflect("com.example.myapplication.Hello").method("getNative", 9).get();
-                int a = 0;
+                toast(getNative);
             }
         });
+    }
+
+    private void toast(Object text) {
+        Toast.makeText(this, text.toString(), Toast.LENGTH_SHORT).show();
     }
 }

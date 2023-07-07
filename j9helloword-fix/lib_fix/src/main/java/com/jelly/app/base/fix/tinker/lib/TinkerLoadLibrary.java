@@ -18,8 +18,8 @@ package com.jelly.app.base.fix.tinker.lib;
 
 import android.os.Build;
 
-import com.jelly.app.base.fix.tinker.ShareReflectUtil;
 import com.jelly.app.base.fix.tinker.ShareTinkerLog;
+import com.jelly.app.base.fix.utils.ReflectUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,12 +72,10 @@ public class TinkerLoadLibrary {
 
     private static final class V14 {
         private static void install(ClassLoader classLoader, File folder) throws Throwable {
-            final Field pathListField = ShareReflectUtil.findField(classLoader, "pathList");
-            final Object dexPathList = pathListField.get(classLoader);
+            Object dexPathList = ReflectUtils.reflect(classLoader).field("pathList").get();
 
-            final Field nativeLibDirField = ShareReflectUtil.findField(dexPathList, "nativeLibraryDirectories");
-            final File[] origNativeLibDirs = (File[]) nativeLibDirField.get(dexPathList);
-
+            Field nativeLibDirField = ReflectUtils.reflect(dexPathList).getField("nativeLibraryDirectories");
+            File[] origNativeLibDirs = (File[]) nativeLibDirField.get(dexPathList);
             final List<File> newNativeLibDirList = new ArrayList<>(origNativeLibDirs.length + 1);
             newNativeLibDirList.add(folder);
             for (File origNativeLibDir : origNativeLibDirs) {
@@ -91,12 +89,10 @@ public class TinkerLoadLibrary {
 
     private static final class V23 {
         private static void install(ClassLoader classLoader, File folder) throws Throwable {
-            final Field pathListField = ShareReflectUtil.findField(classLoader, "pathList");
-            final Object dexPathList = pathListField.get(classLoader);
+            Object dexPathList = ReflectUtils.reflect(classLoader).field("pathList").get();
+            List<File> origLibDirs = ReflectUtils.reflect(dexPathList).field("nativeLibraryDirectories").get();
+            List<File> origSystemLibDirs = ReflectUtils.reflect(dexPathList).field("systemNativeLibraryDirectories").get();
 
-            final Field nativeLibraryDirectories = ShareReflectUtil.findField(dexPathList, "nativeLibraryDirectories");
-
-            List<File> origLibDirs = (List<File>) nativeLibraryDirectories.get(dexPathList);
             if (origLibDirs == null) {
                 origLibDirs = new ArrayList<>(2);
             }
@@ -110,35 +106,27 @@ public class TinkerLoadLibrary {
             }
             origLibDirs.add(0, folder);
 
-            final Field systemNativeLibraryDirectories = ShareReflectUtil.findField(dexPathList, "systemNativeLibraryDirectories");
-            List<File> origSystemLibDirs = (List<File>) systemNativeLibraryDirectories.get(dexPathList);
             if (origSystemLibDirs == null) {
                 origSystemLibDirs = new ArrayList<>(2);
             }
-
             final List<File> newLibDirs = new ArrayList<>(origLibDirs.size() + origSystemLibDirs.size() + 1);
             newLibDirs.addAll(origLibDirs);
             newLibDirs.addAll(origSystemLibDirs);
 
-            final Method makeElements = ShareReflectUtil.findMethod(dexPathList,
-                    "makePathElements", List.class, File.class, List.class);
+            Method makeElements = ReflectUtils.reflect(dexPathList).getMethod("makePathElements", List.class, File.class, List.class);
             final ArrayList<IOException> suppressedExceptions = new ArrayList<>();
-
             final Object[] elements = (Object[]) makeElements.invoke(dexPathList, newLibDirs, null, suppressedExceptions);
 
-            final Field nativeLibraryPathElements = ShareReflectUtil.findField(dexPathList, "nativeLibraryPathElements");
-            nativeLibraryPathElements.set(dexPathList, elements);
+            ReflectUtils.reflect(dexPathList).field("nativeLibraryPathElements", elements);
         }
     }
 
     private static final class V25 {
         private static void install(ClassLoader classLoader, File folder) throws Throwable {
-            final Field pathListField = ShareReflectUtil.findField(classLoader, "pathList");
-            final Object dexPathList = pathListField.get(classLoader);
+            Object dexPathList = ReflectUtils.reflect(classLoader).field("pathList").get();
+            List<File> origLibDirs = ReflectUtils.reflect(dexPathList).field("nativeLibraryDirectories").get();
+            List<File> origSystemLibDirs = ReflectUtils.reflect(dexPathList).field("systemNativeLibraryDirectories").get();
 
-            final Field nativeLibraryDirectories = ShareReflectUtil.findField(dexPathList, "nativeLibraryDirectories");
-
-            List<File> origLibDirs = (List<File>) nativeLibraryDirectories.get(dexPathList);
             if (origLibDirs == null) {
                 origLibDirs = new ArrayList<>(2);
             }
@@ -151,9 +139,6 @@ public class TinkerLoadLibrary {
                 }
             }
             origLibDirs.add(0, folder);
-
-            final Field systemNativeLibraryDirectories = ShareReflectUtil.findField(dexPathList, "systemNativeLibraryDirectories");
-            List<File> origSystemLibDirs = (List<File>) systemNativeLibraryDirectories.get(dexPathList);
             if (origSystemLibDirs == null) {
                 origSystemLibDirs = new ArrayList<>(2);
             }
@@ -162,12 +147,10 @@ public class TinkerLoadLibrary {
             newLibDirs.addAll(origLibDirs);
             newLibDirs.addAll(origSystemLibDirs);
 
-            final Method makeElements = ShareReflectUtil.findMethod(dexPathList, "makePathElements", List.class);
-
+            Method makeElements = ReflectUtils.reflect(dexPathList).getMethod("makePathElements", List.class);
             final Object[] elements = (Object[]) makeElements.invoke(dexPathList, newLibDirs);
 
-            final Field nativeLibraryPathElements = ShareReflectUtil.findField(dexPathList, "nativeLibraryPathElements");
-            nativeLibraryPathElements.set(dexPathList, elements);
+            ReflectUtils.reflect(dexPathList).field("nativeLibraryPathElements", elements);
         }
     }
 }
