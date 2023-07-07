@@ -1,6 +1,9 @@
 package com.jelly.app.base.fix.utils;
 
+import android.util.Log;
+
 import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -120,10 +123,18 @@ public class ReflectUtils {
      * @return the single {@link ReflectUtils} instance
      */
     public ReflectUtils newInstance(Object... args) {
+        Constructor<?> constructor = getConstructor(args);
+        return newInstance(constructor, args);
+    }
+
+    public Constructor<?> getConstructor(Object... args) {
         Class<?>[] types = getArgsType(args);
         try {
             Constructor<?> constructor = type().getDeclaredConstructor(types);
-            return newInstance(constructor, args);
+            if (!constructor.isAccessible()) {
+                constructor.setAccessible(true);
+            }
+            return constructor;
         } catch (NoSuchMethodException e) {
             List<Constructor<?>> list = new ArrayList<>();
             for (Constructor<?> constructor : type().getDeclaredConstructors()) {
@@ -135,12 +146,16 @@ public class ReflectUtils {
                 throw new ReflectException(e);
             } else {
                 sortConstructors(list);
-                return newInstance(list.get(0), args);
+                Constructor<?> constructor = list.get(0);
+                if (!constructor.isAccessible()) {
+                    constructor.setAccessible(true);
+                }
+                return constructor;
             }
         }
     }
 
-    private Class<?>[] getArgsType(final Object... args) {
+    private static Class<?>[] getArgsType(final Object... args) {
         if (args == null) return new Class[0];
         Class<?>[] result = new Class[args.length];
         for (int i = 0; i < args.length; i++) {
@@ -281,12 +296,13 @@ public class ReflectUtils {
      */
     public ReflectUtils method(final String name, final Object... args) throws ReflectException {
         Class<?>[] types = getArgsType(args);
+        Class<?> type = type();
         try {
-            Method method = exactMethod(name, types);
+            Method method = exactMethod(type, name, types);
             return method(method, object, args);
         } catch (NoSuchMethodException e) {
             try {
-                Method method = similarMethod(name, types);
+                Method method = similarMethod(type, name, types);
                 return method(method, object, args);
             } catch (NoSuchMethodException e1) {
                 throw new ReflectException(e1);
@@ -308,26 +324,62 @@ public class ReflectUtils {
         }
     }
 
-    private Method exactMethod(final String name, final Class<?>[] types)
-            throws NoSuchMethodException {
+    public Method getMethod(String name, Class<?>... types) throws NoSuchMethodException {
         Class<?> type = type();
         try {
-            return type.getMethod(name, types);
+            Method method = exactMethod(type, name, types);
+            return method;
+        } catch (NoSuchMethodException e) {
+            try {
+                Method method = similarMethod(type, name, types);
+                return method;
+            } catch (NoSuchMethodException e1) {
+                throw new NoSuchMethodException();
+            }
+        }
+    }
+
+    public static Method getMethod(Object object, String name, Class<?>... types) throws NoSuchMethodException {
+        Class<?> type = object.getClass();
+        try {
+            Method method = exactMethod(type, name, types);
+            return method;
+        } catch (NoSuchMethodException e) {
+            try {
+                Method method = similarMethod(type, name, types);
+                return method;
+            } catch (NoSuchMethodException e1) {
+                throw new NoSuchMethodException();
+            }
+        }
+    }
+
+    private static Method exactMethod(Class<?> type, final String name, final Class<?>[] types)
+            throws NoSuchMethodException {
+        Method method = null;
+        try {
+            method = type.getMethod(name, types);
         } catch (NoSuchMethodException e) {
             do {
                 try {
-                    return type.getDeclaredMethod(name, types);
+                    method = type.getDeclaredMethod(name, types);
+                    break;
                 } catch (NoSuchMethodException ignore) {
                 }
                 type = type.getSuperclass();
             } while (type != null);
+        }
+        if (method == null) {
             throw new NoSuchMethodException();
         }
+        if (!method.isAccessible()) {
+            method.setAccessible(true);
+        }
+        return method;
     }
 
-    private Method similarMethod(final String name, final Class<?>[] types)
+    private static Method similarMethod(Class<?> type, final String name, final Class<?>[] types)
             throws NoSuchMethodException {
-        Class<?> type = type();
         List<Method> methods = new ArrayList<>();
         for (Method method : type.getMethods()) {
             if (isSimilarSignature(method, name, types)) {
@@ -336,7 +388,11 @@ public class ReflectUtils {
         }
         if (!methods.isEmpty()) {
             sortMethods(methods);
-            return methods.get(0);
+            Method method = methods.get(0);
+            if (!method.isAccessible()) {
+                method.setAccessible(true);
+            }
+            return method;
         }
         do {
             for (Method method : type.getDeclaredMethods()) {
@@ -346,16 +402,20 @@ public class ReflectUtils {
             }
             if (!methods.isEmpty()) {
                 sortMethods(methods);
-                return methods.get(0);
+                Method method = methods.get(0);
+                if (!method.isAccessible()) {
+                    method.setAccessible(true);
+                }
+                return method;
             }
             type = type.getSuperclass();
         } while (type != null);
 
         throw new NoSuchMethodException("No similar method " + name + " with params "
-                + Arrays.toString(types) + " could be found on type " + type() + ".");
+                + Arrays.toString(types) + " could be found on type " + type + ".");
     }
 
-    private void sortMethods(final List<Method> methods) {
+    private static void sortMethods(final List<Method> methods) {
         Collections.sort(methods, new Comparator<Method>() {
             @Override
             public int compare(Method o1, Method o2) {
@@ -376,14 +436,14 @@ public class ReflectUtils {
         });
     }
 
-    private boolean isSimilarSignature(final Method possiblyMatchingMethod,
-                                       final String desiredMethodName,
-                                       final Class<?>[] desiredParamTypes) {
+    private static boolean isSimilarSignature(final Method possiblyMatchingMethod,
+                                              final String desiredMethodName,
+                                              final Class<?>[] desiredParamTypes) {
         return possiblyMatchingMethod.getName().equals(desiredMethodName)
                 && match(possiblyMatchingMethod.getParameterTypes(), desiredParamTypes);
     }
 
-    private boolean match(final Class<?>[] declaredTypes, final Class<?>[] actualTypes) {
+    private static boolean match(final Class<?>[] declaredTypes, final Class<?>[] actualTypes) {
         if (declaredTypes.length == actualTypes.length) {
             for (int i = 0; i < actualTypes.length; i++) {
                 if (actualTypes[i] == NULL.class
@@ -474,7 +534,7 @@ public class ReflectUtils {
         return type;
     }
 
-    private Class<?> wrapper(final Class<?> type) {
+    private static Class<?> wrapper(final Class<?> type) {
         if (type == null) {
             return null;
         } else if (type.isPrimitive()) {
@@ -545,5 +605,80 @@ public class ReflectUtils {
         public ReflectException(Throwable cause) {
             super(cause);
         }
+    }
+
+    public static void expandFieldArray(Object instance, String fieldName, Object[] extraElements) {
+        try {
+            Field jlrField = ReflectUtils.reflect(instance).getField(fieldName);
+            Object[] original = (Object[]) jlrField.get(instance);
+            Object[] combined = (Object[]) Array.newInstance(original.getClass().getComponentType(), original.length + extraElements.length);
+            System.arraycopy(extraElements, 0, combined, 0, extraElements.length);
+            System.arraycopy(original, 0, combined, extraElements.length, original.length);
+            jlrField.set(instance, combined);
+        } catch (Throwable t) {
+            Log.e(TAG, "expandFieldArray Throwable:", t);
+        }
+    }
+
+    /**
+     * 合并数组
+     */
+    private static Object[] combineArray(Object selfPathListObject, Object apkPathListObject, String field, String className) {
+        try {
+            Object[] selfArray = (Object[]) ReflectUtils.reflect(selfPathListObject).field(field).get();
+            Object[] apkArray = (Object[]) ReflectUtils.reflect(apkPathListObject).field(field).get();
+            if (selfArray == null && apkArray == null) {
+                return null;
+            }
+            int apkArrayLength = 0;
+            Class<?> componentType = null;
+            if (apkArray != null) {
+                componentType = apkArray.getClass().getComponentType();
+                apkArrayLength = apkArray.length;
+            }
+            int selfArrayLength = 0;
+            if (selfArray != null) {
+                selfArrayLength = selfArray.length;
+            }
+            if (componentType == null) {
+                componentType = Class.forName(className);
+            }
+            Object[] copyArray = (Object[]) Array.newInstance(componentType, apkArrayLength + selfArrayLength);
+            if (apkArray != null) {
+                System.arraycopy(apkArray, 0, copyArray, 0, apkArrayLength);
+            }
+            if (selfArray != null) {
+                System.arraycopy(selfArray, 0, copyArray, apkArrayLength, selfArrayLength);
+            }
+            return copyArray;
+        } catch (Throwable t) {
+            Log.e(TAG, "combineArray Throwable:", t);
+        }
+        return null;
+    }
+
+    /**
+     * 合并集合
+     */
+    private static List<Object> combineList(
+            Object apkPathListObject,
+            Object selfPathListObject,
+            String field
+    ) {
+        try {
+            List<Object> apkList = (List<Object>) ReflectUtils.reflect(apkPathListObject).field(field).get();
+            List<Object> selfList = (List<Object>) ReflectUtils.reflect(selfPathListObject).field(field).get();
+            if (apkList == null) {
+                return selfList;
+            }
+            if (selfList == null) {
+                return apkList;
+            }
+            apkList.addAll(selfList);
+            return apkList;
+        } catch (Throwable t) {
+            Log.e(TAG, "combineList Throwable:", t);
+        }
+        return null;
     }
 }

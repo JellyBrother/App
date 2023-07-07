@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.jelly.app.base.fix.utils.FileUtils;
+import com.jelly.app.base.fix.utils.ReflectUtils;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -53,11 +54,7 @@ final class NewClassLoaderInjector {
                                                     boolean useDLC,
                                                     boolean forActualLoading,
                                                     String... patchDexPaths) throws Throwable {
-        final Field pathListField = findField(
-                Class.forName("dalvik.system.BaseDexClassLoader", false, oldClassLoader),
-                "pathList");
-        final Object oldPathList = pathListField.get(oldClassLoader);
-
+        Object oldPathList = ReflectUtils.reflect(Class.forName("dalvik.system.BaseDexClassLoader", false, oldClassLoader)).field("pathList").get();
         final StringBuilder dexPathBuilder = new StringBuilder();
         final boolean hasPatchDexPaths = patchDexPaths != null && patchDexPaths.length > 0;
         if (hasPatchDexPaths) {
@@ -68,9 +65,9 @@ final class NewClassLoaderInjector {
                 dexPathBuilder.append(patchDexPaths[i]);
             }
         }
-
         final String combinedDexPath = dexPathBuilder.toString();
-        final Field nativeLibraryDirectoriesField = findField(oldPathList.getClass(), "nativeLibraryDirectories");
+
+        Field nativeLibraryDirectoriesField = ReflectUtils.reflect(oldPathList).getField("nativeLibraryDirectories");
         List<File> oldNativeLibraryDirectories = null;
         if (nativeLibraryDirectoriesField.getType().isArray()) {
             oldNativeLibraryDirectories = Arrays.asList((File[]) nativeLibraryDirectoriesField.get(oldPathList));
@@ -97,9 +94,7 @@ final class NewClassLoaderInjector {
                 result = new DelegateLastClassLoader(combinedDexPath, combinedLibraryPath, oldClassLoader);
             } else {
                 result = new DelegateLastClassLoader(combinedDexPath, combinedLibraryPath, ClassLoader.getSystemClassLoader());
-                final Field parentField = ClassLoader.class.getDeclaredField("parent");
-                parentField.setAccessible(true);
-                parentField.set(result, oldClassLoader);
+                ReflectUtils.reflect(result).field("parent", oldClassLoader);
             }
         } else {
             result = new TinkerClassLoader(combinedDexPath, dexOptDir, combinedLibraryPath, oldClassLoader);
@@ -107,56 +102,36 @@ final class NewClassLoaderInjector {
         // 'EnsureSameClassLoader' mechanism which is first introduced in Android O
         // may cause exception if we replace definingContext of old classloader.
         if (forActualLoading && !FileUtils.isNewerOrEqualThanVersion(26, true)) {
-            findField(oldPathList.getClass(), "definingContext").set(oldPathList, result);
+            ReflectUtils.reflect(oldPathList).field("definingContext", result);
         }
         return result;
     }
 
     public static void doInject(Application app, ClassLoader classLoader) throws Throwable {
         Thread.currentThread().setContextClassLoader(classLoader);
-
-        final Context baseContext = (Context) findField(app.getClass(), "mBase").get(app);
+        Context baseContext = ReflectUtils.reflect(app).field("mBase").get();
         try {
-            findField(baseContext.getClass(), "mClassLoader").set(baseContext, classLoader);
+            ReflectUtils.reflect(baseContext).field("mClassLoader", classLoader);
         } catch (Throwable ignored) {
             // There's no mClassLoader field in ContextImpl before Android O.
             // However we should try our best to replace this field in case some
             // customized system has one.
         }
-        final Object basePackageInfo = findField(baseContext.getClass(), "mPackageInfo").get(baseContext);
-        findField(basePackageInfo.getClass(), "mClassLoader").set(basePackageInfo, classLoader);
-
+        Object basePackageInfo = ReflectUtils.reflect(baseContext).field("mPackageInfo").get();
+        ReflectUtils.reflect(basePackageInfo).field("mClassLoader", classLoader);
         final Resources res = app.getResources();
         try {
-            findField(res.getClass(), "mClassLoader").set(res, classLoader);
+            ReflectUtils.reflect(res).field("mClassLoader", classLoader);
         } catch (Throwable ignored) {
             // Ignored.
         }
         try {
-            final Object drawableInflater = findField(res.getClass(), "mDrawableInflater").get(res);
+            Object drawableInflater = ReflectUtils.reflect(res).field("mDrawableInflater").get();
             if (drawableInflater != null) {
-                findField(drawableInflater.getClass(), "mClassLoader").set(drawableInflater, classLoader);
+                ReflectUtils.reflect(drawableInflater).field("mClassLoader", classLoader);
             }
         } catch (Throwable ignored) {
             // Ignored.
-        }
-    }
-
-    private static Field findField(Class<?> clazz, String name) throws Throwable {
-        Class<?> currClazz = clazz;
-        while (true) {
-            try {
-                final Field result = currClazz.getDeclaredField(name);
-                result.setAccessible(true);
-                return result;
-            } catch (Throwable ignored) {
-                if (currClazz == Object.class) {
-                    throw new NoSuchFieldException("Cannot find field "
-                            + name + " in class " + clazz.getName() + " and its super classes.");
-                } else {
-                    currClazz = currClazz.getSuperclass();
-                }
-            }
         }
     }
 
