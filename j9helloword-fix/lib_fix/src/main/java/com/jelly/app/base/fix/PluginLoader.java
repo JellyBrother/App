@@ -40,12 +40,14 @@ public class PluginLoader {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             HiddenApiBypass.startBypass();
         }
-
-//        String fileName = "2036-release.apk";
-        String fileName = "app-debug.apk";
-        apkPath = FilePath.getPluginPath() + File.separator + fileName;
-        // 复制apk
-        FileUtils.copyAssetsFile(context, fileName, apkPath);
+        try {
+            String[] plugins = context.getAssets().list(FilePath.PATH_PLUGIN);
+            apkPath = FilePath.getPluginPath() + File.separator + plugins[0];
+            // 复制apk
+            FileUtils.copyAssetsFile(context, FilePath.PATH_PLUGIN + File.separator + plugins[0], apkPath);
+        } catch (Throwable t) {
+            ShareTinkerLog.e(TAG, "attachBaseContextBefore getAssets list Throwable:", t);
+        }
         // 解压
         unzipDir();
         // 加载so

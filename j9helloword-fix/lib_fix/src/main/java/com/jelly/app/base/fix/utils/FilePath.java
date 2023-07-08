@@ -8,7 +8,7 @@ import java.io.File;
 
 public class FilePath {
     public static final String PATH_FILE = "/data/data/com.example.myapplication/file";
-    public static final String PATH_PLUGIN = "Plugin";
+    public static final String PATH_PLUGIN = "plugin";
     public static final String PATH_PLUGIN_UNZIP = "PluginUnzip";
     public static final String PATH_DEX_OPT_DIR = "dexOptDir";
     public static final String PATH_OAT = "oat";

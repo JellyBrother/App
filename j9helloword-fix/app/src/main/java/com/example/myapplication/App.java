@@ -1,7 +1,9 @@
-package com.jelly.app.base.fix;
+package com.example.myapplication;
 
 import android.app.Application;
 import android.content.Context;
+
+import com.jelly.app.base.fix.PluginLoader;
 
 public class App extends Application {
 
