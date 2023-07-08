@@ -54,6 +54,13 @@
  # 这句话能够使我们的项目混淆后产生映射文件
  # 包含有类名->混淆后类名的映射关系
 -verbose
+# ----------------------------- 加数据字典 -----------------------------
+# 指定外部模糊字典
+-obfuscationdictionary dic.txt
+# 指定class模糊字典
+-classobfuscationdictionary dic.txt
+# 指定package模糊字典
+-packageobfuscationdictionary dic.txt
 # ----------------------------- 默认保留 -----------------------------
 # 保持哪些类不被混淆
 #继承activity,application,service,broadcastReceiver,contentprovider....不进行混淆
