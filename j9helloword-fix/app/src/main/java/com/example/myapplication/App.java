@@ -3,7 +3,7 @@ package com.example.myapplication;
 import android.app.Application;
 import android.content.Context;
 
-import com.jelly.app.base.fix.PluginLoader;
+import com.jelly.app.base.load.PluginLoader;
 
 public class App extends Application {
 

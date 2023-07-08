@@ -1,8 +1,8 @@
-package com.jelly.app.base.fix.utils;
+package com.jelly.app.base.load.utils;
 
 import android.content.Context;
 
-import com.jelly.app.base.fix.PluginLoader;
+import com.jelly.app.base.load.PluginLoader;
 
 import java.io.File;
 

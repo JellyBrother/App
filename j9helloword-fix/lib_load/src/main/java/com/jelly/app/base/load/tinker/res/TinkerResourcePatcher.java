@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jelly.app.base.fix.tinker.res;
+package com.jelly.app.base.load.tinker.res;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
@@ -28,9 +28,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.ArrayMap;
 
-import com.jelly.app.base.fix.tinker.ShareTinkerLog;
-import com.jelly.app.base.fix.utils.FileUtils;
-import com.jelly.app.base.fix.utils.ReflectUtils;
+import com.jelly.app.base.load.tinker.ShareTinkerLog;
+import com.jelly.app.base.load.utils.FileUtils;
+import com.jelly.app.base.load.utils.ReflectUtils;
 
 import java.io.File;
 import java.io.InputStream;

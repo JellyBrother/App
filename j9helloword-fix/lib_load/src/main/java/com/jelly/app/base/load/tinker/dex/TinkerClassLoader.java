@@ -1,4 +1,4 @@
-package com.jelly.app.base.fix.tinker.dex;
+package com.jelly.app.base.load.tinker.dex;
 
 import android.annotation.SuppressLint;
 

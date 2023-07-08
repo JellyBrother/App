@@ -1,14 +1,12 @@
-package com.jelly.app.base.fix.tinker.lib;
+package com.jelly.app.base.load.tinker.lib;
 
 import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.jelly.app.base.fix.PluginLoader;
-import com.jelly.app.base.fix.utils.FilePath;
+import com.jelly.app.base.load.utils.FilePath;
 
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * 优先加载最合适的so

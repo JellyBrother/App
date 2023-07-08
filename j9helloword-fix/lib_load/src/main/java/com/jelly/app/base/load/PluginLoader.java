@@ -1,17 +1,16 @@
-package com.jelly.app.base.fix;
+package com.jelly.app.base.load;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.Build;
 
 import androidx.annotation.Keep;
 
-import com.jelly.app.base.fix.tinker.ShareTinkerLog;
-import com.jelly.app.base.fix.tinker.dex.SystemClassLoaderAdder;
-import com.jelly.app.base.fix.tinker.lib.PluginSoLoad;
-import com.jelly.app.base.fix.tinker.res.TinkerResourcePatcher;
-import com.jelly.app.base.fix.utils.FilePath;
-import com.jelly.app.base.fix.utils.FileUtils;
+import com.jelly.app.base.load.tinker.ShareTinkerLog;
+import com.jelly.app.base.load.tinker.dex.SystemClassLoaderAdder;
+import com.jelly.app.base.load.tinker.lib.PluginSoLoad;
+import com.jelly.app.base.load.tinker.res.TinkerResourcePatcher;
+import com.jelly.app.base.load.utils.FilePath;
+import com.jelly.app.base.load.utils.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;

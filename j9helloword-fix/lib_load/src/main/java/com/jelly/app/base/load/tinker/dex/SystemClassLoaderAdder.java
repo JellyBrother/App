@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-package com.jelly.app.base.fix.tinker.dex;
+package com.jelly.app.base.load.tinker.dex;
 
 import android.app.Application;
 import android.os.Build;
 
-import com.jelly.app.base.fix.tinker.ShareTinkerLog;
-import com.jelly.app.base.fix.utils.ReflectUtils;
+import com.jelly.app.base.load.tinker.ShareTinkerLog;
+import com.jelly.app.base.load.utils.ReflectUtils;
 
 import java.io.File;
 import java.io.IOException;

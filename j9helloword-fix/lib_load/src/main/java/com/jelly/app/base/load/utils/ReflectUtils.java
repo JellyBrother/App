@@ -1,4 +1,4 @@
-package com.jelly.app.base.fix.utils;
+package com.jelly.app.base.load.utils;
 
 import android.util.Log;
 

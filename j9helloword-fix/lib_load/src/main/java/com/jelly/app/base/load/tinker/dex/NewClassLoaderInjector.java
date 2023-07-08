@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.jelly.app.base.fix.tinker.dex;
+package com.jelly.app.base.load.tinker.dex;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.jelly.app.base.fix.utils.FileUtils;
-import com.jelly.app.base.fix.utils.ReflectUtils;
+import com.jelly.app.base.load.utils.FileUtils;
+import com.jelly.app.base.load.utils.ReflectUtils;
 
 import java.io.File;
 import java.lang.reflect.Field;

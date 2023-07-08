@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jelly.app.base.fix.tinker;
+package com.jelly.app.base.load.tinker;
 
 import android.util.Log;
 
