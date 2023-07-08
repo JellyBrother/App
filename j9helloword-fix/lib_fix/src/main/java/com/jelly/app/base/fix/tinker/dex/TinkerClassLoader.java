@@ -2,8 +2,6 @@ package com.jelly.app.base.fix.tinker.dex;
 
 import android.annotation.SuppressLint;
 
-import com.jelly.app.base.fix.tinker.TinkerRuntimeException;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -82,7 +80,7 @@ public final class TinkerClassLoader extends PathClassLoader {
                 SystemClassLoaderAdder.injectDexesInternal(cl, dexFiles, optimizedDir);
             }
         } catch (Throwable thr) {
-            throw new TinkerRuntimeException("Fail to create TinkerClassLoader.", thr);
+            throw new RuntimeException("Fail to create TinkerClassLoader.", thr);
         }
     }
 

@@ -28,9 +28,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.ArrayMap;
 
-import com.jelly.app.base.fix.tinker.ShareConstants;
 import com.jelly.app.base.fix.tinker.ShareTinkerLog;
-import com.jelly.app.base.fix.tinker.TinkerRuntimeException;
 import com.jelly.app.base.fix.utils.FileUtils;
 import com.jelly.app.base.fix.utils.ReflectUtils;
 
@@ -50,7 +48,7 @@ import java.util.Map;
  * Thanks for Android Fragmentation
  */
 public class TinkerResourcePatcher {
-    private static final String TAG = "Tinker.ResourcePatcher";
+    private static final String TAG = TinkerResourcePatcher.class.getSimpleName() + "ResPatcher";
     private static final String TEST_ASSETS_VALUE = "only_use_to_test_tinker_resource.txt";
 
     // original object
@@ -317,7 +315,7 @@ public class TinkerResourcePatcher {
         }
 
         if (!checkResUpdate(context)) {
-            throw new TinkerRuntimeException(ShareConstants.CHECK_RES_INSTALL_FAIL);
+            throw new RuntimeException("checkResInstall failed");
         }
 
         installResourceInsuranceHacks(context, externalResourceFile);

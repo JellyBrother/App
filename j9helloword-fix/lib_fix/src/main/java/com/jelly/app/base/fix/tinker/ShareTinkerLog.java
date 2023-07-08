@@ -22,7 +22,7 @@ import android.util.Log;
  * Created by zhangshaowen on 16/3/17.
  */
 public class ShareTinkerLog {
-    private static final String TAG = "-*-";
+    private static final String TAG = ShareTinkerLog.class.getSimpleName() + "Log";
 
     public static void i(final String tag, final String fmt, final Object... values) {
         printLog(Log.INFO, tag, fmt, values);

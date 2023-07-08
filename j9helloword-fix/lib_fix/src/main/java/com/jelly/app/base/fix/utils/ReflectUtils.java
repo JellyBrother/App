@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ReflectUtils {
-    private static final String TAG = "ReflectUtils";
+    private static final String TAG = ReflectUtils.class.getSimpleName() + "Ref";
 
     private final Class<?> type;
 

@@ -20,7 +20,6 @@ package com.jelly.app.base.fix.tinker.dex;
 import android.app.Application;
 import android.os.Build;
 
-import com.jelly.app.base.fix.tinker.ShareConstants;
 import com.jelly.app.base.fix.tinker.ShareTinkerLog;
 import com.jelly.app.base.fix.utils.ReflectUtils;
 
@@ -34,6 +33,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Created by zhangshaowen on 16/3/18.
@@ -41,6 +41,7 @@ import java.util.Map;
 public class SystemClassLoaderAdder {
     private static final String TAG = SystemClassLoaderAdder.class.getSimpleName() + "SCLoader";
     private static int sPatchDexCount = 0;
+    public static final Pattern CLASS_N_PATTERN = Pattern.compile("classes(?:[2-9]?|[1-9][0-9]+)\\.dex(\\.jar)?");
 
     public static void installDexes(Application application, ClassLoader loader, File dexOptDir, List<File> files,
                                     boolean isProtectedApp, boolean useDLC) throws Throwable {
@@ -76,7 +77,7 @@ public class SystemClassLoaderAdder {
         final Map<String, Boolean> matchesClassNPatternMemo = new HashMap<>();
         for (File file : result) {
             final String name = file.getName();
-            matchesClassNPatternMemo.put(name, ShareConstants.CLASS_N_PATTERN.matcher(name).matches());
+            matchesClassNPatternMemo.put(name, CLASS_N_PATTERN.matcher(name).matches());
         }
         Collections.sort(result, new Comparator<File>() {
             @Override

@@ -20,7 +20,6 @@ import java.util.ArrayList;
  * 获取当前Android手机支持的所有CPU ABI类型：adb shell getprop ro.product.cpu.abilist
  */
 public class PluginSoLoad {
-    private static final String TAG = PluginLoader.class.getSimpleName() + "PluSoLoader";
 
     public static void loadSo(Context context) throws Throwable {
         // armeabi，armeabi-v7a，x86，mips，arm64-v8a，mips64，x86_64
