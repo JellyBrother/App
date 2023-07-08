@@ -1,40 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:versionCode="1"
-    android:versionName="1.0">
-
-    <uses-sdk
-        android:minSdkVersion="24"
-        android:targetSdkVersion="33" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name="com.jelly.app.base.fix.App"
-        android:label="@string/app_name"
+        android:allowBackup="false"
+        android:exported="false"
         android:icon="@mipmap/ic_launcher"
-        android:testOnly="true"
-        android:allowBackup="true"
-        android:supportsRtl="true"
-        android:extractNativeLibs="false"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:appComponentFactory="androidx.core.app.CoreComponentFactory">
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round" >
 
         <activity
-            android:theme="@style/Base.Theme.MyApplication"
             android:name="com.example.myapplication.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Base.Theme.MyApplication">
 
             <intent-filter>
 
-                <action
-                    android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-                <category
-                    android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.example.myapplication.MainActivity2" />
+        <activity android:name="com.example.myapplication.MainActivity2" />
     </application>
 </manifest>

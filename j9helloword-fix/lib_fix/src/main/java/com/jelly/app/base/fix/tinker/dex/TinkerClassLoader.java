@@ -2,8 +2,6 @@ package com.jelly.app.base.fix.tinker.dex;
 
 import android.annotation.SuppressLint;
 
-import androidx.annotation.Keep;
-
 import com.jelly.app.base.fix.tinker.TinkerRuntimeException;
 
 import java.io.File;
@@ -19,7 +17,6 @@ import dalvik.system.PathClassLoader;
 /**
  * Created by tangyinsheng on 2020-01-09.
  */
-@Keep
 @SuppressLint("NewApi")
 public final class TinkerClassLoader extends PathClassLoader {
     private final ClassLoader mOriginAppClassLoader;
@@ -89,7 +86,6 @@ public final class TinkerClassLoader extends PathClassLoader {
         }
     }
 
-    @Keep
     class CompoundEnumeration<E> implements Enumeration<E> {
         private Enumeration<E>[] enums;
         private int index = 0;

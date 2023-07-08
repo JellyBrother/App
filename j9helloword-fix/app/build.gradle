@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
 }
 
+apply from: '../gradle/appProductFlavors.gradle'
 android {
     namespace rootProject.ext.android.applicationId
     compileSdk rootProject.ext.android.compileSdk
@@ -15,13 +16,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -33,4 +27,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
 
     implementation project(':lib_fix')
+
+//    api fileTree(include: ['*.jar'], dir: 'libs')
+//    api fileTree(include: ['*.aar'], dir: 'libs')
+//    implementation 'io.github.windysha:bypassHiddenApiRestriction:1.0.2'
 }

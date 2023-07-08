@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -67,6 +68,19 @@ public class ApkMainActivity extends BaseActivity {
             public void onClick(View v) {
                 Object getNative = ReflectUtils.reflect("com.example.myapplication.Hello").method("getNative", 9).get();
                 toast(getNative);
+            }
+        });
+        findViewById(R.id.tvw7).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String property = System.getProperty("os.arch");
+                String abi = null;
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    abi = Build.CPU_ABI;
+                } else {
+                    abi = Build.SUPPORTED_ABIS[0];
+                }
+                toast(abi);
             }
         });
     }

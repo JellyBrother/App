@@ -1,60 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvw1"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="基座-tvw1-初始化"
-        android:textColor="@color/black" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvw2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="基座-tvw2-启动1"
-        android:textColor="@color/black" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvw3"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="基座-tvw3-启动2"
-        android:textColor="@color/black" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvw4"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="基座-tvw4-反射类"
-        android:textColor="@color/black" />
+            </ScrollView>
 
-    <TextView
-        android:id="@+id/tvw5"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="基座-tvw5-反射资源"
-        android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/tvw1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw1-初始化"
+                android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/tvw6"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="基座-tvw6-反射c++"
-        android:textColor="@color/black" />
-</LinearLayout>
+            <TextView
+                android:id="@+id/tvw2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw2-启动1"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw3-启动2"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw4"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw4-反射类"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw5-反射资源"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw6"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw6-反射c++"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw7"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw7-获取abi"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

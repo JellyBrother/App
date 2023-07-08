@@ -4,10 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 
+import androidx.annotation.Keep;
 
 import com.jelly.app.base.fix.tinker.ShareTinkerLog;
 import com.jelly.app.base.fix.tinker.dex.SystemClassLoaderAdder;
-import com.jelly.app.base.fix.tinker.lib.TinkerLoadLibrary;
+import com.jelly.app.base.fix.tinker.lib.PluginSoLoad;
 import com.jelly.app.base.fix.tinker.res.TinkerResourcePatcher;
 import com.jelly.app.base.fix.utils.FilePath;
 import com.jelly.app.base.fix.utils.FileUtils;
@@ -21,6 +22,7 @@ public class PluginLoader {
     public static String apkPath = "";
     public static Context app;
 
+    @Keep
     public static void attachBaseContext(Context context) {
         attachBaseContextBefore(context);
         attachBaseContextAfter(context);
@@ -82,14 +84,7 @@ public class PluginLoader {
     private static void installSo() {
         try {
             ShareTinkerLog.e(TAG, "attachBaseContext installSo start:");
-            ClassLoader classLoader = app.getClassLoader();
-            File[] files = FilePath.getPluginUnZipLibDir().listFiles();
-            for (File f : files) {
-                if (f == null) {
-                    continue;
-                }
-                TinkerLoadLibrary.installNativeLibraryPath(classLoader, f);
-            }
+            PluginSoLoad.loadSo(app);
             ShareTinkerLog.e(TAG, "attachBaseContext installSo end:");
         } catch (Throwable t) {
             ShareTinkerLog.e(TAG, "attachBaseContext installSo Throwable:", t);

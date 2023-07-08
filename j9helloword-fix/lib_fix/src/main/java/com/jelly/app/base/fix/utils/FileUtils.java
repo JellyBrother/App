@@ -6,8 +6,6 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.jelly.app.base.fix.tinker.ShareConstants;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
@@ -298,30 +296,5 @@ public final class FileUtils {
         } catch (Throwable ignore) {
             return null;
         }
-    }
-
-    /**
-     * change the jar file path as the makeDexElements do
-     * Android O change its path
-     *
-     * @param path
-     * @param optimizedDirectory
-     * @return
-     */
-    public static String optimizedPathFor(File path, File optimizedDirectory) {
-        String fileName = path.getName();
-        if (!fileName.endsWith(ShareConstants.DEX_SUFFIX)) {
-            int lastDot = fileName.lastIndexOf(".");
-            if (lastDot < 0) {
-                fileName += ShareConstants.DEX_SUFFIX;
-            } else {
-                StringBuilder sb = new StringBuilder(lastDot + 4);
-                sb.append(fileName, 0, lastDot);
-                sb.append(ShareConstants.DEX_SUFFIX);
-                fileName = sb.toString();
-            }
-        }
-        File result = new File(optimizedDirectory, fileName);
-        return result.getPath();
     }
 }
