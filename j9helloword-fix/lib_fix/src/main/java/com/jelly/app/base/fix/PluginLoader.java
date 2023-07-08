@@ -12,7 +12,6 @@ import com.jelly.app.base.fix.tinker.lib.PluginSoLoad;
 import com.jelly.app.base.fix.tinker.res.TinkerResourcePatcher;
 import com.jelly.app.base.fix.utils.FilePath;
 import com.jelly.app.base.fix.utils.FileUtils;
-import com.wind.hiddenapi.bypass.HiddenApiBypass;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,9 +36,9 @@ public class PluginLoader {
                 PluginLoader.app = applicationContext;
             }
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            HiddenApiBypass.startBypass();
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            HiddenApiBypass.startBypass();
+//        }
         try {
             String[] plugins = context.getAssets().list(FilePath.PATH_PLUGIN);
             apkPath = FilePath.getPluginPath() + File.separator + plugins[0];
