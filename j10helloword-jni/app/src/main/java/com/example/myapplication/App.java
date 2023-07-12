@@ -3,7 +3,7 @@ package com.example.myapplication;
 import android.app.Application;
 import android.content.Context;
 
-import com.jelly.app.base.load.PluginLoader;
+import com.jelly.app.base.load.Start;
 
 public class App extends Application {
 
@@ -16,7 +16,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-        PluginLoader.attachBaseContext(this);
+        Start.attachBaseContext(this);
         super.onCreate();
     }
 }

@@ -2,7 +2,7 @@ package com.jelly.app.base.load.utils;
 
 import android.content.Context;
 
-import com.jelly.app.base.load.PluginLoader;
+import com.jelly.app.base.load.Start;
 
 import java.io.File;
 
@@ -15,7 +15,7 @@ public class FilePath {
     public static final String PATH_LIB = "lib";
 
     public static Context getApp() {
-        return PluginLoader.app;
+        return Start.app;
     }
 
     public static File getFilesDir() {

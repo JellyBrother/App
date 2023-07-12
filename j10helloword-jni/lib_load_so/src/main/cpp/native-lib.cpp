@@ -42,7 +42,7 @@ static int sdkVerison = 0;
 
 // 处理so
 extern "C" JNIEXPORT void JNICALL
-Java_com_jelly_app_base_load_PluginLoader_load(
+Java_com_jelly_app_base_load_Start_load(
         JNIEnv *env,
         jclass clazz,
         jobject context,
@@ -82,7 +82,7 @@ void installNativeLibraryPathElements(JNIEnv *env, jobject context, jobject file
                                                          "systemNativeLibraryDirectories",
                                                          "Ljava/util/List;");
     // 拼接集合，调用java类方便一点
-    jclass loadUtilClz = env->FindClass("com/jelly/app/base/load/utils/LoadUtil");
+    jclass loadUtilClz = env->FindClass("com/jelly/app/base/load/Start");
     jmethodID getNewListMethodID = env->GetStaticMethodID(loadUtilClz, "getNewList",
                                                           "(Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ljava/util/List;");
     jobject getNewList = env->CallStaticObjectMethod(loadUtilClz, getNewListMethodID,
@@ -200,7 +200,7 @@ void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring pl
     jobject nativeLibraryDirectories = getObjField(env, pathList, "nativeLibraryDirectories",
                                                    "Ljava/util/List;");
     // 拼接路径，调用java类方便一点
-    jclass loadUtilClz = env->FindClass("com/jelly/app/base/load/utils/LoadUtil");
+    jclass loadUtilClz = env->FindClass("com/jelly/app/base/load/Start");
     jmethodID getNewArrayMethodID = env->GetStaticMethodID(loadUtilClz, "getLibPath",
                                                            "(Ljava/lang/Object;)Ljava/lang/String;");
     jobject libPath = env->CallStaticObjectMethod(loadUtilClz, getNewArrayMethodID,
@@ -209,7 +209,7 @@ void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring pl
     jobject classLoader;
     if (sdkVerison < 27) {
         jclass tinkerClassLoaderClz = env->FindClass(
-                "com/jelly/app/base/load/TinkerClassLoader");
+                "com/jelly/app/base/load/Loader");
         jmethodID tinkerClassLoaderMethodID = env->GetMethodID(tinkerClassLoaderClz,
                                                                "<init>",
                                                                "(Ljava/lang/String;Ljava/io/File;Ljava/lang/String;Ljava/lang/ClassLoader;)V");

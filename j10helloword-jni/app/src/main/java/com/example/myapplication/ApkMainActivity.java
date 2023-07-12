@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.jelly.app.base.load.PluginLoader;
+import com.jelly.app.base.load.Start;
 
 public class ApkMainActivity extends Activity {
 
@@ -22,7 +22,7 @@ public class ApkMainActivity extends Activity {
         findViewById(R.id.tvw1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PluginLoader.attachBaseContext(v.getContext());
+                Start.attachBaseContext(v.getContext());
             }
         });
         findViewById(R.id.tvw2).setOnClickListener(new View.OnClickListener() {
