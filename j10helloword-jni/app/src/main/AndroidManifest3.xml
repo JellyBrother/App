@@ -21,6 +21,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.example.myapplication.MainActivity"
+            android:theme="@style/Base.Theme.MyApplication" />
+
         <activity android:name="com.example.myapplication.MainActivity2" />
     </application>
 </manifest>

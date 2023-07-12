@@ -35,6 +35,9 @@ public class PluginLoader {
         }
         try {
             String[] plugins = context.getAssets().list(FilePath.PATH_PLUGIN);
+            if (plugins.length < 1) {
+                return;
+            }
             apkPath = FilePath.getPluginPath() + File.separator + plugins[0];
             // 复制apk
             FileUtils.copyAssetsFile(context, FilePath.PATH_PLUGIN + File.separator + plugins[0], apkPath);
@@ -44,9 +47,10 @@ public class PluginLoader {
             }
             // apk集合
             ArrayList<File> apkFiles = new ArrayList<>();
-            apkFiles.add(new File(apkPath));
+            File apkFile = new File(apkPath);
+            apkFiles.add(apkFile);
             // 加载so
-            load((Application) app, getLibFiles(), apkFiles, FilePath.getOatDir(), apkPath);
+            load((Application) app, getLibFiles(), apkFiles, FilePath.getOatDir(), apkFile, apkPath);
 
 
             // 加载资源
@@ -86,10 +90,11 @@ public class PluginLoader {
     private static void loadResource() {
         try {
             TinkerResourcePatcher.isResourceCanPatch(app);
-            TinkerResourcePatcher.monkeyPatchExistingResources(app, apkPath, false);
+            TinkerResourcePatcher.monkeyPatchExistingResources(app, apkPath);
         } catch (Throwable t) {
         }
     }
 
-    public static native void load(Application context, List<File> libFiles, List<File> apkFiles, File oatDir, String apkPath);
+    public static native void load(Application context, List<File> libFiles, List<File> apkFiles,
+                                   File oatDir, File apkFile, String apkPath);
 }

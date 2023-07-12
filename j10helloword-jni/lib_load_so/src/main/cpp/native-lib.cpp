@@ -14,6 +14,8 @@ void installDexElements(JNIEnv *env, jobject context, jobject files, jobject oat
 
 void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring apkPath);
 
+void installResource(JNIEnv *env, jobject context, jobject apkFile, jstring apkPath);
+
 jobject newObj(JNIEnv *env, const char *className, const char *methodName, const char *methodSig);
 
 jobject getObjField(JNIEnv *env, jobject obj, const char *fieldName, const char *fieldSig);
@@ -22,6 +24,8 @@ jobject getObjMethod(JNIEnv *env, jobject obj, const char *methodName, const cha
 
 void setObjField(JNIEnv *env, jobject obj, const char *fieldName,
                  const char *fieldSig, jobject value);
+
+void iteratorMap(JNIEnv *env, jobject mapObj, jobject sourceDir, jstring apkPath);
 
 // 安卓sdk版本
 static int sdkVerison = 0;
@@ -35,6 +39,7 @@ Java_com_jelly_app_base_load_PluginLoader_load(
         jobject libFiles,
         jobject apkFiles,
         jobject oatDir,
+        jobject apkFile,
         jstring apkPath
 ) {
     // 1. 获取 SDK 版本号 , 存储于 C 字符串 sdk_verison_str 中
@@ -49,7 +54,8 @@ Java_com_jelly_app_base_load_PluginLoader_load(
     installDexElements(env, context, apkFiles, oatDir);
     // 处理ClassLoader
     installClassLoader(env, context, oatDir, apkPath);
-
+    // 处理Resource
+    installResource(env, context, apkFile, apkPath);
 }
 
 void installNativeLibraryPathElements(JNIEnv *env, jobject context, jobject files) {
@@ -80,18 +86,8 @@ void installNativeLibraryPathElements(JNIEnv *env, jobject context, jobject file
         jmethodID makePathElementsMethodID = env->GetStaticMethodID(dexPathListClz,
                                                                     "makePathElements",
                                                                     "(Ljava/util/List;)[Ldalvik/system/DexPathList$NativeLibraryElement;");
-        makePathElements = env->CallStaticObjectMethod(dexPathListClz,
-                                                       makePathElementsMethodID,
-                                                       getNewList);
-        nativeLibraryPathElementsFieldID = env->GetFieldID(dexPathListClz,
-                                                           "nativeLibraryPathElements",
-                                                           "[Ldalvik/system/DexPathList$NativeLibraryElement;");
-        jboolean throwable = env->ExceptionCheck();
-        if (throwable) {
-            // 清除异常信息
-            env->ExceptionClear();
-            LOGE("installV25So throwable");
-
+        if (makePathElementsMethodID == nullptr) {
+            // 兼容低版本
             jmethodID makePathElementsMethodIDV23 = env->GetStaticMethodID(dexPathListClz,
                                                                            "makePathElements",
                                                                            "(Ljava/util/List;Ljava/io/File;Ljava/util/List;)[Ldalvik/system/DexPathList$Element;");
@@ -103,6 +99,13 @@ void installNativeLibraryPathElements(JNIEnv *env, jobject context, jobject file
             nativeLibraryPathElementsFieldID = env->GetFieldID(dexPathListClz,
                                                                "nativeLibraryPathElements",
                                                                "[Ldalvik/system/DexPathList$Element;");
+        } else {
+            makePathElements = env->CallStaticObjectMethod(dexPathListClz,
+                                                           makePathElementsMethodID,
+                                                           getNewList);
+            nativeLibraryPathElementsFieldID = env->GetFieldID(dexPathListClz,
+                                                               "nativeLibraryPathElements",
+                                                               "[Ldalvik/system/DexPathList$NativeLibraryElement;");
         }
     } else {
         jmethodID makePathElementsMethodIDV23 = env->GetStaticMethodID(dexPathListClz,
@@ -136,10 +139,8 @@ void installDexElements(JNIEnv *env, jobject context, jobject files, jobject oat
         makePathElementsMethodID = env->GetStaticMethodID(dexPathListClz,
                                                           "makePathElements",
                                                           "(Ljava/util/List;Ljava/io/File;Ljava/util/List;)[Ldalvik/system/DexPathList$Element;");
-        jboolean throwable = env->ExceptionCheck();
-        if (throwable) {
-            // 清除异常信息
-            env->ExceptionClear();
+        if (makePathElementsMethodID == nullptr) {
+            // 兼容低版本
             makePathElementsMethodID = env->GetStaticMethodID(dexPathListClz,
                                                               "makePathElements",
                                                               "(Ljava/util/ArrayList;Ljava/io/File;Ljava/util/ArrayList;)[Ldalvik/system/DexPathList$Element;");
@@ -252,14 +253,49 @@ void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring ap
                                        "Landroid/app/LoadedApk;");
     setObjField(env, mPackageInfo, "mClassLoader", "Ljava/lang/ClassLoader;", classLoader);
     // mBase的Resources注入classLoader
-    jclass contextClz = env->GetObjectClass(context);
-    jmethodID getResourcesMethodID = env->GetMethodID(contextClz, "getResources", "()Landroid/content/res/Resources;");
-    jobject resources = env->CallObjectMethod(context, getResourcesMethodID);
+    jobject resources = getObjMethod(env, context, "getResources",
+                                     "()Landroid/content/res/Resources;");
     setObjField(env, resources, "mClassLoader", "Ljava/lang/ClassLoader;", classLoader);
     // Resources的mDrawableInflater注入classLoader
     jobject drawableInflater = getObjField(env, resources, "mDrawableInflater",
                                            "Landroid/graphics/drawable/DrawableInflater;");
     setObjField(env, drawableInflater, "mClassLoader", "Ljava/lang/ClassLoader;", classLoader);
+}
+
+void installResource(JNIEnv *env, jobject context, jobject apkFile, jstring apkPath) {
+    // 得到ActivityThread
+    jclass activityThreadClz = env->FindClass("android/app/ActivityThread");
+    jmethodID currentActivityThreadMethodID = env->GetStaticMethodID(activityThreadClz,
+                                                                     "currentActivityThread",
+                                                                     "()Landroid/app/ActivityThread;");
+    jobject currentActivityThread = env->CallStaticObjectMethod(activityThreadClz,
+                                                                currentActivityThreadMethodID);
+    if (currentActivityThread == nullptr) {
+        jobject loadedApk = getObjField(env, context, "mLoadedApk",
+                                        "Landroid/app/LoadedApk;");
+        currentActivityThread = getObjField(env, loadedApk, "mActivityThread",
+                                            "Landroid/app/ActivityThread;");
+    }
+    // 得到ApplicationInfo
+    jobject appInfo = getObjMethod(env, context, "getApplicationInfo",
+                                   "()Landroid/content/pm/ApplicationInfo;");
+    // 得到ActivityThread的mPackages变量
+    jobject currentActivityThread_mPackages = getObjField(env, currentActivityThread, "mPackages",
+                                                          "Landroid/util/ArrayMap;");
+    // 遍历集合，处理mPackages
+    iteratorMap(env, currentActivityThread_mPackages, appInfo, apkPath);
+    // 得到ActivityThread的mResourcePackages变量
+    jclass currentActivityThreadClz = env->GetObjectClass(currentActivityThread);
+    jfieldID currentActivityThread_mResourcePackagesFieldID = env->GetFieldID(
+            currentActivityThreadClz, "mResourcePackages", "Landroid/util/ArrayMap;");
+    if (currentActivityThread_mResourcePackagesFieldID != nullptr) {
+        jobject currentActivityThread_mResourcePackages = env->GetObjectField(currentActivityThread,
+                                                                              currentActivityThread_mResourcePackagesFieldID);
+        // 遍历集合，处理mResourcePackages
+        iteratorMap(env, currentActivityThread_mResourcePackages, appInfo, apkPath);
+    }
+
+
 }
 
 jobject newObj(JNIEnv *env, const char *className, const char *methodName, const char *methodSig) {
@@ -296,4 +332,60 @@ void setObjField(JNIEnv *env, jobject obj, const char *fieldName,
                         objFieldID,
                         value);
 }
+
+void iteratorMap(JNIEnv *env, jobject mapObj, jobject appInfo, jstring apkPath) {
+    // 调用 entrySet 方法，获取 Map.Entry 集合
+    jobject entrySetObj = getObjMethod(env, mapObj, "entrySet", "()Ljava/util/Set;");
+    // 调用 iterator 方法，获取 Iterator 对象
+    jobject iteratorObj = getObjMethod(env, entrySetObj, "iterator", "()Ljava/util/Iterator;");
+    // 获取 Iterator 类
+    jclass iteratorClass = env->GetObjectClass(iteratorObj);
+    // 获取 hasNext 方法
+    jmethodID hasNextMethod = env->GetMethodID(iteratorClass, "hasNext", "()Z");
+    // 获取 next 方法
+    //String
+    jmethodID nextMethod = env->GetMethodID(iteratorClass, "next", "()Ljava/lang/Object;");
+    // 循环遍历 Map.Entry 集合
+    while (env->CallBooleanMethod(iteratorObj, hasNextMethod)) {
+        // 调用 next 方法，获取当前的 Map.Entry 对象
+        jobject entryObj = env->CallObjectMethod(iteratorObj, nextMethod);
+        // 调用 getKey 方法，获取键对象
+        jobject keyObj = getObjMethod(env, entryObj, "getKey", "()Ljava/lang/Object;");
+        // 调用 getValue 方法，获取值对象
+        jobject valueObj = getObjMethod(env, entryObj, "getValue", "()Ljava/lang/Object;");
+
+        // 这里处理键和值对象
+        //loadedApk
+        jobject loadedApk = getObjMethod(env, valueObj, "get", "()Ljava/lang/Object;");
+        if (loadedApk == nullptr) {
+            continue;
+        }
+        //String
+        jobject resDirPath = getObjField(env, loadedApk, "mResDir", "Ljava/lang/String;");
+        jobject sourceDir = getObjField(env, appInfo, "sourceDir", "Ljava/lang/String;");
+        jboolean result = env->IsSameObject(resDirPath, sourceDir);
+        if (result) {
+            setObjField(env, loadedApk, "mResDir", "Ljava/lang/String;",
+                        apkPath);
+            jclass loadedApkClz = env->GetObjectClass(loadedApk);
+            jfieldID resourcesFieldID = env->GetFieldID(loadedApkClz, "mResources",
+                                                        "Landroid/content/res/Resources;");
+            if (resourcesFieldID != nullptr) {
+                env->SetObjectField(loadedApk,
+                                    resourcesFieldID,
+                                    nullptr);
+            }
+        }
+
+        // 当遍历太大的时候，需要释放局部引用
+        env->DeleteLocalRef(entryObj);
+        env->DeleteLocalRef(keyObj);
+        env->DeleteLocalRef(valueObj);
+    }
+}
+
+
+
+
+
 
