@@ -12,9 +12,12 @@ void installNativeLibraryPathElements(JNIEnv *env, jobject context, jobject file
 
 void installDexElements(JNIEnv *env, jobject context, jobject files, jobject oatDir);
 
-void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring apkPath);
+void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring pluginPath);
 
-void installResource(JNIEnv *env, jobject context, jobject apkFile, jstring apkPath);
+void installResource(JNIEnv *env, jobject context, jobject pluginFile, jstring pluginPath);
+
+void installAssetManager(JNIEnv *env, jobject context, jobject pluginFile, jstring pluginPath,
+                         jobject applicationInfo);
 
 jobject newObj(JNIEnv *env, const char *className, const char *methodName, const char *methodSig);
 
@@ -25,7 +28,14 @@ jobject getObjMethod(JNIEnv *env, jobject obj, const char *methodName, const cha
 void setObjField(JNIEnv *env, jobject obj, const char *fieldName,
                  const char *fieldSig, jobject value);
 
-void iteratorMap(JNIEnv *env, jobject mapObj, jobject sourceDir, jstring apkPath);
+void iteratorMapDealLoadedApk(JNIEnv *env, jobject mapObj, jobject sourceDir, jstring pluginPath);
+
+void iteratorCollectionDealResources(JNIEnv *env, jobject collectionObj, jobject resources,
+                                     jobject newAssetManager);
+
+void iteratorMapDealResourceImplAssets(JNIEnv *env, jobject mapObj, jobject newAssetManager);
+
+jboolean endsWith(JNIEnv *env, jobject obj, const char *bytes);
 
 // 安卓sdk版本
 static int sdkVerison = 0;
@@ -37,25 +47,25 @@ Java_com_jelly_app_base_load_PluginLoader_load(
         jclass clazz,
         jobject context,
         jobject libFiles,
-        jobject apkFiles,
+        jobject pluginFiles,
         jobject oatDir,
-        jobject apkFile,
-        jstring apkPath
+        jobject pluginFile,
+        jstring pluginPath
 ) {
     // 1. 获取 SDK 版本号 , 存储于 C 字符串 sdk_verison_str 中
     char sdk[128] = "0";
     // 获取版本号方法
     __system_property_get("ro.build.version.sdk", sdk);
-    //将版本号转为 int 值
+    // 将版本号转为 int 值
     sdkVerison = atoi(sdk);
     // 处理so
     installNativeLibraryPathElements(env, context, libFiles);
     // 处理dex
-    installDexElements(env, context, apkFiles, oatDir);
+    installDexElements(env, context, pluginFiles, oatDir);
     // 处理ClassLoader
-    installClassLoader(env, context, oatDir, apkPath);
+    installClassLoader(env, context, oatDir, pluginPath);
     // 处理Resource
-    installResource(env, context, apkFile, apkPath);
+    installResource(env, context, pluginFile, pluginPath);
 }
 
 void installNativeLibraryPathElements(JNIEnv *env, jobject context, jobject files) {
@@ -180,7 +190,7 @@ void installDexElements(JNIEnv *env, jobject context, jobject files, jobject oat
                 combinedElements);
 }
 
-void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring apkPath) {
+void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring pluginPath) {
     jobject baseClassLoader = getObjMethod(env, context, "getClassLoader",
                                            "()Ljava/lang/ClassLoader;");
     // 获取pathList
@@ -199,12 +209,12 @@ void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring ap
     jobject classLoader;
     if (sdkVerison < 27) {
         jclass tinkerClassLoaderClz = env->FindClass(
-                "com/jelly/app/base/load/tinker/dex/TinkerClassLoader");
+                "com/jelly/app/base/load/TinkerClassLoader");
         jmethodID tinkerClassLoaderMethodID = env->GetMethodID(tinkerClassLoaderClz,
                                                                "<init>",
                                                                "(Ljava/lang/String;Ljava/io/File;Ljava/lang/String;Ljava/lang/ClassLoader;)V");
         classLoader = env->NewObject(tinkerClassLoaderClz,
-                                     tinkerClassLoaderMethodID, apkPath, oatDir,
+                                     tinkerClassLoaderMethodID, pluginPath, oatDir,
                                      libPath, baseClassLoader);
     } else {
         jclass delegateLastClassLoaderClz = env->FindClass("dalvik/system/DelegateLastClassLoader");
@@ -213,7 +223,7 @@ void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring ap
                                                                      "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/ClassLoader;)V");
         if (sdkVerison >= 31) {
             classLoader = env->NewObject(delegateLastClassLoaderClz,
-                                         delegateLastClassLoaderMethodID, apkPath,
+                                         delegateLastClassLoaderMethodID, pluginPath,
                                          libPath, baseClassLoader);
         } else {
             jclass classLoaderClz = env->FindClass("java/lang/ClassLoader");
@@ -223,7 +233,7 @@ void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring ap
             jobject javaClassLoader = env->CallStaticObjectMethod(classLoaderClz,
                                                                   classLoaderMethodID);
             classLoader = env->NewObject(delegateLastClassLoaderClz,
-                                         delegateLastClassLoaderMethodID, apkPath,
+                                         delegateLastClassLoaderMethodID, pluginPath,
                                          libPath, javaClassLoader);
             setObjField(env, classLoader, "parent", "Ljava/lang/ClassLoader;", baseClassLoader);
         }
@@ -262,40 +272,126 @@ void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring ap
     setObjField(env, drawableInflater, "mClassLoader", "Ljava/lang/ClassLoader;", classLoader);
 }
 
-void installResource(JNIEnv *env, jobject context, jobject apkFile, jstring apkPath) {
+void installResource(JNIEnv *env, jobject context, jobject pluginFile, jstring pluginPath) {
     // 得到ActivityThread
     jclass activityThreadClz = env->FindClass("android/app/ActivityThread");
     jmethodID currentActivityThreadMethodID = env->GetStaticMethodID(activityThreadClz,
                                                                      "currentActivityThread",
                                                                      "()Landroid/app/ActivityThread;");
-    jobject currentActivityThread = env->CallStaticObjectMethod(activityThreadClz,
-                                                                currentActivityThreadMethodID);
-    if (currentActivityThread == nullptr) {
+    jobject activityThread = env->CallStaticObjectMethod(activityThreadClz,
+                                                         currentActivityThreadMethodID);
+    if (activityThread == nullptr) {
         jobject loadedApk = getObjField(env, context, "mLoadedApk",
                                         "Landroid/app/LoadedApk;");
-        currentActivityThread = getObjField(env, loadedApk, "mActivityThread",
-                                            "Landroid/app/ActivityThread;");
+        activityThread = getObjField(env, loadedApk, "mActivityThread",
+                                     "Landroid/app/ActivityThread;");
     }
     // 得到ApplicationInfo
-    jobject appInfo = getObjMethod(env, context, "getApplicationInfo",
-                                   "()Landroid/content/pm/ApplicationInfo;");
+    jobject applicationInfo = getObjMethod(env, context, "getApplicationInfo",
+                                           "()Landroid/content/pm/ApplicationInfo;");
     // 得到ActivityThread的mPackages变量
-    jobject currentActivityThread_mPackages = getObjField(env, currentActivityThread, "mPackages",
-                                                          "Landroid/util/ArrayMap;");
+    jobject activityThread_mPackages = getObjField(env, activityThread, "mPackages",
+                                                   "Landroid/util/ArrayMap;");
     // 遍历集合，处理mPackages
-    iteratorMap(env, currentActivityThread_mPackages, appInfo, apkPath);
+    iteratorMapDealLoadedApk(env, activityThread_mPackages, applicationInfo, pluginPath);
     // 得到ActivityThread的mResourcePackages变量
-    jclass currentActivityThreadClz = env->GetObjectClass(currentActivityThread);
-    jfieldID currentActivityThread_mResourcePackagesFieldID = env->GetFieldID(
-            currentActivityThreadClz, "mResourcePackages", "Landroid/util/ArrayMap;");
-    if (currentActivityThread_mResourcePackagesFieldID != nullptr) {
-        jobject currentActivityThread_mResourcePackages = env->GetObjectField(currentActivityThread,
-                                                                              currentActivityThread_mResourcePackagesFieldID);
+    jclass actThreadClz = env->GetObjectClass(activityThread);
+    jfieldID activityThread_mResourcePackagesFieldID = env->GetFieldID(
+            actThreadClz, "mResourcePackages", "Landroid/util/ArrayMap;");
+    if (activityThread_mResourcePackagesFieldID != nullptr) {
+        jobject activityThread_mResourcePackages = env->GetObjectField(activityThread,
+                                                                       activityThread_mResourcePackagesFieldID);
         // 遍历集合，处理mResourcePackages
-        iteratorMap(env, currentActivityThread_mResourcePackages, appInfo, apkPath);
+        iteratorMapDealLoadedApk(env, activityThread_mResourcePackages, applicationInfo,
+                                 pluginPath);
     }
+    // 处理AssetManager
+    installAssetManager(env, context, pluginFile, pluginPath, applicationInfo);
+}
 
 
+void installAssetManager(JNIEnv *env, jobject context, jobject pluginFile, jstring pluginPath,
+                         jobject applicationInfo) {
+    // 新建一个AssetManager
+    jobject newAssetManager = newObj(env, "android/content/res/AssetManager", "<init>", "()V");
+    jclass assetManagerClz = env->GetObjectClass(newAssetManager);
+    jmethodID addAssetPathMethodID = env->GetMethodID(assetManagerClz, "addAssetPath",
+                                                      "(Ljava/lang/String;)I");
+    // 添加资源到新的AssetManager
+    jint addAssetPath = env->CallIntMethod(newAssetManager, addAssetPathMethodID, pluginPath);
+    if (addAssetPath == 0) {
+        return;
+    }
+    if (sdkVerison >= 24) {
+        jclass applicationInfoClz = env->GetObjectClass(applicationInfo);
+        jfieldID sharedLibraryFilesFieldID = env->GetFieldID(applicationInfoClz,
+                                                             "sharedLibraryFiles",
+                                                             "[Ljava/lang/String;");
+        if (sharedLibraryFilesFieldID != nullptr) {
+            jobjectArray sharedLibraryFiles = static_cast<jobjectArray>(env->GetObjectField(
+                    applicationInfo,
+                    sharedLibraryFilesFieldID));
+            if (sharedLibraryFiles != nullptr) {
+                int sharedLibraryFilesLength = env->GetArrayLength(sharedLibraryFiles);
+                for (int i = 0; i < sharedLibraryFilesLength; i++) {
+                    jobject obj = env->GetObjectArrayElement(sharedLibraryFiles, i);
+                    if (!endsWith(env, obj, ".apk")) {
+                        continue;
+                    }
+                    jmethodID addAssetPathAsSharedLibraryMethodID = env->GetMethodID(
+                            assetManagerClz,
+                            "addAssetPathAsSharedLibrary",
+                            "(Ljava/lang/String;)I");
+                    env->CallIntMethod(newAssetManager,
+                                       addAssetPathAsSharedLibraryMethodID, obj);
+                }
+            }
+        }
+    }
+    if (sdkVerison < 28) {
+        jfieldID mStringBlocksFieldID = env->GetFieldID(assetManagerClz, "mStringBlocks",
+                                                        "Landroid/content/res/StringBlock;");
+        jmethodID ensureStringBlocksMethodID = env->GetMethodID(assetManagerClz,
+                                                                "ensureStringBlocks", "()V");
+        if (mStringBlocksFieldID != nullptr && ensureStringBlocksMethodID != nullptr) {
+            env->SetObjectField(newAssetManager,
+                                mStringBlocksFieldID,
+                                nullptr);
+            env->CallVoidMethod(newAssetManager, ensureStringBlocksMethodID);
+        }
+    }
+    // 新建ResourcesManager
+    jclass resourcesManagerClz = env->FindClass("android/app/ResourcesManager");
+    jmethodID getInstanceMethodID = env->GetStaticMethodID(resourcesManagerClz,
+                                                           "getInstance",
+                                                           "()Landroid/app/ResourcesManager;");
+    jobject resourcesManager = env->CallStaticObjectMethod(resourcesManagerClz,
+                                                           getInstanceMethodID);
+    jobject mResourceReferences;
+    jobject mResourceImpl = nullptr;
+    if (sdkVerison >= 24) {
+        mResourceReferences = getObjField(env, resourcesManager, "mResourceReferences",
+                                          "Ljava/util/ArrayList;");
+        mResourceImpl = getObjField(env, resourcesManager, "mResourceImpls",
+                                    "Landroid/util/ArrayMap;");
+    } else {
+        jobject activeResources19 = getObjField(env, resourcesManager, "mActiveResources",
+                                                "Landroid/util/ArrayMap;");
+        mResourceReferences = getObjMethod(env, activeResources19, "values",
+                                           "()Ljava/util/Collection;");
+    }
+    // 获取基座的Resources
+    jobject resources = getObjMethod(env, context, "getResources",
+                                     "()Landroid/content/res/Resources;");
+    // 替换基座Resources的AssetManager为新构建的AssetManager
+    iteratorCollectionDealResources(env, mResourceReferences, resources, newAssetManager);
+    if (nullptr != mResourceImpl) {
+        iteratorMapDealResourceImplAssets(env, mResourceImpl, newAssetManager);
+    }
+    if (sdkVerison >= 24) {
+        setObjField(env, applicationInfo, "publicSourceDir", "Ljava/lang/String;",
+                    pluginPath);
+    }
 }
 
 jobject newObj(JNIEnv *env, const char *className, const char *methodName, const char *methodSig) {
@@ -319,6 +415,22 @@ jobject getObjField(JNIEnv *env, jobject obj, const char *fieldName, const char 
     return objField;
 }
 
+jboolean endsWith(JNIEnv *env, jobject obj, const char *bytes) {
+    if (obj == nullptr) {
+        return false;
+    }
+    jclass objClz = env->GetObjectClass(obj);
+    if (objClz == nullptr) {
+        return false;
+    }
+    jmethodID objMethodID = env->GetMethodID(objClz, "endsWith", "(Ljava/lang/String;)Z");
+    if (objMethodID == nullptr) {
+        return false;
+    }
+    jstring text = env->NewStringUTF(bytes);
+    return env->CallBooleanMethod(obj, objMethodID, text);
+}
+
 void setObjField(JNIEnv *env, jobject obj, const char *fieldName,
                  const char *fieldSig, jobject value) {
     if (obj == nullptr) {
@@ -333,7 +445,7 @@ void setObjField(JNIEnv *env, jobject obj, const char *fieldName,
                         value);
 }
 
-void iteratorMap(JNIEnv *env, jobject mapObj, jobject appInfo, jstring apkPath) {
+void iteratorMapDealLoadedApk(JNIEnv *env, jobject mapObj, jobject appInfo, jstring pluginPath) {
     // 调用 entrySet 方法，获取 Map.Entry 集合
     jobject entrySetObj = getObjMethod(env, mapObj, "entrySet", "()Ljava/util/Set;");
     // 调用 iterator 方法，获取 Iterator 对象
@@ -343,7 +455,6 @@ void iteratorMap(JNIEnv *env, jobject mapObj, jobject appInfo, jstring apkPath) 
     // 获取 hasNext 方法
     jmethodID hasNextMethod = env->GetMethodID(iteratorClass, "hasNext", "()Z");
     // 获取 next 方法
-    //String
     jmethodID nextMethod = env->GetMethodID(iteratorClass, "next", "()Ljava/lang/Object;");
     // 循环遍历 Map.Entry 集合
     while (env->CallBooleanMethod(iteratorObj, hasNextMethod)) {
@@ -355,18 +466,16 @@ void iteratorMap(JNIEnv *env, jobject mapObj, jobject appInfo, jstring apkPath) 
         jobject valueObj = getObjMethod(env, entryObj, "getValue", "()Ljava/lang/Object;");
 
         // 这里处理键和值对象
-        //loadedApk
         jobject loadedApk = getObjMethod(env, valueObj, "get", "()Ljava/lang/Object;");
         if (loadedApk == nullptr) {
             continue;
         }
-        //String
         jobject resDirPath = getObjField(env, loadedApk, "mResDir", "Ljava/lang/String;");
         jobject sourceDir = getObjField(env, appInfo, "sourceDir", "Ljava/lang/String;");
         jboolean result = env->IsSameObject(resDirPath, sourceDir);
         if (result) {
             setObjField(env, loadedApk, "mResDir", "Ljava/lang/String;",
-                        apkPath);
+                        pluginPath);
             jclass loadedApkClz = env->GetObjectClass(loadedApk);
             jfieldID resourcesFieldID = env->GetFieldID(loadedApkClz, "mResources",
                                                         "Landroid/content/res/Resources;");
@@ -384,8 +493,106 @@ void iteratorMap(JNIEnv *env, jobject mapObj, jobject appInfo, jstring apkPath) 
     }
 }
 
+void iteratorCollectionDealResources(JNIEnv *env, jobject collectionObj, jobject resources,
+                                     jobject newAssetManager) {
+    // 获取迭代器对象
+    jobject iteratorObj = getObjMethod(env, collectionObj, "iterator", "()Ljava/util/Iterator;");
+    // 获得 Iterator 类
+    jclass iteratorClass = env->GetObjectClass(iteratorObj);
+    // 获取 hasNext 方法
+    jmethodID hasNextMethod = env->GetMethodID(iteratorClass, "hasNext", "()Z");
+    // 获取 next 方法
+    jmethodID nextMethod = env->GetMethodID(iteratorClass, "next", "()Ljava/lang/Object;");
+    while (env->CallBooleanMethod(iteratorObj, hasNextMethod)) {
+        jobject element = env->CallObjectMethod(iteratorObj, nextMethod);
 
+        // 对元素进行操作，例如获取属性或调用方法
+        jobject pluginResources = getObjMethod(env, element, "get", "()Ljava/lang/Object;");
+        if (pluginResources == nullptr) {
+            continue;
+        }
+        // 替换基座Resources的AssetManager为新构建的AssetManager
+        if (sdkVerison >= 24) {
+            jobject mResourcesImpl = getObjField(env, resources, "mResourcesImpl",
+                                                 "Landroid/content/res/ResourcesImpl;");
+            setObjField(env, mResourcesImpl, "mAssets", "Landroid/content/res/AssetManager;",
+                        newAssetManager);
+        } else {
+            setObjField(env, resources, "mAssets", "Landroid/content/res/AssetManager;",
+                        newAssetManager);
+        }
+        // 清理TypedArray，解决bug
+        jclass resourcesClz = env->GetObjectClass(resources);
+        jfieldID mTypedArrayPoolFieldID = env->GetFieldID(resourcesClz, "mTypedArrayPool",
+                                                          "Landroid/util/Pools$SynchronizedPool;");
+        if (mTypedArrayPoolFieldID == nullptr) {
+            mTypedArrayPoolFieldID = env->GetFieldID(resourcesClz, "mTypedArrayPool",
+                                                     "Landroidx/core/util/Pools$SynchronizedPool;");
+        }
+        if (mTypedArrayPoolFieldID == nullptr) {
+            mTypedArrayPoolFieldID = env->GetFieldID(resourcesClz, "mTypedArrayPool",
+                                                     "Landroid/support/v4/util/Pools$SynchronizedPool;");
+        }
+        jobject origTypedArrayPool = env->GetObjectField(resources, mTypedArrayPoolFieldID);
+        while (true) {
+            jobject acquire = getObjMethod(env, origTypedArrayPool, "acquire",
+                                           "()Ljava/lang/Object;");
+            if (acquire == nullptr) {
+                break;
+            }
+        }
+        // 更新resources
+        jobject getConfiguration = getObjMethod(env, resources, "getConfiguration",
+                                                "()Landroid/content/res/Configuration;");
+        jobject getDisplayMetrics = getObjMethod(env, resources, "getDisplayMetrics",
+                                                 "()Landroid/util/DisplayMetrics;");
+        jmethodID updateConfigurationMethodID = env->GetMethodID(resourcesClz,
+                                                                 "updateConfiguration",
+                                                                 "(Landroid/content/res/Configuration;Landroid/util/DisplayMetrics;)V");
+        env->CallVoidMethod(resources, updateConfigurationMethodID, getConfiguration,
+                            getDisplayMetrics);
 
+        // 释放元素的引用
+        env->DeleteLocalRef(element);
+    }
+    // 释放迭代器对象的引用
+    env->DeleteLocalRef(iteratorObj);
+}
+
+void iteratorMapDealResourceImplAssets(JNIEnv *env, jobject mapObj, jobject newAssetManager) {
+    // 调用 entrySet 方法，获取 Map.Entry 集合
+    jobject entrySetObj = getObjMethod(env, mapObj, "entrySet", "()Ljava/util/Set;");
+    // 调用 iterator 方法，获取 Iterator 对象
+    jobject iteratorObj = getObjMethod(env, entrySetObj, "iterator", "()Ljava/util/Iterator;");
+    // 获取 Iterator 类
+    jclass iteratorClass = env->GetObjectClass(iteratorObj);
+    // 获取 hasNext 方法
+    jmethodID hasNextMethod = env->GetMethodID(iteratorClass, "hasNext", "()Z");
+    // 获取 next 方法
+    jmethodID nextMethod = env->GetMethodID(iteratorClass, "next", "()Ljava/lang/Object;");
+    // 循环遍历 Map.Entry 集合
+    while (env->CallBooleanMethod(iteratorObj, hasNextMethod)) {
+        // 调用 next 方法，获取当前的 Map.Entry 对象
+        jobject entryObj = env->CallObjectMethod(iteratorObj, nextMethod);
+        // 调用 getKey 方法，获取键对象
+        jobject keyObj = getObjMethod(env, entryObj, "getKey", "()Ljava/lang/Object;");
+        // 调用 getValue 方法，获取值对象
+        jobject valueObj = getObjMethod(env, entryObj, "getValue", "()Ljava/lang/Object;");
+
+        // 这里处理键和值对象
+        jobject resourceImpl = getObjMethod(env, valueObj, "get", "()Ljava/lang/Object;");
+        if (resourceImpl == nullptr) {
+            continue;
+        }
+        setObjField(env, resourceImpl, "mAssets", "Landroid/content/res/AssetManager;",
+                    newAssetManager);
+
+        // 当遍历太大的时候，需要释放局部引用
+        env->DeleteLocalRef(entryObj);
+        env->DeleteLocalRef(keyObj);
+        env->DeleteLocalRef(valueObj);
+    }
+}
 
 
 

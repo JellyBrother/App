@@ -1,21 +1,16 @@
 package com.jelly.app.base.load.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -234,67 +229,6 @@ public final class FileUtils {
             fos.close();
         } catch (Throwable e) {
             Log.e(TAG, "copyFilesFassets Throwable", e);
-        }
-    }
-
-    @SuppressLint("NewApi")
-    public static void closeQuietly(Object obj) {
-        if (obj == null) return;
-        if (obj instanceof Closeable) {
-            try {
-                ((Closeable) obj).close();
-            } catch (Throwable ignored) {
-                // Ignored.
-            }
-        } else if (Build.VERSION.SDK_INT >= 19 && obj instanceof AutoCloseable) {
-            try {
-                ((AutoCloseable) obj).close();
-            } catch (Throwable ignored) {
-                // Ignored.
-            }
-        } else if (obj instanceof ZipFile) {
-            try {
-                ((ZipFile) obj).close();
-            } catch (Throwable ignored) {
-                // Ignored.
-            }
-        } else {
-            throw new IllegalArgumentException("obj: " + obj + " cannot be closed.");
-        }
-    }
-
-    public static boolean isNewerOrEqualThanVersion(int apiLevel, boolean includePreviewVer) {
-        if (includePreviewVer && Build.VERSION.SDK_INT >= 23) {
-            return Build.VERSION.SDK_INT >= apiLevel
-                    || ((Build.VERSION.SDK_INT == apiLevel - 1) && Build.VERSION.PREVIEW_SDK_INT > 0);
-        } else {
-            return Build.VERSION.SDK_INT >= apiLevel;
-        }
-    }
-
-    public static Object getActivityThread(Context context,
-                                           Class<?> activityThread) {
-        try {
-            if (activityThread == null) {
-                activityThread = Class.forName("android.app.ActivityThread");
-            }
-            Method m = activityThread.getMethod("currentActivityThread");
-            m.setAccessible(true);
-            Object currentActivityThread = m.invoke(null);
-            if (currentActivityThread == null && context != null) {
-                // In older versions of Android (prior to frameworks/base 66a017b63461a22842)
-                // the currentActivityThread was built on thread locals, so we'll need to try
-                // even harder
-                Field mLoadedApk = context.getClass().getField("mLoadedApk");
-                mLoadedApk.setAccessible(true);
-                Object apk = mLoadedApk.get(context);
-                Field mActivityThreadField = apk.getClass().getDeclaredField("mActivityThread");
-                mActivityThreadField.setAccessible(true);
-                currentActivityThread = mActivityThreadField.get(apk);
-            }
-            return currentActivityThread;
-        } catch (Throwable ignore) {
-            return null;
         }
     }
 }

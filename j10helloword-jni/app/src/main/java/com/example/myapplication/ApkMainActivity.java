@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.jelly.app.base.load.PluginLoader;
-import com.jelly.app.base.load.utils.ReflectUtils;
 
 public class ApkMainActivity extends Activity {
 

@@ -8,7 +8,6 @@ import android.util.Log;
 
 import androidx.annotation.Keep;
 
-import com.jelly.app.base.load.tinker.res.TinkerResourcePatcher;
 import com.jelly.app.base.load.utils.FilePath;
 import com.jelly.app.base.load.utils.FileUtils;
 
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PluginLoader {
-    public static String apkPath = "";
+    public static String pluginPath = "";
     public static Context app;
 
     static {
@@ -38,23 +37,19 @@ public class PluginLoader {
             if (plugins.length < 1) {
                 return;
             }
-            apkPath = FilePath.getPluginPath() + File.separator + plugins[0];
+            pluginPath = FilePath.getPluginPath() + File.separator + plugins[0];
             // 复制apk
-            FileUtils.copyAssetsFile(context, FilePath.PATH_PLUGIN + File.separator + plugins[0], apkPath);
+            FileUtils.copyAssetsFile(context, FilePath.PATH_PLUGIN + File.separator + plugins[0], pluginPath);
             // 解压
             if (!FileUtils.hasFiles(FilePath.getPluginUnzipDir())) {
-                FileUtils.unzipFile(apkPath, FilePath.getPluginUnZipPath());
+                FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
             }
             // apk集合
-            ArrayList<File> apkFiles = new ArrayList<>();
-            File apkFile = new File(apkPath);
-            apkFiles.add(apkFile);
+            ArrayList<File> pluginFiles = new ArrayList<>();
+            File pluginFile = new File(pluginPath);
+            pluginFiles.add(pluginFile);
             // 加载so
-            load((Application) app, getLibFiles(), apkFiles, FilePath.getOatDir(), apkFile, apkPath);
-
-
-            // 加载资源
-            loadResource();
+            load((Application) app, getLibFiles(), pluginFiles, FilePath.getOatDir(), pluginFile, pluginPath);
         } catch (Throwable t) {
             Log.e("", "init", t);
         }
@@ -87,14 +82,6 @@ public class PluginLoader {
         return libFiles;
     }
 
-    private static void loadResource() {
-        try {
-            TinkerResourcePatcher.isResourceCanPatch(app);
-            TinkerResourcePatcher.monkeyPatchExistingResources(app, apkPath);
-        } catch (Throwable t) {
-        }
-    }
-
-    public static native void load(Application context, List<File> libFiles, List<File> apkFiles,
-                                   File oatDir, File apkFile, String apkPath);
+    public static native void load(Application context, List<File> libFiles, List<File> pluginFiles,
+                                   File oatDir, File pluginFile, String pluginPath);
 }

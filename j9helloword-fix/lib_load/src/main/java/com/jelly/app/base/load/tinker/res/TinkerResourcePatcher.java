@@ -483,7 +483,7 @@ public class TinkerResourcePatcher {
         ShareTinkerLog.w(TAG, "try to clear typedArray cache!");
         // Clear typedArray cache.
         try {
-            Object origTypedArrayPool = ReflectUtils.reflect(Resources.class).field("mTypedArrayPool").get();
+            Object origTypedArrayPool = ReflectUtils.reflect(resources).field("mTypedArrayPool").get();
             final Method acquireMethod = ReflectUtils.reflect(origTypedArrayPool).getMethod("acquire");
             while (true) {
                 if (acquireMethod.invoke(origTypedArrayPool) == null) {
