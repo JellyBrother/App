@@ -22,7 +22,7 @@ public class Start {
     public static Context app;
 
     static {
-        System.loadLibrary("loadPlugin");
+        System.loadLibrary("load");
     }
 
     @Keep

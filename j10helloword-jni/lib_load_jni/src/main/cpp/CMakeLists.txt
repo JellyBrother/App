@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.22.1)
 
 # Declares and names the project.
 
-project("loadPlugin")
+project("load")
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -15,7 +15,7 @@ project("loadPlugin")
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-        loadPlugin
+        load
 
         # Sets the library as a shared library.
         SHARED
@@ -41,7 +41,7 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-        loadPlugin
+        load
 
         # Links the target library to the log library
         # included in the NDK.

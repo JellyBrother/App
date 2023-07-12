@@ -40,7 +40,17 @@ jboolean endsWith(JNIEnv *env, jobject obj, const char *bytes);
 // 安卓sdk版本
 static int sdkVerison = 0;
 
-// 处理so
+/**
+ * 参考了tinker方案
+ * so加载参考类：
+ * TinkerLoadLibrary.java
+ * dex加载参考类：
+ * NewClassLoaderInjector.java
+ * SystemClassLoaderAdder.java
+ * TinkerClassLoader.java
+ * 资源加载参考类：
+ * TinkerResourcePatcher.java
+ */
 extern "C" JNIEXPORT void JNICALL
 Java_com_jelly_app_base_load_Start_load(
         JNIEnv *env,
