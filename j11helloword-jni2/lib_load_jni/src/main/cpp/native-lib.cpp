@@ -2,11 +2,10 @@
 #include <string>
 #include <sys/system_properties.h>
 
-// 日志打印
-#include <android/log.h>
-
-#define LOG_TAG "loader"
-#define LOGE(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+//// 日志打印
+//#include <android/log.h>
+//#define LOG_TAG "loader"
+//#define LOGE(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
 void installNativeLibraryPathElements(JNIEnv *env, jobject context, jobject files);
 

@@ -23,7 +23,7 @@ public class ApkMainActivity extends Activity {
         findViewById(R.id.tvw1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Start.attachBaseContext(v.getContext());
+                Start.attachBaseContext(v.getContext(), "mx123+++");
             }
         });
         findViewById(R.id.tvw2).setOnClickListener(new View.OnClickListener() {

@@ -26,7 +26,7 @@ public class Start {
     }
 
     @Keep
-    public static void attachBaseContext(Context context) {
+    public static void attachBaseContext(Context context, String password) {
         Start.app = context;
         if (context != null) {
             Context applicationContext = context.getApplicationContext();
@@ -54,7 +54,7 @@ public class Start {
                 }
                 // 解压、解密分卷
                 String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + subsectionName;
-                FileUtils.unzipFileByPassword(subsectionPath, FilePath.getPluginPath(), "mx123+++");
+                FileUtils.unzipFileByPassword(subsectionPath, FilePath.getPluginPath(), password);
                 File pluginDir = FilePath.getPluginDir();
                 String[] list = pluginDir.list();
                 pluginPath = FilePath.getPluginPath() + File.separator + list[0];

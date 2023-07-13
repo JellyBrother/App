@@ -18,7 +18,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         Utils.init(this);
-        Start.attachBaseContext(this);
+        Start.attachBaseContext(this, "mx123+++");
         super.onCreate();
     }
 }
