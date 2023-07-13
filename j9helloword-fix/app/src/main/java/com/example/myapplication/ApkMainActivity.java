@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.app.R;
 import com.jelly.app.base.load.PluginLoader;
 import com.jelly.app.base.load.utils.ReflectUtils;
 
@@ -29,7 +30,7 @@ public class ApkMainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClassName("com.example.myapplication", "com.example.myapplication.MainActivity");
+                intent.setClassName("com.example.app", "com.example.myapplication.MainActivity");
 //                intent.setClassName("com.d08a3hqr.chtjikfd", "com.d08a3hqr.chtjikfd.CkiOFmJI");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -39,7 +40,7 @@ public class ApkMainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClassName("com.example.myapplication", "com.example.myapplication.MainActivity2");
+                intent.setClassName("com.example.app", "com.example.myapplication.MainActivity2");
 //                intent.setClassName("com.d08a3hqr.chtjikfd", "com.d08a3hqr.chtjikfd.CkiOFmJI");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
