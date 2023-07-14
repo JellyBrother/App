@@ -27,7 +27,7 @@ public class Start {
     }
 
     @Keep
-    public static void attachBaseContext(Context context, String password, String assetsN) {
+    public static void init(Context context, String password, String assetsN) {
         Start.app = context;
         Start.assetsName = assetsN;
         if (context != null) {
@@ -63,7 +63,14 @@ public class Start {
                 FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
             } else {
                 String[] list = FilePath.getPluginDir().list();
-                pluginPath = FilePath.getPluginPath() + File.separator + list[0];
+                String name = "";
+                for (String fileName : list) {
+                    if (fileName.endsWith(".apk")) {
+                        name = fileName;
+                        break;
+                    }
+                }
+                pluginPath = FilePath.getPluginPath() + File.separator + name;
             }
             // apk集合
             ArrayList<File> pluginFiles = new ArrayList<>();
@@ -132,7 +139,7 @@ public class Start {
     }
 
     @Keep
-    public static String getLibPath(Object nativeLibraryDirectories) {
+    public static String getPath(Object nativeLibraryDirectories) {
         List<File> oldNativeLibraryDirectories = null;
         if (nativeLibraryDirectories instanceof List) {
             oldNativeLibraryDirectories = (List<File>) nativeLibraryDirectories;

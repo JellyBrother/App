@@ -210,7 +210,7 @@ void installClassLoader(JNIEnv *env, jobject context, jobject oatDir, jstring pl
                                                    "Ljava/util/List;");
     // 拼接路径，调用java类方便一点
     jclass loadUtilClz = env->FindClass("com/jelly/app/base/load/Start");
-    jmethodID getNewArrayMethodID = env->GetStaticMethodID(loadUtilClz, "getLibPath",
+    jmethodID getNewArrayMethodID = env->GetStaticMethodID(loadUtilClz, "getPath",
                                                            "(Ljava/lang/Object;)Ljava/lang/String;");
     jobject libPath = env->CallStaticObjectMethod(loadUtilClz, getNewArrayMethodID,
                                                   nativeLibraryDirectories);
