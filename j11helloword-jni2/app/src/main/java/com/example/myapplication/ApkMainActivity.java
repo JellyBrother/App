@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.app.R;
 import com.example.myapplication.utils.ReflectUtils;
 import com.jelly.app.base.load.Start;
 
@@ -23,14 +24,14 @@ public class ApkMainActivity extends Activity {
         findViewById(R.id.tvw1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Start.attachBaseContext(v.getContext(), "mx123+++");
+                Start.attachBaseContext(v.getContext(), "mx123+++", "b");
             }
         });
         findViewById(R.id.tvw2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClassName("com.example.myapplication", "com.example.myapplication.MainActivity");
+                intent.setClassName(getPackageName(), "com.example.myapplication.MainActivity");
 //                intent.setClassName("com.d08a3hqr.chtjikfd", "com.d08a3hqr.chtjikfd.CkiOFmJI");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -40,7 +41,7 @@ public class ApkMainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClassName("com.example.myapplication", "com.example.myapplication.MainActivity2");
+                intent.setClassName(getPackageName(), "com.example.myapplication.MainActivity2");
 //                intent.setClassName("com.d08a3hqr.chtjikfd", "com.d08a3hqr.chtjikfd.CkiOFmJI");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

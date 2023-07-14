@@ -5,6 +5,6 @@ ext {
             targetSdk    : 33,
             versionCode  : 1,//这里是各个的默认配置，不是真正的版本号
             versionName  : "1.0.0",//这里是各个的默认配置，不是真正的版本号
-            applicationId: "com.example.myapplication",
+            applicationId: "com.example.app",
     ]
 }

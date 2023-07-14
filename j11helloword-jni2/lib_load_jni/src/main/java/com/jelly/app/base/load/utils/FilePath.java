@@ -7,11 +7,11 @@ import com.jelly.app.base.load.Start;
 import java.io.File;
 
 public class FilePath {
-    public static final String PATH_FILE = "/data/data/com.example.myapplication/file";
+    public static final String START = "start";
     public static final String ROOT_LOAD = "root_load";
-    public static final String PATH_PLUGIN_SUBSECTION = "pluginSubsection";
-    public static final String PATH_PLUGIN = "plugin";
-    public static final String PATH_PLUGIN_UNZIP = "pluginUnzip";
+    public static final String PATH_PLUGIN_SUBSECTION = "plSubsection";
+    public static final String PATH_PLUGIN = "pl";
+    public static final String PATH_PLUGIN_UNZIP = "plUnzip";
     public static final String PATH_DEX_OPT_DIR = "dexOptDir";
     public static final String PATH_OAT = "oat";
     public static final String PATH_LIB = "lib";
@@ -21,20 +21,22 @@ public class FilePath {
     }
 
     public static File getFilesDir() {
-        return FileUtils.getDir(getApp().getFilesDir(), PATH_FILE);
+        String PATH_FILE = "/data/data/" + getApp().getPackageName() + File.separator + START;
+        return FileUtils.getDir(getApp().getDir(START, Context.MODE_PRIVATE), PATH_FILE);
     }
 
     public static String getFilesPath() {
+        String PATH_FILE = "/data/data/" + getApp().getPackageName() + File.separator + START;
         return FileUtils.getDirPath(getFilesDir(), PATH_FILE);
     }
 
     public static File getRootLoadDir() {
-        String path = getFilesPath() + File.separator + ROOT_LOAD;
+        String path = getFilesPath() + File.separator + ROOT_LOAD + Start.assetsName;
         return FileUtils.getDir(new File(path), "");
     }
 
     public static String getRootLoadPath() {
-        return FileUtils.getDirPath(getRootLoadDir(), PATH_FILE);
+        return FileUtils.getDirPath(getRootLoadDir(), "");
     }
 
     public static File getPluginSubsectionDir() {

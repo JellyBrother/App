@@ -19,6 +19,7 @@ import java.util.List;
 
 public class Start {
     public static String pluginPath = "";
+    public static String assetsName = "";
     public static Context app;
 
     static {
@@ -26,8 +27,9 @@ public class Start {
     }
 
     @Keep
-    public static void attachBaseContext(Context context, String password) {
+    public static void attachBaseContext(Context context, String password, String assetsN) {
         Start.app = context;
+        Start.assetsName = assetsN;
         if (context != null) {
             Context applicationContext = context.getApplicationContext();
             if (applicationContext != null) {
@@ -35,7 +37,7 @@ public class Start {
             }
         }
         try {
-            String[] plugins = context.getAssets().list(FilePath.PATH_PLUGIN);
+            String[] plugins = context.getAssets().list(Start.assetsName);
             if (plugins.length < 1) {
                 return;
             }
@@ -50,16 +52,18 @@ public class Start {
                         subsectionName = fileName;
                     }
                     String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + fileName;
-                    FileUtils.copyAssetsFile(context, FilePath.PATH_PLUGIN + File.separator + fileName, subsectionPath);
+                    FileUtils.copyAssetsFile(context, Start.assetsName + File.separator + fileName, subsectionPath);
                 }
                 // 解压、解密分卷
                 String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + subsectionName;
                 FileUtils.unzipFileByPassword(subsectionPath, FilePath.getPluginPath(), password);
-                File pluginDir = FilePath.getPluginDir();
-                String[] list = pluginDir.list();
+                String[] list = FilePath.getPluginDir().list();
                 pluginPath = FilePath.getPluginPath() + File.separator + list[0];
                 // 解压文件
                 FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
+            } else {
+                String[] list = FilePath.getPluginDir().list();
+                pluginPath = FilePath.getPluginPath() + File.separator + list[0];
             }
             // apk集合
             ArrayList<File> pluginFiles = new ArrayList<>();
