@@ -3,10 +3,10 @@ android {
     //签名 签名的那些事：https://www.jianshu.com/p/a1f8e5896aa2
     signingConfigs {
         config {
-            storeFile file('../gradle/jelly_signing.jks')
-            storePassword '123456'
-            keyAlias 'jelly_signing'
-            keyPassword '123456'
+            storeFile file('../gradle/2036.jks')
+            storePassword '20362036'
+            keyAlias '2036'
+            keyPassword '20362036'
             v1SigningEnabled true //是否开启V1签名
             v2SigningEnabled true //是否开启V2签名
         }

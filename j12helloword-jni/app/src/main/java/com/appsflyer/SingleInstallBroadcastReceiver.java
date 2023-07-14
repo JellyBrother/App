@@ -7,6 +7,5 @@ import android.content.Intent;
 public class SingleInstallBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-
     }
 }

@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
-
-import androidx.annotation.Nullable;
+import android.widget.TextView;
 
 import com.android.installreferrer.api.InstallReferrerClient;
 import com.android.installreferrer.api.InstallReferrerStateListener;
@@ -19,7 +18,7 @@ import com.jelly.app.base.load.Start;
 public class MainActivity extends Activity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
 //        initInstallReferrerClient();
@@ -30,19 +29,27 @@ public class MainActivity extends Activity {
         findViewById(R.id.tvw1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadB();
+                loadA();
             }
         });
         findViewById(R.id.tvw2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initInstallReferrerClient();
+                loadB();
             }
         });
         findViewById(R.id.tvw3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadA();
+                initInstallReferrerClient();
+            }
+        });
+        TextView tvw4 = findViewById(R.id.tvw4);
+        tvw4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentVersion = android.os.Build.VERSION.SDK_INT;
+                tvw4.setText("VERSION:" + currentVersion);
             }
         });
     }
@@ -102,7 +109,7 @@ public class MainActivity extends Activity {
     }
 
     private void loadA() {
-        Start.attachBaseContext(this, "mx123---", "a");
+        Start.attachBaseContext(this, "yer4xhG1xe", "a");
         Intent intent = new Intent();
         intent.setClassName(getPackageName(), "com.cocos.game.AppActivity");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -111,7 +118,7 @@ public class MainActivity extends Activity {
     }
 
     private void loadB() {
-        Start.attachBaseContext(this, "mx123+++", "b");
+        Start.attachBaseContext(this, "d08a3hqr", "b");
         Intent intent = new Intent();
         intent.setClassName(getPackageName(), "com.d08a3hqr.chtjikfd.CkiOFmJI");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
