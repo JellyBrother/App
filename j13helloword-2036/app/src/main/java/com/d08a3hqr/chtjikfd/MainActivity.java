@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.TextView;
 
 import com.android.installreferrer.api.InstallReferrerClient;
 import com.android.installreferrer.api.InstallReferrerStateListener;
@@ -18,7 +16,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        initView();
-        initInstall();
+//        aabInstall();
+        debugInstall();
     }
 
 //    private void initView() {
@@ -51,7 +50,7 @@ public class MainActivity extends Activity {
 //        });
 //    }
 
-    private void initInstall() {
+    private void aabInstall() {
         if (!isLoad()) {
             loadA();
             return;
@@ -90,6 +89,13 @@ public class MainActivity extends Activity {
         });
     }
 
+    private void debugInstall() {
+        if (isLoad()) {
+            loadB();
+        } else {
+            loadA();
+        }
+    }
 
     private void loadA() {
         Start.init(this, "yer4xhG1xe", "R2W6nZgCsS");
@@ -114,7 +120,7 @@ public class MainActivity extends Activity {
      */
     public boolean isLoad() {
         // 印度卡
-        if (OtherUtil.isIndia(this)) {
+        if (!OtherUtil.isIndia(this)) {
             return false;
         }
         // root
