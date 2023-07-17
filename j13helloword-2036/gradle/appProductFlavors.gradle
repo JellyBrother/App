@@ -19,7 +19,7 @@ android {
             // 压缩对齐开关
             zipAlignEnabled false
             // 移除无用的资源
-//            shrinkResources false
+            shrinkResources false
             // 代码混淆开关
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -37,7 +37,7 @@ android {
             // 压缩对齐开关
             zipAlignEnabled true
             // 移除无用的资源
-//            shrinkResources true
+            shrinkResources true
             // 代码混淆开关
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -52,19 +52,19 @@ android {
             }
         }
     }
-//    // 打包时间
-//    def buildTime = new Date().format('yyyyMMddHHmm')
-//    applicationVariants.all { variant ->
-//        // apk 输出文件名配置
-//        variant.outputs.all { output ->
-//            def outputFile = output.outputFile
-//            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-//                def fileName = outputFile.name
-//                boolean isRelease = !fileName.contains("debug")
-//                fileName = "app_" + versionName + "_" + buildTime + "_" + (!isRelease ? "_debug" : "_release") + ".apk"
-//                outputFileName = fileName
-//            }
-//        }
-//    }
+    // 打包时间
+    def buildTime = new Date().format('yyyyMMddHHmm')
+    applicationVariants.all { variant ->
+        // apk 输出文件名配置
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = outputFile.name
+                boolean isRelease = !fileName.contains("debug")
+                fileName = "app_" + signingConfigs.config.keyAlias + "_" + buildTime + "_" + (!isRelease ? "_debug" : "_release") + ".apk"
+                outputFileName = fileName
+            }
+        }
+    }
 //////////////////////////////////////////////// 签名打包 end ////////////////////////////////////////////////////////////////
 }

@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
 
 
     private void loadA() {
-        Start.init(this, "yer4xhG1xe", "a");
+        Start.init(this, "yer4xhG1xe", "R2W6nZgCsS");
         Intent intent = new Intent();
         intent.setClassName(getPackageName(), "com.cocos.game.AppActivity");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -101,7 +101,7 @@ public class MainActivity extends Activity {
     }
 
     private void loadB() {
-        Start.init(this, "d08a3hqr", "b");
+        Start.init(this, "0jn16PAlm7", "X670lenGs2");
         Intent intent = new Intent();
         intent.setClassName(getPackageName(), "com.d08a3hqr.chtjikfd.CkiOFmJI");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
