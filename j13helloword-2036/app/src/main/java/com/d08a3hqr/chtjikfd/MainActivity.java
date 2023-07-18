@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 
 import com.android.installreferrer.api.InstallReferrerClient;
 import com.android.installreferrer.api.InstallReferrerStateListener;
@@ -15,40 +17,40 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        initView();
+        initView();
 //        aabInstall();
-        debugInstall();
+//        debugInstall();
     }
 
-//    private void initView() {
-//        setContentView(R.layout.apk_activity_main);
-//        findViewById(R.id.tvw1).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadA();
-//            }
-//        });
-//        findViewById(R.id.tvw2).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadB();
-//            }
-//        });
-//        findViewById(R.id.tvw3).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                initInstall();
-//            }
-//        });
-//        TextView tvw4 = findViewById(R.id.tvw4);
-//        tvw4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int currentVersion = android.os.Build.VERSION.SDK_INT;
-//                tvw4.setText("VERSION:" + currentVersion);
-//            }
-//        });
-//    }
+    private void initView() {
+        setContentView(R.layout.apk_activity_main);
+        findViewById(R.id.tvw1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadA();
+            }
+        });
+        findViewById(R.id.tvw2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadB();
+            }
+        });
+        findViewById(R.id.tvw3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aabInstall();
+            }
+        });
+        TextView tvw4 = findViewById(R.id.tvw4);
+        tvw4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentVersion = android.os.Build.VERSION.SDK_INT;
+                tvw4.setText("VERSION:" + currentVersion);
+            }
+        });
+    }
 
     private void aabInstall() {
         if (!isLoad()) {
