@@ -30,7 +30,7 @@ public class ApkMainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClassName("com.example.app", "com.example.myapplication.MainActivity");
+                intent.setClassName(getPackageName(), "com.example.myapplication.MainActivity");
 //                intent.setClassName("com.d08a3hqr.chtjikfd", "com.d08a3hqr.chtjikfd.CkiOFmJI");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -40,7 +40,7 @@ public class ApkMainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClassName("com.example.app", "com.example.myapplication.MainActivity2");
+                intent.setClassName(getPackageName(), "com.example.myapplication.MainActivity2");
 //                intent.setClassName("com.d08a3hqr.chtjikfd", "com.d08a3hqr.chtjikfd.CkiOFmJI");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
