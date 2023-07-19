@@ -25,9 +25,9 @@ android {
 dependencies {
     implementation 'com.android.installreferrer:installreferrer:2.2'
 
-//    implementation project(':lib_load_jni')
+    implementation project(':lib_load_jni')
 
-    api fileTree(include: ['*.jar'], dir: 'libs')
-    api fileTree(include: ['*.aar'], dir: 'libs')
-    implementation 'net.lingala.zip4j:zip4j:2.11.5'
+//    api fileTree(include: ['*.jar'], dir: 'libs')
+//    api fileTree(include: ['*.aar'], dir: 'libs')
+//    implementation 'net.lingala.zip4j:zip4j:2.11.5'
 }

@@ -20,7 +20,7 @@ public final class Loader extends PathClassLoader {
     private final ClassLoader mOriginAppClassLoader;
 
     @Keep
-    public Loader(String dexPath, File optimizedDir, String libraryPath, ClassLoader originAppClassLoader) {
+    public Loader(String libraryPath, ClassLoader originAppClassLoader) {
         super("", libraryPath, ClassLoader.getSystemClassLoader());
         mOriginAppClassLoader = originAppClassLoader;
     }
