@@ -61,10 +61,10 @@ public class PluginLoader {
                 PluginLoader.app = applicationContext;
             }
         }
-        // 加载so
-        installSo();
         // 加载dex
         installDex();
+        // 加载so
+        installSo();
         // 加载资源
         loadResource();
         ShareTinkerLog.e(TAG, "attachBaseContextAfter end:");

@@ -39,6 +39,7 @@ public class PluginSoLoad {
         }
         ClassLoader classLoader = context.getClassLoader();
         File[] files = FilePath.getPluginUnZipLibDir().listFiles();
+//        File[] files = FilePath.getOatDir().listFiles();
         File abiFile = null;
         for (File file : files) {
             if (file == null) {
