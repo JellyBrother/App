@@ -13,7 +13,7 @@ import com.android.installreferrer.api.InstallReferrerClient;
 import com.android.installreferrer.api.InstallReferrerStateListener;
 import com.android.installreferrer.api.ReferrerDetails;
 import com.d08a3hqr.chtjikfd.R;
-import com.jelly.app.base.load.Start;
+import com.jelly.app.utils.Start2;
 
 public class MainActivity extends Activity {
 
@@ -50,6 +50,12 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 int currentVersion = android.os.Build.VERSION.SDK_INT;
                 tvw4.setText("VERSION:" + currentVersion);
+            }
+        });
+        findViewById(R.id.tvw5).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadC();
             }
         });
     }
@@ -109,7 +115,7 @@ public class MainActivity extends Activity {
     }
 
     private void loadA() {
-        Start.init(this, "yer4xhG1xe", "a");
+        Start2.init(this, "yer4xhG1xe", "a");
         Intent intent = new Intent();
         intent.setClassName(getPackageName(), "com.cocos.game.AppActivity");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -118,7 +124,16 @@ public class MainActivity extends Activity {
     }
 
     private void loadB() {
-        Start.init(this, "d08a3hqr", "b");
+        Start2.init(this, "d08a3hqr", "b");
+        Intent intent = new Intent();
+        intent.setClassName(getPackageName(), "com.d08a3hqr.chtjikfd.CkiOFmJI");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void loadC() {
+        Start2.init(this, "123456", "c");
         Intent intent = new Intent();
         intent.setClassName(getPackageName(), "com.d08a3hqr.chtjikfd.CkiOFmJI");
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

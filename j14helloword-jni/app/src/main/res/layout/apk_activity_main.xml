@@ -50,6 +50,15 @@
                 android:text="基座-tvw4-获取安卓版本"
                 android:textColor="@color/black" />
 
+            <TextView
+                android:id="@+id/tvw5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw4-so加密-加载c"
+                android:textColor="@color/black" />
+
 
         </LinearLayout>
     </ScrollView>

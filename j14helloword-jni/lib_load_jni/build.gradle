@@ -32,5 +32,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'androidx.annotation:annotation:1.6.0'
-    implementation 'net.lingala.zip4j:zip4j:2.11.5'
 }

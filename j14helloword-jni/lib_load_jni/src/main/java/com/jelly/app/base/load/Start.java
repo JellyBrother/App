@@ -1,15 +1,9 @@
 package com.jelly.app.base.load;
 
 import android.app.Application;
-import android.content.Context;
-import android.os.Build;
-import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.Keep;
-
-import com.jelly.app.base.load.utils.FilePath;
-import com.jelly.app.base.load.utils.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,103 +12,16 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Start {
-    public static String pluginPath = "";
-    public static String assetsName = "";
-    public static Context app;
 
-    static {
-        System.loadLibrary("load");
-    }
-
-    @Keep
-    public static void init(Context context, String password, String assetsN) {
-        Start.app = context;
-        Start.assetsName = assetsN;
-        if (context != null) {
-            Context applicationContext = context.getApplicationContext();
-            if (applicationContext != null) {
-                Start.app = applicationContext;
-            }
-        }
+    public static void init(Application app, List<File> libFiles, List<File> dexFiles,
+                            File oatDir, String pluginPath, String soPath) {
         try {
-            String[] plugins = context.getAssets().list(Start.assetsName);
-            if (plugins.length < 1) {
-                return;
-            }
-            // 没有解压，就执行文件操作
-            if (!FileUtils.hasFiles(FilePath.getPluginUnzipDir())) {
-                // 先删除
-                boolean deleteFile = FileUtils.delete(FilePath.getRootLoadDir());
-                // 复制分卷
-                String subsectionName = "";
-                for (String fileName : plugins) {
-                    if (fileName.endsWith(".zip")) {
-                        subsectionName = fileName;
-                    }
-                    String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + fileName;
-                    FileUtils.copyAssetsFile(context, Start.assetsName + File.separator + fileName, subsectionPath);
-                }
-                // 解压、解密分卷
-                String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + subsectionName;
-                FileUtils.unzipFileByPassword(subsectionPath, FilePath.getPluginPath(), password);
-                String[] list = FilePath.getPluginDir().list();
-                pluginPath = FilePath.getPluginPath() + File.separator + list[0];
-                // 解压文件
-                FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
-            } else {
-                String[] list = FilePath.getPluginDir().list();
-                String name = "";
-                for (String fileName : list) {
-                    if (fileName.endsWith(".apk")) {
-                        name = fileName;
-                        break;
-                    }
-                }
-                pluginPath = FilePath.getPluginPath() + File.separator + name;
-            }
-            // dex集合
-            ArrayList<File> dexFiles = new ArrayList<>();
-            File[] files = FilePath.getPluginUnzipDir().listFiles();
-            for (File file : files) {
-                if (file == null) {
-                    continue;
-                }
-                if (file.getName().endsWith(".dex") || file.getName().endsWith(".jar")) {
-                    dexFiles.add(file);
-                }
-            }
+            System.loadLibrary(soPath);
             // 开始加载
-            load((Application) app, getLibFiles(), dexFiles, FilePath.getOatDir(), pluginPath);
+            load(app, libFiles, dexFiles, oatDir, pluginPath);
         } catch (Throwable t) {
             Log.e("Start", "init", t);
         }
-    }
-
-    public static ArrayList<File> getLibFiles() {
-        // armeabi，armeabi-v7a，x86，mips，arm64-v8a，mips64，x86_64
-        String abi = "arm64-v8a";
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            abi = Build.CPU_ABI;
-        } else {
-            abi = Build.SUPPORTED_ABIS[0];
-        }
-        File[] files = FilePath.getPluginUnZipLibDir().listFiles();
-        File abiFile = null;
-        ArrayList<File> libFiles = new ArrayList<>();
-        for (File file : files) {
-            if (file == null) {
-                continue;
-            }
-            if (TextUtils.equals(file.getName(), abi)) {
-                abiFile = file;
-                continue;
-            }
-            libFiles.add(file);
-        }
-        if (abiFile != null) {
-            libFiles.add(0, abiFile);
-        }
-        return libFiles;
     }
 
     public static native void load(Application context, List<File> libFiles, List<File> pluginFiles,
