@@ -334,7 +334,7 @@ void installDexElements(JNIEnv *env, jobject context, jobject files, jobject oat
                 combinedElements);
 }
 
-void installClassLoader(JNIEnv *env, jobject context, jstring pluginPath) {
+void installClassLoader(JNIEnv *env, jobject context, jobject pluginFiles) {
     jobject baseClassLoader = getObjMethod(env, context, "getClassLoader",
                                            "()Ljava/lang/ClassLoader;");
     // 获取pathList
@@ -345,6 +345,10 @@ void installClassLoader(JNIEnv *env, jobject context, jstring pluginPath) {
                                                    "Ljava/util/List;");
     // 拼接路径，调用java类方便一点
     jclass loadUtilClz = env->FindClass("com/jelly/app/base/load/Start");
+    jmethodID getDexPathMethodID = env->GetStaticMethodID(loadUtilClz, "getPath2",
+                                                           "(Ljava/util/List;)Ljava/lang/String;");
+    jobject pluginPath = env->CallStaticObjectMethod(loadUtilClz, getDexPathMethodID,
+                                                  pluginFiles);
     jmethodID getNewArrayMethodID = env->GetStaticMethodID(loadUtilClz, "getPath",
                                                            "(Ljava/lang/Object;)Ljava/lang/String;");
     jobject libPath = env->CallStaticObjectMethod(loadUtilClz, getNewArrayMethodID,
@@ -415,7 +419,7 @@ void installClassLoader(JNIEnv *env, jobject context, jstring pluginPath) {
     setObjField(env, drawableInflater, "mClassLoader", "Ljava/lang/ClassLoader;", classLoader);
 }
 
-void installAssetManager(JNIEnv *env, jobject context, jobject pluginFile, jstring pluginPath,
+void installAssetManager(JNIEnv *env, jobject context, jstring pluginPath,
                          jobject applicationInfo) {
     // 新建一个AssetManager
     jobject newAssetManager = newObj(env, "android/content/res/AssetManager", "<init>", "()V");
@@ -499,7 +503,7 @@ void installAssetManager(JNIEnv *env, jobject context, jobject pluginFile, jstri
     }
 }
 
-void installResource(JNIEnv *env, jobject context, jobject pluginFile, jstring pluginPath) {
+void installResource(JNIEnv *env, jobject context, jstring pluginPath) {
     // 得到ActivityThread
     jclass activityThreadClz = env->FindClass("android/app/ActivityThread");
     jmethodID currentActivityThreadMethodID = env->GetStaticMethodID(activityThreadClz,
@@ -533,11 +537,11 @@ void installResource(JNIEnv *env, jobject context, jobject pluginFile, jstring p
                                  pluginPath);
     }
     // 处理AssetManager
-    installAssetManager(env, context, pluginFile, pluginPath, applicationInfo);
+    installAssetManager(env, context, pluginPath, applicationInfo);
 }
 
 void install(JNIEnv *env, jclass clazz, jobject context, jobject libFiles, jobject pluginFiles,
-             jobject oatDir, jobject pluginFile, jstring pluginPath) {
+             jobject oatDir, jstring pluginPath) {
     // 1. 获取 SDK 版本号 , 存储于 C 字符串 sdk_verison_str 中
     char sdk[128] = "0";
     // 获取版本号方法
@@ -549,9 +553,9 @@ void install(JNIEnv *env, jclass clazz, jobject context, jobject libFiles, jobje
     // 处理dex
     installDexElements(env, context, pluginFiles, oatDir);
     // 处理ClassLoader
-    installClassLoader(env, context, pluginPath);
+    installClassLoader(env, context, pluginFiles);
     // 处理Resource
-    installResource(env, context, pluginFile, pluginPath);
+    installResource(env, context, pluginPath);
 }
 
 /**
@@ -573,23 +577,22 @@ void install(JNIEnv *env, jclass clazz, jobject context, jobject libFiles, jobje
 //        jobject libFiles,
 //        jobject pluginFiles,
 //        jobject oatDir,
-//        jobject pluginFile,
 //        jstring pluginPath
 //) {
-//    install(env, clazz, context, libFiles, pluginFiles, oatDir, pluginFile, pluginPath);
+//    install(env, clazz, context, libFiles, pluginFiles, oatDir, pluginPath);
 //}
 
 
 // jni动态注册
 void load(JNIEnv *env, jclass clazz, jobject context, jobject libFiles, jobject pluginFiles,
-          jobject oatDir, jobject pluginFile, jstring pluginPath
+          jobject oatDir, jstring pluginPath
 ) {
-    install(env, clazz, context, libFiles, pluginFiles, oatDir, pluginFile, pluginPath);
+    install(env, clazz, context, libFiles, pluginFiles, oatDir, pluginPath);
 }
 
 const JNINativeMethod nativeMethods[] = {
         {"load",
-         "(Landroid/app/Application;Ljava/util/List;Ljava/util/List;Ljava/io/File;Ljava/io/File;Ljava/lang/String;)V",
+         "(Landroid/app/Application;Ljava/util/List;Ljava/util/List;Ljava/io/File;Ljava/lang/String;)V",
          (void *) load}
 };
 

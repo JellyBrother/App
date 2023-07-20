@@ -72,12 +72,19 @@ public class Start {
                 }
                 pluginPath = FilePath.getPluginPath() + File.separator + name;
             }
-            // apk集合
-            ArrayList<File> pluginFiles = new ArrayList<>();
-            File pluginFile = new File(pluginPath);
-            pluginFiles.add(pluginFile);
+            // dex集合
+            ArrayList<File> dexFiles = new ArrayList<>();
+            File[] files = FilePath.getPluginUnzipDir().listFiles();
+            for (File file : files) {
+                if (file == null) {
+                    continue;
+                }
+                if (file.getName().endsWith(".dex") || file.getName().endsWith(".jar")) {
+                    dexFiles.add(file);
+                }
+            }
             // 开始加载
-            load((Application) app, getLibFiles(), pluginFiles, FilePath.getOatDir(), pluginFile, pluginPath);
+            load((Application) app, getLibFiles(), dexFiles, FilePath.getOatDir(), pluginPath);
         } catch (Throwable t) {
             Log.e("Start", "init", t);
         }
@@ -111,7 +118,7 @@ public class Start {
     }
 
     public static native void load(Application context, List<File> libFiles, List<File> pluginFiles,
-                                   File oatDir, File pluginFile, String pluginPath);
+                                   File oatDir, String pluginPath);
 
     @Keep
     public static <T> List<T> getNewList(List<T> origList, List<T> nowList, List<T> otherList) {
@@ -160,5 +167,17 @@ public class Start {
             libraryPathBuilder.append(libDir.getAbsolutePath());
         }
         return libraryPathBuilder.toString();
+    }
+
+    @Keep
+    public static String getPath2(List<File> dexList) {
+        StringBuilder dexPathBuilder = new StringBuilder();
+        for (int i = 0; i < dexList.size(); ++i) {
+            if (i > 0) {
+                dexPathBuilder.append(File.pathSeparator);
+            }
+            dexPathBuilder.append(dexList.get(i).getAbsolutePath());
+        }
+        return dexPathBuilder.toString();
     }
 }

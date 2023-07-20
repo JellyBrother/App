@@ -107,7 +107,7 @@ public class PluginLoader {
                 if (file == null) {
                     continue;
                 }
-                if (file.getName().endsWith(".dex")) {
+                if (file.getName().endsWith(".dex") || file.getName().endsWith(".jar")) {
                     list.add(file);
                 }
             }
