@@ -153,31 +153,25 @@ public class Start {
         } else {
             Arrays.asList((File[]) nativeLibraryDirectories);
         }
-        StringBuilder libraryPathBuilder = new StringBuilder();
-        boolean isFirstItem = true;
-        for (File libDir : oldNativeLibraryDirectories) {
-            if (libDir == null) {
-                continue;
-            }
-            if (isFirstItem) {
-                isFirstItem = false;
-            } else {
-                libraryPathBuilder.append(File.pathSeparator);
-            }
-            libraryPathBuilder.append(libDir.getAbsolutePath());
-        }
-        return libraryPathBuilder.toString();
+        return getString(oldNativeLibraryDirectories);
     }
 
     @Keep
     public static String getPath2(List<File> dexList) {
-        StringBuilder dexPathBuilder = new StringBuilder();
-        for (int i = 0; i < dexList.size(); ++i) {
-            if (i > 0) {
-                dexPathBuilder.append(File.pathSeparator);
-            }
-            dexPathBuilder.append(dexList.get(i).getAbsolutePath());
+        return getString(dexList);
+    }
+
+    private static String getString(List<File> list) {
+        if (list == null) {
+            return "";
         }
-        return dexPathBuilder.toString();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < list.size(); ++i) {
+            if (i > 0) {
+                stringBuilder.append(File.pathSeparator);
+            }
+            stringBuilder.append(list.get(i).getAbsolutePath());
+        }
+        return stringBuilder.toString();
     }
 }
