@@ -62,10 +62,10 @@ public class PluginLoader {
                 PluginLoader.app = applicationContext;
             }
         }
-        // 加载dex
-        installDex();
         // 加载so
         installSo();
+        // 加载dex
+        installDex();
         // 加载资源
         loadResource();
         ShareTinkerLog.e(TAG, "attachBaseContextAfter end:");
@@ -86,10 +86,10 @@ public class PluginLoader {
     private static void installSo() {
         try {
             ShareTinkerLog.e(TAG, "attachBaseContext installSo start:");
-//            PluginSoLoad.loadSo(app);
+            PluginSoLoad.loadSo(app);
 //            PluginSoLoad.loadSo2(app);
 //            PluginSoLoad.loadSo3(app);
-            PluginSoLoad.loadSo4(app);
+//            PluginSoLoad.loadSo4(app);
             ShareTinkerLog.e(TAG, "attachBaseContext installSo end:");
         } catch (Throwable t) {
             ShareTinkerLog.e(TAG, "attachBaseContext installSo Throwable:", t);

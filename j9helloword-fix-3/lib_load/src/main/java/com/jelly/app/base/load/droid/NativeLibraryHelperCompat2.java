@@ -1,4 +1,4 @@
-package com.jelly.app.base.load.tinker.lib;
+package com.jelly.app.base.load.droid;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -13,9 +13,9 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class NativeLibraryHelperCompat {
+public class NativeLibraryHelperCompat2 {
 
-    private static final String TAG = NativeLibraryHelperCompat.class.getSimpleName();
+    private static final String TAG = NativeLibraryHelperCompat2.class.getSimpleName();
 
     private static final Class nativeLibraryHelperClass() throws ClassNotFoundException {
         return Class.forName("com.android.internal.content.NativeLibraryHelper");

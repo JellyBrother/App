@@ -8,6 +8,7 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.jelly.app.base.load.PluginLoader;
+import com.jelly.app.base.load.droid.NativeLibraryHelperCompat;
 import com.jelly.app.base.load.utils.FilePath;
 import com.jelly.app.base.load.utils.PluginCombinePathList;
 import com.jelly.app.base.load.utils.ReflectUtils;
@@ -80,7 +81,7 @@ public class PluginSoLoad {
     }
 
     public static void loadSo4(Context context) throws Throwable {
-        NativeLibraryHelperCompat.copyNativeBinaries(new File(PluginLoader.apkPath), FilePath.getPluginUnZipLibDir2());
+        NativeLibraryHelperCompat.copyNativeBinaries(new File(NativeLibraryHelperCompat.getHostApk()), new File(PluginLoader.apkPath));
         File pluginUnZipLibDir2 = FilePath.getPluginUnZipLibDir2();
         File[] files = pluginUnZipLibDir2.listFiles();
 //        loadSo(context);
