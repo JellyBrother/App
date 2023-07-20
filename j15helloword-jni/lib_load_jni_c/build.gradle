@@ -1,0 +1,28 @@
+plugins {
+    id 'com.android.library'
+}
+
+apply from: '../gradle/appProductFlavors.gradle'
+android {
+    namespace rootProject.ext.android.applicationId
+    compileSdk rootProject.ext.android.compileSdk
+
+    defaultConfig {
+        minSdk rootProject.ext.android.minSdk
+        targetSdk rootProject.ext.android.targetSdk
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.22.1'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':lib_load_jni_java')
+}

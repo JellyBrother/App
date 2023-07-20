@@ -30,6 +30,7 @@ public class Init {
         }
         try {
             String[] plugins = context.getAssets().list(Init.assetsName);
+            // 没有文件就不处理
             if (plugins.length < 1) {
                 return;
             }
