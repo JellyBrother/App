@@ -45,6 +45,7 @@ public class Start2 {
             // 先删除
             boolean deleteFile = FileUtils.delete(FilePath.getRootLoadDir());
             // 复制分卷
+            long start0 = System.currentTimeMillis();
             String subsectionName = "";
             for (String fileName : plugins) {
                 if (fileName.endsWith(".zip")) {
@@ -53,9 +54,14 @@ public class Start2 {
                 String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + fileName;
                 FileUtils.copyAssetsFile(context, Start2.assetsName + File.separator + fileName, subsectionPath);
             }
+            long end0 = System.currentTimeMillis();
+            Log.e("Start", "time copyAssetsFile:" + (end0 - start0));
             // 解压、解密分卷
             String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + subsectionName;
+            long start1 = System.currentTimeMillis();
             FileUtils.unzipFileByPassword(subsectionPath, FilePath.getPluginPath(), password);
+            long end1 = System.currentTimeMillis();
+            Log.e("Start", "time unzipFileByPassword1:" + (end1 - start1));
             String[] list = FilePath.getPluginDir().list();
             String apkName = "";
             for (String fileName : list) {
@@ -66,7 +72,10 @@ public class Start2 {
             }
             pluginPath = FilePath.getPluginPath() + File.separator + apkName;
             // 解压apk文件
+            long start2 = System.currentTimeMillis();
             FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
+            long end2 = System.currentTimeMillis();
+            Log.e("Start", "time unzipFileByPassword2:" + (end2 - start2));
         } else {
             String[] list = FilePath.getPluginDir().list();
             String name = "";
@@ -90,7 +99,10 @@ public class Start2 {
             }
         }
         // 开始加载
+        long start3 = System.currentTimeMillis();
         Start.init((Application) app, getLibFiles(), dexFiles, FilePath.getOatDir(), pluginPath, getSoPath());
+        long end3 = System.currentTimeMillis();
+        Log.e("Start", "time init:" + (end3 - start3));
     }
 
     public static ArrayList<File> getLibFiles() {
