@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvw1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw1-启动a"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw2-启动b"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw3-自然启动"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw4"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw4-获取安卓版本"
+                android:textColor="@color/black" />
+
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
