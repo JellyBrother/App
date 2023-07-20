@@ -103,7 +103,7 @@ public class FilePath {
     }
 
     public static File getPluginUnAarJniDir() {
-        String path = getPluginUnAarPath() + File.separator + PATH_AAR_JNI;
+        String path = getPluginPath() + File.separator + PATH_AAR_JNI;
         return FileUtils.getDir(new File(path), "");
     }
 

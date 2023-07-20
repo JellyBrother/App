@@ -58,19 +58,13 @@ public class Start2 {
             FileUtils.unzipFileByPassword(subsectionPath, FilePath.getPluginPath(), password);
             String[] list = FilePath.getPluginDir().list();
             String apkName = "";
-            String rarName = "";
             for (String fileName : list) {
                 if (fileName.endsWith(".apk")) {
                     apkName = fileName;
-                }
-                if (fileName.endsWith(".aar")) {
-                    rarName = fileName;
+                    break;
                 }
             }
             pluginPath = FilePath.getPluginPath() + File.separator + apkName;
-            // 解压rar
-            String rarPath = FilePath.getPluginPath() + File.separator + rarName;
-            FileUtils.unzipFile(rarPath, FilePath.getPluginUnAarPath());
             // 解压apk文件
             FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
         } else {
