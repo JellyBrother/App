@@ -52,19 +52,5 @@ android {
             }
         }
     }
-//    // 打包时间
-//    def buildTime = new Date().format('yyyyMMddHHmm')
-//    applicationVariants.all { variant ->
-//        // apk 输出文件名配置
-//        variant.outputs.all { output ->
-//            def outputFile = output.outputFile
-//            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-//                def fileName = outputFile.name
-//                boolean isRelease = !fileName.contains("debug")
-//                fileName = "app_" + versionName + "_" + buildTime + "_" + (!isRelease ? "_debug" : "_release") + ".apk"
-//                outputFileName = fileName
-//            }
-//        }
-//    }
 //////////////////////////////////////////////// 签名打包 end ////////////////////////////////////////////////////////////////
 }

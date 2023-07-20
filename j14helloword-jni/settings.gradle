@@ -14,4 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MyApplication"
 include ':app'
-include ':lib_load_jni'
+include ':lib_load_jni_c'
+include ':lib_load_jni_java'
