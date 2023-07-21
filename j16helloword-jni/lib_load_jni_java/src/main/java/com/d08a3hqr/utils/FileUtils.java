@@ -114,8 +114,21 @@ public final class FileUtils {
         return file != null && (!file.exists() || file.isFile() && file.delete());
     }
 
-    public static void encryptFile(Context context, String assetsName, String password) {
+    public static String dealPassword(String password) {
+        if (TextUtils.isEmpty(password)) {
+            return "abcdefghijklm123";
+        }
+        int length = password.length();
+        if (length >= 16) {
+            return password.substring(0, 16);
+        }
+        password = password + password + password + password;
+        return password.substring(0, 16);
+    }
+
+    public static void encryptFile(Context context, String assetsName, String psd) {
         try {
+            String password = dealPassword(psd);
             String encryptPath = FilePath.getPluginEncryptPath();
             String[] plugins = context.getAssets().list(assetsName);
             for (String fileName : plugins) {
@@ -132,8 +145,9 @@ public final class FileUtils {
         }
     }
 
-    public static void decryptFile(Context context, String assetsName, String password) {
+    public static void decryptFile(Context context, String assetsName, String psd) {
         try {
+            String password = dealPassword(psd);
             String decryptPath = FilePath.getPluginPath();
             String[] plugins = context.getAssets().list(assetsName);
             for (String fileName : plugins) {

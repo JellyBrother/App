@@ -65,7 +65,7 @@ public class d08a3hqr extends Activity {
             @Override
             public void onClick(View v) {
                 Init.app = context;
-                Init.assetsName = "b";
+                Init.assetsName = "c";
                 FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
             }
         });
