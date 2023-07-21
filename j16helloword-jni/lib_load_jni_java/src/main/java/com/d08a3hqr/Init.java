@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.d08a3hqr.utils.FilePath;
 import com.d08a3hqr.utils.FileUtils;
@@ -40,24 +39,12 @@ public class Init {
             if (!FileUtils.hasFiles(FilePath.getPluginUnzipDir())) {
                 // 先删除
                 boolean deleteFile = FileUtils.delete(FilePath.getRootLoadDir());
-                // 复制分卷
-                long start0 = System.currentTimeMillis();
-                String subsectionName = "";
-                for (String fileName : plugins) {
-                    if (fileName.endsWith(".zip")) {
-                        subsectionName = fileName;
-                    }
-                    String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + fileName;
-                    FileUtils.copyAssetsFile(context, Init.assetsName + File.separator + fileName, subsectionPath);
-                }
-                // 解压、解密分卷
-                String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + subsectionName;
-                FileUtils.unzipFileByPassword(subsectionPath, FilePath.getPluginPath(), password);
-                pluginPath = getPluginPath();
+                FileUtils.decryptFile(context, Init.assetsName, password);
+                pluginPath = getPluginPath(".apk");
                 // 解压apk文件
                 FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
             } else {
-                pluginPath = getPluginPath();
+                pluginPath = getPluginPath(".apk");
             }
             // dex集合
             ArrayList<File> dexFiles = new ArrayList<>();
@@ -70,24 +57,25 @@ public class Init {
                     dexFiles.add(file);
                 }
             }
+            String abi = getAbi();
             // 加载lib_load_jni_c
             if (isDebug) {
                 System.loadLibrary("load");
             } else {
-                System.load(getSoPath());
+                System.load(getSoPath(abi));
             }
             // 开始加载插件
-            Sd08a3hqrtart.load((Application) app, getLibFiles(), dexFiles, FilePath.getOatDir(), pluginPath);
-        } catch (Throwable t) {
-            Log.e("Start", "init", t);
+            Sd08a3hqrtart.load((Application) app, getLibFiles(abi), dexFiles, FilePath.getOatDir(), pluginPath);
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 
-    public static String getPluginPath() {
+    public static String getPluginPath(String suffixName) {
         String[] list = FilePath.getPluginDir().list();
         String name = "";
         for (String fileName : list) {
-            if (fileName.endsWith(".apk")) {
+            if (fileName.endsWith(suffixName)) {
                 name = fileName;
                 break;
             }
@@ -96,8 +84,7 @@ public class Init {
         return pluginPath;
     }
 
-    public static ArrayList<File> getLibFiles() {
-        String abi = getAbi();
+    public static ArrayList<File> getLibFiles(String abi) {
         File[] files = FilePath.getPluginUnZipLibDir().listFiles();
         File abiFile = null;
         ArrayList<File> libFiles = new ArrayList<>();
@@ -117,10 +104,8 @@ public class Init {
         return libFiles;
     }
 
-    public static String getSoPath() {
-        String abi = getAbi();
-        File[] files = FilePath.getPluginUnAarJniAbiDir(abi).listFiles();
-        return FilePath.getPluginUnAarJniAbiPath(abi) + File.separator + files[0].getName();
+    public static String getSoPath(String abi) {
+        return getPluginPath(abi + ".so");
     }
 
     public static String getAbi() {

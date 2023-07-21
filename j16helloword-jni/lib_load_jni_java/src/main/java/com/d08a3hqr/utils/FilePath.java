@@ -16,7 +16,7 @@ public class FilePath {
     public static final String PATH_DEX_OPT_DIR = "dexOptDir";
     public static final String PATH_OAT = "oat";
     public static final String PATH_LIB = "lib";
-    public static final String PATH_AAR_JNI = "jni";
+    public static final String PATH_ENCRYPT = "encrypt";
 
     public static Context getApp() {
         return Init.app;
@@ -104,21 +104,12 @@ public class FilePath {
         return FileUtils.getDirPath(getPluginUnZipLibDir(), "");
     }
 
-    public static File getPluginUnAarJniDir() {
-        String path = getPluginPath() + File.separator + PATH_AAR_JNI;
+    public static File getPluginEncryptDir() {
+        String path = getRootLoadPath() + File.separator + PATH_ENCRYPT;
         return FileUtils.getDir(new File(path), "");
     }
 
-    public static String getPluginUnAarJniPath() {
-        return FileUtils.getDirPath(getPluginUnAarJniDir(), "");
-    }
-
-    public static File getPluginUnAarJniAbiDir(String abi) {
-        String path = getPluginUnAarJniPath() + File.separator + abi;
-        return FileUtils.getDir(new File(path), "");
-    }
-
-    public static String getPluginUnAarJniAbiPath(String abi) {
-        return FileUtils.getDirPath(getPluginUnAarJniAbiDir(abi), "");
+    public static String getPluginEncryptPath() {
+        return FileUtils.getDirPath(getPluginEncryptDir(), "");
     }
 }

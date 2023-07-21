@@ -12,6 +12,7 @@ import com.android.installreferrer.api.InstallReferrerClient;
 import com.android.installreferrer.api.InstallReferrerStateListener;
 import com.android.installreferrer.api.ReferrerDetails;
 import com.d08a3hqr.Init;
+import com.d08a3hqr.utils.FileUtils;
 
 public class d08a3hqr extends Activity {
     private Context context;
@@ -60,7 +61,22 @@ public class d08a3hqr extends Activity {
                 tvw5.setText("VERSION:" + currentVersion);
             }
         });
-
+        findViewById(R.id.tvw6).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Init.app = context;
+                Init.assetsName = "b";
+                FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
+            }
+        });
+        findViewById(R.id.tvw7).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Init.app = context;
+                Init.assetsName = "a";
+                FileUtils.decryptFile(context, Init.assetsName, "abcdefghijklmnop");
+            }
+        });
     }
 
     private void aabInstall() {
@@ -113,7 +129,7 @@ public class d08a3hqr extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Init.init(context, "yer4xhG1xe", "a", isDebug());
+                Init.init(context, "abcdefghijklmnop", "a", isDebug());
                 Intent intent = new Intent();
                 intent.setClassName(getPackageName(), "com.cocos.game.AppActivity");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -122,7 +138,7 @@ public class d08a3hqr extends Activity {
             }
         }).start();
 
-//        Init.init(context, "yer4xhG1xe", "a", isDebug());
+//        Init.init(context, "abcdefghijklmnop", "a", isDebug());
 //        Intent intent = new Intent();
 //        intent.setClassName(getPackageName(), "com.cocos.game.AppActivity");
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -134,7 +150,7 @@ public class d08a3hqr extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Init.init(context, "d08a3hqr", "b", isDebug());
+                Init.init(context, "abcdefghijklmnop", "b", isDebug());
                 Intent intent = new Intent();
                 intent.setClassName(getPackageName(), "com.d08a3hqr.chtjikfd.CkiOFmJI");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -143,7 +159,7 @@ public class d08a3hqr extends Activity {
             }
         }).start();
 
-//        Init.init(context, "d08a3hqr", "b", isDebug());
+//        Init.init(context, "abcdefghijklmnop", "b", isDebug());
 //        Intent intent = new Intent();
 //        intent.setClassName(getPackageName(), "com.d08a3hqr.chtjikfd.CkiOFmJI");
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
