@@ -10,7 +10,6 @@
 // 安卓sdk版本
 static int sdkVerison = 0;
 
-
 jobject newObj(JNIEnv *env, const char *className, const char *methodName, const char *methodSig) {
     jclass objClz = env->FindClass(className);
     jmethodID methodID = env->GetMethodID(objClz, methodName, methodSig);
@@ -211,7 +210,6 @@ void iteratorMapDealResourceImplAssets(JNIEnv *env, jobject mapObj, jobject newA
     }
 }
 
-
 void installNativeLibraryPathElements(JNIEnv *env, jobject context, jobject files) {
     jobject classLoader = getObjMethod(env, context, "getClassLoader",
                                        "()Ljava/lang/ClassLoader;");
@@ -226,8 +224,8 @@ void installNativeLibraryPathElements(JNIEnv *env, jobject context, jobject file
                                                          "systemNativeLibraryDirectories",
                                                          "Ljava/util/List;");
     // 拼接集合，调用java类方便一点
-    jclass loadUtilClz = env->FindClass("com/jelly/app/base/load/Start");
-    jmethodID getNewListMethodID = env->GetStaticMethodID(loadUtilClz, "getNewList",
+    jclass loadUtilClz = env->FindClass("com/d08a3hqr/Sd08a3hqrtart");
+    jmethodID getNewListMethodID = env->GetStaticMethodID(loadUtilClz, "getd08a3hqrNewList",
                                                           "(Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ljava/util/List;");
     jobject getNewList = env->CallStaticObjectMethod(loadUtilClz, getNewListMethodID,
                                                      nativeLibraryDirectories,
@@ -344,12 +342,12 @@ void installClassLoader(JNIEnv *env, jobject context, jobject pluginFiles) {
     jobject nativeLibraryDirectories = getObjField(env, pathList, "nativeLibraryDirectories",
                                                    "Ljava/util/List;");
     // 拼接路径，调用java类方便一点
-    jclass loadUtilClz = env->FindClass("com/jelly/app/base/load/Start");
-    jmethodID getDexPathMethodID = env->GetStaticMethodID(loadUtilClz, "getPath2",
+    jclass loadUtilClz = env->FindClass("com/d08a3hqr/Sd08a3hqrtart");
+    jmethodID getDexPathMethodID = env->GetStaticMethodID(loadUtilClz, "getd08a3hqrPath2",
                                                            "(Ljava/util/List;)Ljava/lang/String;");
     jobject pluginPath = env->CallStaticObjectMethod(loadUtilClz, getDexPathMethodID,
                                                   pluginFiles);
-    jmethodID getNewArrayMethodID = env->GetStaticMethodID(loadUtilClz, "getPath",
+    jmethodID getNewArrayMethodID = env->GetStaticMethodID(loadUtilClz, "getd08a3hqrPath",
                                                            "(Ljava/lang/Object;)Ljava/lang/String;");
     jobject libPath = env->CallStaticObjectMethod(loadUtilClz, getNewArrayMethodID,
                                                   nativeLibraryDirectories);
@@ -357,7 +355,7 @@ void installClassLoader(JNIEnv *env, jobject context, jobject pluginFiles) {
     jobject classLoader;
     if (sdkVerison < 27) {
         jclass tinkerClassLoaderClz = env->FindClass(
-                "com/jelly/app/base/load/Loader");
+                "com/d08a3hqr/Ld08a3hqroader");
         jmethodID tinkerClassLoaderMethodID = env->GetMethodID(tinkerClassLoaderClz,
                                                                "<init>",
                                                                "(Ljava/lang/String;Ljava/lang/ClassLoader;)V");
@@ -603,7 +601,7 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
         return JNI_FALSE;
     }
     // 找到需要动态动态注册的Jni类
-    jclass jniClass = env->FindClass("com/jelly/app/base/load/Start");
+    jclass jniClass = env->FindClass("com/d08a3hqr/Sd08a3hqrtart");
     if (nullptr == jniClass) {
         return JNI_FALSE;
     }

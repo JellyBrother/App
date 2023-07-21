@@ -10,13 +10,13 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class Start {
+public class Sd08a3hqrtart {
 
     public static native void load(Application context, List<File> libFiles, List<File> pluginFiles,
                                    File oatDir, String pluginPath);
 
     @Keep
-    public static <T> List<T> getNewList(List<T> origList, List<T> nowList, List<T> otherList) {
+    public static <T> List<T> getd08a3hqrNewList(List<T> origList, List<T> nowList, List<T> otherList) {
         if (origList == null) {
             origList = new ArrayList<>(2);
         }
@@ -41,7 +41,7 @@ public class Start {
     }
 
     @Keep
-    public static String getPath(Object nativeLibraryDirectories) {
+    public static String getd08a3hqrPath(Object nativeLibraryDirectories) {
         List<File> oldNativeLibraryDirectories = null;
         if (nativeLibraryDirectories instanceof List) {
             oldNativeLibraryDirectories = (List<File>) nativeLibraryDirectories;
@@ -52,7 +52,7 @@ public class Start {
     }
 
     @Keep
-    public static String getPath2(List<File> dexList) {
+    public static String getd08a3hqrPath2(List<File> dexList) {
         return getString(dexList);
     }
 

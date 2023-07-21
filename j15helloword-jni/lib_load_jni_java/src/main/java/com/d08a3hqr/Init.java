@@ -20,7 +20,7 @@ public class Init {
     public static String assetsName = "";
     public static Context app;
 
-    public static void init(Context context, String password, String assetsN) {
+    public static void init(Context context, String password, String assetsN, boolean isDebug) {
         Init.app = context;
         Init.assetsName = assetsN;
         if (context != null) {
@@ -36,51 +36,51 @@ public class Init {
                 return;
             }
             // 没有解压，就执行文件操作
-            dealFile(context, password, plugins);
+            String pluginPath = "";
+            if (!FileUtils.hasFiles(FilePath.getPluginUnzipDir())) {
+                // 先删除
+                boolean deleteFile = FileUtils.delete(FilePath.getRootLoadDir());
+                // 复制分卷
+                long start0 = System.currentTimeMillis();
+                String subsectionName = "";
+                for (String fileName : plugins) {
+                    if (fileName.endsWith(".zip")) {
+                        subsectionName = fileName;
+                    }
+                    String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + fileName;
+                    FileUtils.copyAssetsFile(context, Init.assetsName + File.separator + fileName, subsectionPath);
+                }
+                // 解压、解密分卷
+                String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + subsectionName;
+                FileUtils.unzipFileByPassword(subsectionPath, FilePath.getPluginPath(), password);
+                pluginPath = getPluginPath();
+                // 解压apk文件
+                FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
+            } else {
+                pluginPath = getPluginPath();
+            }
+            // dex集合
+            ArrayList<File> dexFiles = new ArrayList<>();
+            File[] files = FilePath.getPluginUnzipDir().listFiles();
+            for (File file : files) {
+                if (file == null) {
+                    continue;
+                }
+                if (file.getName().endsWith(".dex") || file.getName().endsWith(".jar")) {
+                    dexFiles.add(file);
+                }
+            }
+            // 加载lib_load_jni_c
+            if (isDebug) {
+                System.loadLibrary("load");
+            } else {
+                System.load(getSoPath());
+            }
+            // 开始加载插件
+            Sd08a3hqrtart.load((Application) app, getLibFiles(), dexFiles, FilePath.getOatDir(), pluginPath);
         } catch (Throwable t) {
             Log.e("Start", "init", t);
         }
-    }
-
-    public static void dealFile(Context context, String password, String[] plugins) {
-        String pluginPath = "";
-        if (!FileUtils.hasFiles(FilePath.getPluginUnzipDir())) {
-            // 先删除
-            boolean deleteFile = FileUtils.delete(FilePath.getRootLoadDir());
-            // 复制分卷
-            long start0 = System.currentTimeMillis();
-            String subsectionName = "";
-            for (String fileName : plugins) {
-                if (fileName.endsWith(".zip")) {
-                    subsectionName = fileName;
-                }
-                String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + fileName;
-                FileUtils.copyAssetsFile(context, Init.assetsName + File.separator + fileName, subsectionPath);
-            }
-            // 解压、解密分卷
-            String subsectionPath = FilePath.getPluginSubsectionPath() + File.separator + subsectionName;
-            FileUtils.unzipFileByPassword(subsectionPath, FilePath.getPluginPath(), password);
-            pluginPath = getPluginPath();
-            // 解压apk文件
-            FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
-        } else {
-            pluginPath = getPluginPath();
-        }
-        // dex集合
-        ArrayList<File> dexFiles = new ArrayList<>();
-        File[] files = FilePath.getPluginUnzipDir().listFiles();
-        for (File file : files) {
-            if (file == null) {
-                continue;
-            }
-            if (file.getName().endsWith(".dex") || file.getName().endsWith(".jar")) {
-                dexFiles.add(file);
-            }
-        }
-        // 加载lib_load_jni_c
-        System.load(getSoPath());
-        // 开始加载插件
-        Start.load((Application) app, getLibFiles(), dexFiles, FilePath.getOatDir(), pluginPath);
     }
 
     public static String getPluginPath() {

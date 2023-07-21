@@ -113,27 +113,46 @@ public class d08a3hqr extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Init.init(context, "yer4xhG1xe", "a");
+                Init.init(context, "yer4xhG1xe", "a", isDebug());
                 Intent intent = new Intent();
                 intent.setClassName(getPackageName(), "com.cocos.game.AppActivity");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
                 finish();
+                startActivity(intent);
             }
         }).start();
+
+//        Init.init(context, "yer4xhG1xe", "a", isDebug());
+//        Intent intent = new Intent();
+//        intent.setClassName(getPackageName(), "com.cocos.game.AppActivity");
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+//        finish();
     }
 
     private void loadB() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Init.init(context, "d08a3hqr", "b");
+                Init.init(context, "d08a3hqr", "b", isDebug());
                 Intent intent = new Intent();
                 intent.setClassName(getPackageName(), "com.d08a3hqr.chtjikfd.CkiOFmJI");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
                 finish();
+                startActivity(intent);
             }
         }).start();
+
+//        Init.init(context, "d08a3hqr", "b", isDebug());
+//        Intent intent = new Intent();
+//        intent.setClassName(getPackageName(), "com.d08a3hqr.chtjikfd.CkiOFmJI");
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+//        finish();
+    }
+
+    private boolean isDebug() {
+        boolean isDebug = BuildConfig.DEBUG;
+        return isDebug;
     }
 }

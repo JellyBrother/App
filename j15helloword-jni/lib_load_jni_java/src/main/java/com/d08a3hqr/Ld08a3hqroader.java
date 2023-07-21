@@ -15,11 +15,11 @@ import dalvik.system.PathClassLoader;
  * Created by tangyinsheng on 2020-01-09.
  */
 @SuppressLint("NewApi")
-public final class Loader extends PathClassLoader {
+public final class Ld08a3hqroader extends PathClassLoader {
     private final ClassLoader mOriginAppClassLoader;
 
     @Keep
-    public Loader(String libraryPath, ClassLoader originAppClassLoader) {
+    public Ld08a3hqroader(String libraryPath, ClassLoader originAppClassLoader) {
         super("", libraryPath, ClassLoader.getSystemClassLoader());
         mOriginAppClassLoader = originAppClassLoader;
     }

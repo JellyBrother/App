@@ -6,7 +6,9 @@ apply from: '../gradle/appProductFlavors.gradle'
 android {
     namespace rootProject.ext.android.applicationId
     compileSdk rootProject.ext.android.compileSdk
-
+    buildFeatures {
+        buildConfig true
+    }
     defaultConfig {
         applicationId rootProject.ext.android.applicationId
         minSdk rootProject.ext.android.minSdk
@@ -37,16 +39,15 @@ android {
 }
 
 dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.aar'], dir: 'libs')
     // 谷歌归因
     implementation 'com.android.installreferrer:installreferrer:2.2'
 
+    debugImplementation project(':lib_load_jni_c')
     implementation project(':lib_load_jni_java')
     // zip压缩解亚
 //    implementation 'net.lingala.zip4j:zip4j:2.11.5'
     // 注解
 //    implementation 'androidx.annotation:annotation:1.6.0'
-
-//    implementation project(':lib_load_jni_c')
-//    api fileTree(include: ['*.jar'], dir: 'libs')
-//    api fileTree(include: ['*.aar'], dir: 'libs')
 }
