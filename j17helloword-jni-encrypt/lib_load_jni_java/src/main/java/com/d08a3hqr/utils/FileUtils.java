@@ -115,7 +115,6 @@ public final class FileUtils {
             StartConstant.suffix_point_so = jsonObject.optString("4");
             StartConstant.suffix_line_aa = jsonObject.optString("100");
             StartConstant.suffix_line_ss = jsonObject.optString("101");
-            StartConstant.assets_dir_decrypt_a = jsonObject.optString("1000");
         } catch (Throwable e) {
             e.printStackTrace();
         }

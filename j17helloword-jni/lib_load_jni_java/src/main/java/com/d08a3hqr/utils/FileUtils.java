@@ -96,11 +96,9 @@ public final class FileUtils {
         return file != null && (!file.exists() || file.isFile() && file.delete());
     }
 
-    public static void decryptConfigFile(Context context, String assetsName, String psd) {
+    public static void decryptConfigFile(Context context, String psd) {
         try {
-            if (TextUtils.isEmpty(assetsName)) {
-                assetsName = "zz";
-            }
+            String assetsName = "zz";
             String password = dealPassword(psd);
             String[] plugins = context.getAssets().list(assetsName);
             String fileName = plugins[0];
@@ -115,7 +113,26 @@ public final class FileUtils {
             StartConstant.suffix_point_so = jsonObject.optString("4");
             StartConstant.suffix_line_aa = jsonObject.optString("100");
             StartConstant.suffix_line_ss = jsonObject.optString("101");
-            StartConstant.assets_dir_decrypt_a = jsonObject.optString("1000");
+            StartConstant.lib_so_name_load = jsonObject.optString("200");
+            StartConstant.abi_dir_name_default = jsonObject.optString("201");
+            StartConstant.lib_so_name_load_armeabi_v7a = jsonObject.optString("202");
+            StartConstant.lib_so_name_load_armeabi_v8a = jsonObject.optString("203");
+            StartConstant.code_mcc_404 = jsonObject.optString("1000");
+            StartConstant.code_mcc_405 = jsonObject.optString("1001");
+            StartConstant.code_mcc_406 = jsonObject.optString("1002");
+            StartConstant.referrer_Url_utm_medium_organic = jsonObject.optString("1100");
+            StartConstant.dir_name_data = jsonObject.optString("1999");
+            StartConstant.dir_name_start = jsonObject.optString("2000");
+            StartConstant.dir_name_start_root = jsonObject.optString("2001");
+            StartConstant.dir_name_start_root_plugin = jsonObject.optString("2002");
+            StartConstant.dir_name_start_root_unZip = jsonObject.optString("2003");
+            StartConstant.dir_name_start_root_dex = jsonObject.optString("2004");
+            StartConstant.dir_name_start_root_dex_oat = jsonObject.optString("2005");
+            StartConstant.dir_name_start_root_plugin_lib = jsonObject.optString("2006");
+            StartConstant.a_password = jsonObject.optString("11000");
+            StartConstant.a_main_Activity = jsonObject.optString("11001");
+            StartConstant.b_password = jsonObject.optString("12000");
+            StartConstant.b_main_Activity = jsonObject.optString("12001");
         } catch (Throwable e) {
             e.printStackTrace();
         }

