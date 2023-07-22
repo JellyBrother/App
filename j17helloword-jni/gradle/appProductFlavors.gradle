@@ -36,7 +36,7 @@ android {
             debuggable false
             jniDebuggable false
             // 压缩对齐开关
-            zipAlignEnabled true
+            zipAlignEnabled false
             // 移除无用的资源
 //            shrinkResources true
             // 代码混淆开关

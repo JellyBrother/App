@@ -264,3 +264,30 @@
 ########################################### monitor ####################################
 -keep class com.lygttpod.monitor.** { *; }
 ########################################### monitor ####################################
+########################################### cocos混淆规则 ####################################
+# Proguard Cocos2d-x-lite for release
+-keep public class com.cocos.** { *; }
+-dontwarn com.cocos.**
+
+# Proguard Apache HTTP for release
+-keep class org.apache.http.** { *; }
+-dontwarn org.apache.http.**
+
+# Proguard okhttp for release
+-keep class okhttp3.** { *; }
+-dontwarn okhttp3.**
+
+-keep class okio.** { *; }
+-dontwarn okio.**
+
+# Proguard Android Webivew for release. you can comment if you are not using a webview
+-keep public class android.net.http.SslError
+-keep public class android.webkit.WebViewClient
+
+-keep public class com.google.** { *; }
+
+-dontwarn android.webkit.WebView
+-dontwarn android.net.http.SslError
+-dontwarn android.webkit.WebViewClient
+########################################### cocos混淆规则 ####################################
+
