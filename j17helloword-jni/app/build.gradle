@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.application'
+}
+
+apply from: '../gradle/appProductFlavors.gradle'
+android {
+    namespace rootProject.ext.android.applicationId
+    compileSdk rootProject.ext.android.compileSdk
+    buildFeatures {
+        buildConfig true
+    }
+    defaultConfig {
+        applicationId rootProject.ext.android.applicationId
+        minSdk rootProject.ext.android.minSdk
+        targetSdk rootProject.ext.android.targetSdk
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // 打包时间
+    def buildTime = new Date().format('yyyyMMddHHmm')
+    applicationVariants.all { variant ->
+        // apk 输出文件名配置
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = outputFile.name
+                boolean isRelease = !fileName.contains("debug")
+                fileName = rootProject.name + "_" + versionName + "_" + buildTime + "_" + (!isRelease ? "_debug" : "_release") + ".apk"
+                outputFileName = fileName
+            }
+        }
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.aar'], dir: 'libs')
+    // 谷歌归因
+    implementation 'com.android.installreferrer:installreferrer:2.2'
+
+    debugImplementation project(':lib_load_jni_c')
+    implementation project(':lib_load_jni_java')
+    // zip压缩解亚
+//    implementation 'net.lingala.zip4j:zip4j:2.11.5'
+    // 注解
+//    implementation 'androidx.annotation:annotation:1.6.0'
+}
