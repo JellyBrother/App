@@ -89,7 +89,7 @@ public class d08a3hqr extends Activity {
             @Override
             public void onClick(View v) {
                 //加密b面文件
-                Init.assetsName = "c";
+                Init.assetsName = "d";
                 FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
             }
         });

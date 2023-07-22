@@ -133,25 +133,6 @@ public final class FileUtils {
         return password.substring(0, 16);
     }
 
-    public static void encryptFile(Context context, String assetsName, String psd) {
-        try {
-            String password = dealPassword(psd);
-            String encryptPath = FilePath.getPluginEncryptPath();
-            String[] plugins = context.getAssets().list(assetsName);
-            for (String fileName : plugins) {
-                InputStream is = context.getAssets().open(assetsName + File.separator + fileName);
-                byte[] bytes = readFile2BytesByStream(is);
-                byte[] encrypt = EncryptionUtils.encrypt(bytes, password);
-                String name = fileName.replace(StartConstant.suffix_point_apk, StartConstant.suffix_line_aa).replace(StartConstant.suffix_point_so, StartConstant.suffix_line_ss);
-                File newFile = new File(encryptPath + File.separator + name);
-                newFile.createNewFile();
-                writeFileFromIS(newFile, new ByteArrayInputStream(encrypt));
-            }
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void decryptFile(Context context, String assetsName, String psd) {
         try {
             String password = dealPassword(psd);

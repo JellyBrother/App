@@ -63,13 +63,6 @@ public class d08a3hqr extends Activity {
                 tvw5.setText("VERSION:" + currentVersion);
             }
         });
-        findViewById(R.id.tvw6).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Init.assetsName = "c";
-                FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
-            }
-        });
         findViewById(R.id.tvw7).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,30 +70,7 @@ public class d08a3hqr extends Activity {
                 FileUtils.decryptFile(context, Init.assetsName, "abcdefghijklmnop");
             }
         });
-        findViewById(R.id.tvw8).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //加密a面文件
-                Init.assetsName = "c";
-                FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
-            }
-        });
-        findViewById(R.id.tvw9).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //加密b面文件
-                Init.assetsName = "c";
-                FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
-            }
-        });
-        findViewById(R.id.tvw10).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //加密配置文件
-                Init.assetsName = "e";
-                FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
-            }
-        });
+
     }
 
     private void aabInstall() {
