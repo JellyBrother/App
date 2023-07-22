@@ -104,14 +104,14 @@ public class EncryptionUtils {
      * Description：使用外部私钥key，将需要加密的String加密成byte[]
      */
     public static byte[] encryptS2B(String data, byte[] key) throws Exception {
-        return encrypt(data.getBytes("utf-8"), key);
+        return encrypt(data.getBytes(StandardCharsets.UTF_8), key);
     }
 
     /**
      * Description：使用外部私钥key，将需要加密的String加密成String
      */
     public static String encryptS2S(String data, byte[] key) throws Exception {
-        byte[] bytes = encrypt(data.getBytes("utf-8"), key);
+        byte[] bytes = encrypt(data.getBytes(StandardCharsets.UTF_8), key);
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
@@ -120,7 +120,7 @@ public class EncryptionUtils {
      */
     public static String decryptB2S(byte[] data, byte[] key) throws Exception {
         byte[] bytes = decrypt(data, key);
-        return new String(bytes, "utf-8");
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 
     /**
@@ -135,6 +135,6 @@ public class EncryptionUtils {
      */
     public static String decryptS2S(String data, byte[] key) throws Exception {
         byte[] bytes = decrypt(Base64.decode(data, Base64.DEFAULT), key);
-        return new String(bytes, "utf-8");
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 }

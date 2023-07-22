@@ -19,7 +19,7 @@ public class FilePath {
     public static final String PATH_ENCRYPT = "encrypt";
 
     public static Context getApp() {
-        return Init.app;
+        return StartConstant.app;
     }
 
     public static File getFilesDir() {

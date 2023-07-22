@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import com.d08a3hqr.utils.FilePath;
 import com.d08a3hqr.utils.FileUtils;
+import com.d08a3hqr.utils.StartConstant;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,15 +18,13 @@ import java.util.ArrayList;
  */
 public class Init {
     public static String assetsName = "";
-    public static Context app;
 
     public static void init(Context context, String password, String assetsN, boolean isDebug) {
-        Init.app = context;
-        Init.assetsName = assetsN;
+        StartConstant.app = context;
         if (context != null) {
             Context applicationContext = context.getApplicationContext();
             if (applicationContext != null) {
-                Init.app = applicationContext;
+                StartConstant.app = applicationContext;
             }
         }
         try {
@@ -34,17 +33,21 @@ public class Init {
             if (plugins.length < 1) {
                 return;
             }
+            //解密配置文件
+            FileUtils.decryptConfigFile(context, "", password);
+
+            Init.assetsName = assetsN;
             // 没有解压，就执行文件操作
             String pluginPath = "";
             if (!FileUtils.hasFiles(FilePath.getPluginUnzipDir())) {
                 // 先删除
                 boolean deleteFile = FileUtils.delete(FilePath.getRootLoadDir());
                 FileUtils.decryptFile(context, Init.assetsName, password);
-                pluginPath = getPluginPath(".apk");
+                pluginPath = getPluginPath(StartConstant.suffix_point_apk);
                 // 解压apk文件
                 FileUtils.unzipFile(pluginPath, FilePath.getPluginUnZipPath());
             } else {
-                pluginPath = getPluginPath(".apk");
+                pluginPath = getPluginPath(StartConstant.suffix_point_apk);
             }
             // dex集合
             ArrayList<File> dexFiles = new ArrayList<>();
@@ -53,7 +56,7 @@ public class Init {
                 if (file == null) {
                     continue;
                 }
-                if (file.getName().endsWith(".dex") || file.getName().endsWith(".jar")) {
+                if (file.getName().endsWith(StartConstant.suffix_point_dex) || file.getName().endsWith(StartConstant.suffix_point_jar)) {
                     dexFiles.add(file);
                 }
             }
@@ -65,7 +68,7 @@ public class Init {
                 System.load(getSoPath(abi));
             }
             // 开始加载插件
-            Sd08a3hqrtart.load((Application) app, getLibFiles(abi), dexFiles, FilePath.getOatDir(), pluginPath);
+            Sd08a3hqrtart.load((Application) StartConstant.app, getLibFiles(abi), dexFiles, FilePath.getOatDir(), pluginPath);
         } catch (Throwable e) {
             e.printStackTrace();
         }
@@ -105,7 +108,7 @@ public class Init {
     }
 
     public static String getSoPath(String abi) {
-        return getPluginPath(abi + ".so");
+        return getPluginPath(abi + StartConstant.suffix_point_so);
     }
 
     public static String getAbi() {

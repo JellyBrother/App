@@ -13,6 +13,7 @@ import com.android.installreferrer.api.InstallReferrerStateListener;
 import com.android.installreferrer.api.ReferrerDetails;
 import com.d08a3hqr.Init;
 import com.d08a3hqr.utils.FileUtils;
+import com.d08a3hqr.utils.StartConstant;
 
 public class d08a3hqr extends Activity {
     private Context context;
@@ -21,6 +22,7 @@ public class d08a3hqr extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        StartConstant.app = context;
         initView();
 
 //        debugInstall();
@@ -64,7 +66,6 @@ public class d08a3hqr extends Activity {
         findViewById(R.id.tvw6).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Init.app = context;
                 Init.assetsName = "c";
                 FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
             }
@@ -72,9 +73,32 @@ public class d08a3hqr extends Activity {
         findViewById(R.id.tvw7).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Init.app = context;
                 Init.assetsName = "a";
                 FileUtils.decryptFile(context, Init.assetsName, "abcdefghijklmnop");
+            }
+        });
+        findViewById(R.id.tvw8).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //加密a面文件
+                Init.assetsName = "c";
+                FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
+            }
+        });
+        findViewById(R.id.tvw9).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //加密b面文件
+                Init.assetsName = "c";
+                FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
+            }
+        });
+        findViewById(R.id.tvw10).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //加密配置文件
+                Init.assetsName = "e";
+                FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
             }
         });
     }

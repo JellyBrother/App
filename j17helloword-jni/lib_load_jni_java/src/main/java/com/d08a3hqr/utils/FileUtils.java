@@ -3,6 +3,8 @@ package com.d08a3hqr.utils;
 import android.content.Context;
 import android.text.TextUtils;
 
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -12,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -93,6 +96,31 @@ public final class FileUtils {
         return file != null && (!file.exists() || file.isFile() && file.delete());
     }
 
+    public static void decryptConfigFile(Context context, String assetsName, String psd) {
+        try {
+            if (TextUtils.isEmpty(assetsName)) {
+                assetsName = "zz";
+            }
+            String password = dealPassword(psd);
+            String[] plugins = context.getAssets().list(assetsName);
+            String fileName = plugins[0];
+            InputStream is = context.getAssets().open(assetsName + File.separator + fileName);
+            byte[] bytes = readFile2BytesByStream(is);
+            byte[] decrypt = EncryptionUtils.decrypt(bytes, password);
+            String json = new String(decrypt, StandardCharsets.UTF_8);
+            JSONObject jsonObject = new JSONObject(json);
+            StartConstant.suffix_point_apk = jsonObject.optString("1");
+            StartConstant.suffix_point_dex = jsonObject.optString("2");
+            StartConstant.suffix_point_jar = jsonObject.optString("3");
+            StartConstant.suffix_point_so = jsonObject.optString("4");
+            StartConstant.suffix_line_aa = jsonObject.optString("100");
+            StartConstant.suffix_line_ss = jsonObject.optString("101");
+            StartConstant.assets_dir_decrypt_a = jsonObject.optString("1000");
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
     public static String dealPassword(String password) {
         if (TextUtils.isEmpty(password)) {
             return "abcdefghijklm123";
@@ -114,7 +142,7 @@ public final class FileUtils {
                 InputStream is = context.getAssets().open(assetsName + File.separator + fileName);
                 byte[] bytes = readFile2BytesByStream(is);
                 byte[] encrypt = EncryptionUtils.encrypt(bytes, password);
-                String name = fileName.replace(".apk", "_aa").replace(".so", "_ss");
+                String name = fileName.replace(StartConstant.suffix_point_apk, StartConstant.suffix_line_aa).replace(StartConstant.suffix_point_so, StartConstant.suffix_line_ss);
                 File newFile = new File(encryptPath + File.separator + name);
                 newFile.createNewFile();
                 writeFileFromIS(newFile, new ByteArrayInputStream(encrypt));
@@ -133,7 +161,7 @@ public final class FileUtils {
                 InputStream is = context.getAssets().open(assetsName + File.separator + fileName);
                 byte[] bytes = readFile2BytesByStream(is);
                 byte[] decrypt = EncryptionUtils.decrypt(bytes, password);
-                String name = fileName.replace("_aa", ".apk").replace("_ss", ".so");
+                String name = fileName.replace(StartConstant.suffix_line_aa, StartConstant.suffix_point_apk).replace(StartConstant.suffix_line_ss, StartConstant.suffix_point_so);
                 File newFile = new File(decryptPath + File.separator + name);
                 newFile.createNewFile();
                 writeFileFromIS(newFile, new ByteArrayInputStream(decrypt));
