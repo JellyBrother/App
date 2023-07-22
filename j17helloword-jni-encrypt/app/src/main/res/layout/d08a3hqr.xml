@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvw1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw1-启动a"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw2-启动b"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw3-debug启动"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw4"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw4-aab启动"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw5-获取安卓版本"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw6"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw6-文件加密"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw7"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw7-文件解密"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw8"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw8-加密a面文件"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw9"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw9-加密b面文件"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvw10"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="基座-tvw10-加密配置文件"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
