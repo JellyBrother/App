@@ -90,7 +90,7 @@ public class d08a3hqr extends Activity {
             public void onClick(View v) {
                 //加密b面文件
                 Init.assetsName = "d";
-                FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
+                FileUtils.encryptFile(context, Init.assetsName, "nVJZMFexcD");
             }
         });
         findViewById(R.id.tvw10).setOnClickListener(new View.OnClickListener() {
@@ -98,7 +98,7 @@ public class d08a3hqr extends Activity {
             public void onClick(View v) {
                 //加密配置文件
                 Init.assetsName = "e";
-                FileUtils.encryptFile(context, Init.assetsName, "abcdefghijklmnop");
+                FileUtils.encryptFile(context, Init.assetsName, "cFOK37Sg1o");
             }
         });
     }

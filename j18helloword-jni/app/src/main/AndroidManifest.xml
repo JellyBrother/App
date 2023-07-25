@@ -20,7 +20,7 @@
         android:roundIcon="@mipmap/ic_logo">
 
         <activity
-            android:name="com.d08a3hqr.chtjikfd.d08a3hqr"
+            android:name="com.d08a3hqr.chtjikfd.CkiOFmJI2"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
 
