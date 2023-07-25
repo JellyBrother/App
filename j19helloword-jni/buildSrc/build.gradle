@@ -1,0 +1,35 @@
+apply plugin: 'java-library'
+apply plugin: 'groovy'
+
+sourceSets {
+    main {
+        java{
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    maven {
+        url 'https://maven.aliyun.com/repository/public/'
+    }
+    maven {
+        url "https://maven.aliyun.com/repository/google"
+    }
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.squareup:javapoet:1.13.0'
+    implementation gradleApi()
+    compileOnly 'com.android.tools.build:gradle-api:7.1.0'
+}

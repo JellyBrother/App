@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: '../gradle/appProductFlavors.gradle'
-//apply plugin: 'android-junk-code'
+apply plugin: 'android-junk-code'
 
 android {
     compileSdk rootProject.ext.android.compileSdk
@@ -49,23 +49,23 @@ dependencies {
 }
 
 //https://github.com/qq549631030/AndroidJunkCode
-//androidJunkCode {
-//    def junkConfig = {
-//        //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-//        packageBase = "com.d08a3hqr.chtjikfd2"  //生成java类根包名
-//        packageCount = 30 //生成包数量
-//        activityCountPerPackage = 3 //每个包下生成Activity类数量
-//        excludeActivityJavaFile = false
-//        //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
-//        otherCountPerPackage = 50  //每个包下生成其它类的数量
-//        methodCountPerClass = 20  //每个类下生成方法数量
-//        resPrefix = "chtjikfd_"  //生成的layout、drawable、string等资源名前缀
-//        drawableCount = 300  //生成drawable资源数量
-//        stringCount = 300  //生成string数量
-//    }
-//    variantConfig {
-//        //注意：这里的debug,release为变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-//        debug junkConfig
-//        release junkConfig
-//    }
-//}
+androidJunkCode {
+    def junkConfig = {
+        //注意：这里的release是变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
+        packageBase = "com.d08a3hqr.chtjikfd2"  //生成java类根包名
+        packageCount = 30 //生成包数量
+        activityCountPerPackage = 3 //每个包下生成Activity类数量
+        excludeActivityJavaFile = false
+        //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
+        otherCountPerPackage = 50  //每个包下生成其它类的数量
+        methodCountPerClass = 20  //每个类下生成方法数量
+        resPrefix = "chtjikfd_"  //生成的layout、drawable、string等资源名前缀
+        drawableCount = 300  //生成drawable资源数量
+        stringCount = 300  //生成string数量
+    }
+    variantConfig {
+        //注意：这里的debug,release为变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
+        debug junkConfig
+        release junkConfig
+    }
+}

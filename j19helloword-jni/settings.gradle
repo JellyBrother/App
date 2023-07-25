@@ -1,20 +1,4 @@
-pluginManagement {
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
-}
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 rootProject.name = "MyApplication"
 include ':app'
 include ':lib_load_jni_c'
 include ':lib_load_jni_java'
-//include ':lib_load_junk'
