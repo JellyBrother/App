@@ -1,12 +1,29 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            url "https://maven.aliyun.com/repository/google"
+        }
+        mavenLocal()
+        mavenCentral()
+    }
+
     dependencies {
-        //https://github.com/qq549631030/AndroidJunkCode
-        classpath "com.github.qq549631030:android-junk-code:1.2.8"
+        classpath 'com.android.tools.build:gradle:7.1.2'
     }
 }
-plugins {
-    id 'com.android.application' version '8.0.2' apply false
-    id 'com.android.library' version '8.0.2' apply false
+
+repositories {
+    maven {
+        url 'https://maven.aliyun.com/repository/public/'
+    }
+    maven {
+        url "https://maven.aliyun.com/repository/google"
+    }
+    mavenLocal()
+    mavenCentral()
 }
 apply from: "$rootDir/gradle/config.gradle"

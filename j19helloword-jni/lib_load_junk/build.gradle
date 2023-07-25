@@ -1,0 +1,19 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'groovy'
+
+java {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation 'com.squareup:javapoet:1.13.0'
+    compileOnly 'com.android.tools.build:gradle-api:7.1.0'
+}

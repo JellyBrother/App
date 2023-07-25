@@ -4,7 +4,6 @@ plugins {
 
 apply from: '../gradle/appProductFlavors.gradle'
 android {
-    namespace rootProject.ext.android.applicationId
     compileSdk rootProject.ext.android.compileSdk
 
     defaultConfig {
